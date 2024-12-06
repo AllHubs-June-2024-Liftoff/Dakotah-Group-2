@@ -1,6 +1,12 @@
-import './App.css';
+import "./App.css";
 // import from '@mui/material';
-
+import NavBar from "./components/NavBar";
+import Home from "./components/Home";
+import Register from "./components/users/Register";
+import Login from "./components/users/Login";
+import EditUser from "./components/users/EditUser";
+import ViewUser from "./components/users/View";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
   return (
