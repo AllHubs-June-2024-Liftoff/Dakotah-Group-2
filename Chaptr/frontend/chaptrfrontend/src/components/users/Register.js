@@ -2,12 +2,11 @@ import React, { useState } from "react";
 
 export default function Register() {
   const [user, setUser] = useState({
-    firstName:"",
-    lastName:"",
-    email:"",
-    location:"",
-    password:"",
-    verifyPassword:"",
+    firstName: "",
+    lastName: "",
+    email: "",
+    location: "",
+    pwHash: "",
   });
 
   const { firstName, lastName, email, location, password, verifyPassword } =
@@ -16,6 +15,10 @@ export default function Register() {
   const onInputChange = (e) => {
     setUser({ ...user, [e.target.firstName]: e.target.value });
   };
+
+  /*if (verifyPassword ===  password) {
+    setUser.pwHash = password
+  }*/
 
   return (
     <div className="container" style={{ paddingTop: "80px" }}>
@@ -78,7 +81,7 @@ export default function Register() {
                 Password
               </label>
               <input
-                type={"password"}
+                type={"pwHash"}
                 className="form-control"
                 placeholder="Enter a strong password"
                 name="password"
