@@ -1,116 +1,118 @@
 import React, { useState } from "react";
+import { TextField, Button, Paper, Typography } from "@mui/material";
 
-export default function Register() {
+export default function Register({ darkMode }) {
   const [user, setUser] = useState({
     firstName: "",
     lastName: "",
     email: "",
     location: "",
-    pwHash: "",
+    password: "",
+    verifyPassword: "",
   });
 
   const { firstName, lastName, email, location, password, verifyPassword } =
     user;
 
   const onInputChange = (e) => {
-    setUser({ ...user, [e.target.firstName]: e.target.value });
+    setUser({ ...user, [e.target.name]: e.target.value });
   };
 
-  /*if (verifyPassword ===  password) {
-    setUser.pwHash = password
-  }*/
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    // Add your form submission logic here
+  };
 
   return (
-    <div className="container" style={{ paddingTop: "80px" }}>
-      <div className="row">
-        <form className="col-md offset-md-3 border rounded p-4 mt-2 shadow">
-          <h2 className="text-center m-4">Register User</h2>
-          <div className="mb-3">
-            <label htmlFor="firstName" className="form-label">
-              First Name
-            </label>
-            <input
-              type={"text"}
-              className="form-control"
-              placeholder="Enter your first name"
-              name="firstName"
-              value={firstName}
-              onChange={(e) => onInputChange(e)}
-            />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="lastName" className="form-label">
-              Last Name
-            </label>
-            <input
-              type={"text"}
-              className="form-control"
-              placeholder="Enter your last name"
-              name="lastName"
-              value={lastName}
-              onChange={(e) => onInputChange(e)}
-            />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="email" className="form-label">
-              Email Address
-            </label>
-            <input
-              type={"email"}
-              className="form-control"
-              placeholder="Enter your email address"
-              name="email"
-              value={email}
-              onChange={(e) => onInputChange(e)}
-            />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="location" className="form-label">
-              Mailing Address
-            </label>
-            <input
-              type={"text"}
-              className="form-control"
-              placeholder="Enter your mailing address"
-              name="location"
-              value={location}
-              onChange={(e) => onInputChange(e)}
-            />
-            <div className="mb-3">
-              <label htmlFor="password" className="form-label">
-                Password
-              </label>
-              <input
-                type={"pwHash"}
-                className="form-control"
-                placeholder="Enter a strong password"
-                name="password"
-                value={password}
-                onChange={(e) => onInputChange(e)}
-              />
-            </div>
-            <div className="mb-3">
-              <label htmlFor="verifyPassword" className="form-label">
-                Verify Password
-              </label>
-              <input
-                type={"password"}
-                className="form-control"
-                placeholder="Please verify your password"
-                name="verifyPassword"
-                value={verifyPassword}
-                onChange={(e) => onInputChange(e)}
-              />
-            </div>
-            <button type="submit" className="btn btn-outline-primary">
-              Submit
-            </button>
-            <button type="submit" className="btn btn-outline-danger">
-              Cancel
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
+    <Paper
+      sx={{
+        padding: 4,
+        marginTop: "80px",
+        backgroundColor: darkMode ? "#333" : "#fff",
+        color: darkMode ? "#fff" : "#000",
+      }}
+    >
+      <Typography
+        variant="h4"
+        align="center"
+        sx={{
+          marginBottom: 3,
+          color: darkMode ? "#40e0d0" : "#9b4dff",
+        }}
+      >
+        Register User
+      </Typography>
+      <form onSubmit={handleSubmit}>
+        <TextField
+          label="First Name"
+          name="firstName"
+          value={firstName}
+          onChange={onInputChange}
+          fullWidth
+          variant="outlined"
+          sx={{ marginBottom: 2 }}
+        />
+        <TextField
+          label="Last Name"
+          name="lastName"
+          value={lastName}
+          onChange={onInputChange}
+          fullWidth
+          variant="outlined"
+          sx={{ marginBottom: 2 }}
+        />
+        <TextField
+          label="Email Address"
+          name="email"
+          value={email}
+          onChange={onInputChange}
+          fullWidth
+          variant="outlined"
+          sx={{ marginBottom: 2 }}
+        />
+        <TextField
+          label="Mailing Address"
+          name="location"
+          value={location}
+          onChange={onInputChange}
+          fullWidth
+          variant="outlined"
+          sx={{ marginBottom: 2 }}
+        />
+        <TextField
+          label="Password"
+          name="password"
+          type="password"
+          value={password}
+          onChange={onInputChange}
+          fullWidth
+          variant="outlined"
+          sx={{ marginBottom: 2 }}
+        />
+        <TextField
+          label="Verify Password"
+          name="verifyPassword"
+          type="password"
+          value={verifyPassword}
+          onChange={onInputChange}
+          fullWidth
+          variant="outlined"
+          sx={{ marginBottom: 3 }}
+        />
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <Button
+            variant="contained"
+            type="submit"
+            color="primary"
+            sx={{ width: "48%" }}
+          >
+            Submit
+          </Button>
+          <Button variant="outlined" color="secondary" sx={{ width: "48%" }}>
+            Cancel
+          </Button>
+        </div>
+      </form>
+    </Paper>
   );
 }
