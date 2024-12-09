@@ -10,8 +10,7 @@ export default function Register({ darkMode }) {
     pwHash: "",
   });
 
-  const { firstName, lastName, email, location, password, verifyPassword } =
-    user;
+  const { firstName, lastName, email, location, pwHash, verifyPassword } = user;
 
   const onInputChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
@@ -79,9 +78,9 @@ export default function Register({ darkMode }) {
         />
         <TextField
           label="Password"
-          name="password"
+          name="pwHash"
           type="password"
-          value={password}
+          value={pwHash}
           onChange={onInputChange}
           fullWidth
           variant="outlined"
