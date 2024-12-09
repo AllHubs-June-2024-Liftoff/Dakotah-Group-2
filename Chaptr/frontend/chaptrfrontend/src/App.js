@@ -31,7 +31,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home darkMode={darkMode} />} />
             <Route
-              path="/Register"
+              path="/RegisterUser"
               element={<Register darkMode={darkMode} />}
             />
             <Route path="/Login" element={<Login darkMode={darkMode} />} />
