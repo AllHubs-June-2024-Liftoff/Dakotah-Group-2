@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import { TextField, Button, Paper, Typography } from "@mui/material";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function Register({ darkMode }) {
+  let navigate = useNavigate();
+
   const [user, setUser] = useState({
     firstName: "",
     lastName: "",
@@ -16,8 +20,10 @@ export default function Register({ darkMode }) {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    await axios.post("http://localhost:8080/user", user);
+    navigate("/");
   };
 
   return (
@@ -39,7 +45,7 @@ export default function Register({ darkMode }) {
       >
         Register User
       </Typography>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={(e) => onSubmit(e)}>
         <TextField
           label="First Name"
           name="firstName"
