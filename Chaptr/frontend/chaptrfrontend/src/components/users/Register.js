@@ -20,7 +20,6 @@ export default function Register({ darkMode }) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Add your form submission logic here
   };
 
   return (
