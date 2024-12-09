@@ -26,6 +26,10 @@ export default function Register({ darkMode }) {
     navigate("/");
   };
 
+  const onCancel = () => {
+    navigate("/");
+  };
+
   return (
     <Paper
       sx={{
@@ -111,7 +115,12 @@ export default function Register({ darkMode }) {
           >
             Submit
           </Button>
-          <Button variant="outlined" color="secondary" sx={{ width: "48%" }}>
+          <Button
+            onClick={() => onCancel()}
+            variant="outlined"
+            color="secondary"
+            sx={{ width: "48%" }}
+          >
             Cancel
           </Button>
         </div>
