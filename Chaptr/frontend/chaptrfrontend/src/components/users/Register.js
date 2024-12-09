@@ -7,8 +7,7 @@ export default function Register({ darkMode }) {
     lastName: "",
     email: "",
     location: "",
-    password: "",
-    verifyPassword: "",
+    pwHash: "",
   });
 
   const { firstName, lastName, email, location, password, verifyPassword } =

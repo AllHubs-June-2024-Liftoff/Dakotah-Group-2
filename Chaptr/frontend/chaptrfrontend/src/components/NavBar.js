@@ -50,7 +50,7 @@ export default function NavBar({ darkMode, toggleDarkMode }) {
               marginRight: 2,
               backgroundColor: "#40e0d0",
             }}
-            to="/RegisterUser"
+            to="/Register"
           >
             Register
           </Button>
