@@ -1,6 +1,8 @@
 package com.example.Chaptr.models;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Book extends AbstractEntity{
@@ -10,6 +12,9 @@ public class Book extends AbstractEntity{
     private String author;
 
     private String publicationDate;
+
+    @OneToMany
+    private Club club;
 
     public Book(String bookCover, String author, String publicationDate) {
         super();
