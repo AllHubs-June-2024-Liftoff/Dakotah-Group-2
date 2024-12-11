@@ -37,6 +37,7 @@ public class UserController {
 
     @PostMapping("/user")
     User newUser(@RequestBody User newUser) {
+        newUser.setName(newUser.getFirstName(), newUser.getLastName());
         return userRepository.save(newUser);
     }
 
@@ -50,9 +51,9 @@ public class UserController {
         if (optUser.isPresent()) {
             existingUser = optUser.get();
 
-            existingUser.setName(newUser.getFirstName(), newUser.getLastName());
             existingUser.setFirstName(newUser.getFirstName());
             existingUser.setLastName(newUser.getLastName());
+            existingUser.setName(newUser.getFirstName(), newUser.getLastName());
             existingUser.setEmail(newUser.getEmail());
             existingUser.setLocation(newUser.getLocation());
 
