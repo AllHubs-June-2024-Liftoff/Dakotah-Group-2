@@ -37,6 +37,7 @@ public class UserController {
 
     @PostMapping("/user")
     User newUser(@RequestBody User newUser) {
+        newUser.setPwHash(bCryptPasswordEncoder.encode(newUser.getPwHash()));
         newUser.setName(newUser.getFirstName(), newUser.getLastName());
         return userRepository.save(newUser);
     }
