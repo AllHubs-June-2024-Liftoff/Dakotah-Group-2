@@ -1,38 +1,120 @@
-import React from "react";
+import React, { useState } from "react";
+import { TextField, Button, Paper, Typography } from "@mui/material";
 
-export default function Login() {
+export default function Login({ darkMode }) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    console.log("Logging in with:", email, password);
+  };
+
   return (
-    <div className="container" style={{ paddingTop: "80px" }}>
-      <div class="row">
-        <form className="col-md offset-md-3 border rounded p-4 mt-2 shadow">
-          <h2 className="text-center m-4">Login</h2>
-          <div className="mb-3">
-            <label htmlFor="email" className="form-label">
-              Email Address
-            </label>
-            <input
-              type={"email"}
-              className="form-control"
-              placeholder="Enter your email address"
-              name="email"
-            />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="password" className="form-label">
-              Password
-            </label>
-            <input
-              type={"password"}
-              className="form-control"
-              placeholder="Enter your password"
-              name="password"
-            />
-          </div>
-          <button type="submit" className="btn btn-outline-primary">
+    <div
+      style={{
+        backgroundColor: darkMode ? "#121212" : "#f5f5f5",
+        color: darkMode ? "#e0e0e0" : "#333",
+        height: "50vh",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <Paper
+        elevation={3}
+        sx={{
+          padding: "20px",
+          borderRadius: "8px",
+          width: "400px",
+          backgroundColor: darkMode ? "#1c1c1c" : "#ffffff",
+        }}
+      >
+        <Typography
+          variant="h4"
+          align="center"
+          sx={{
+            marginBottom: 3,
+            color: darkMode ? "#ff1493" : "#9b4dff",
+          }}
+        >
+          Login
+        </Typography>
+
+        <form onSubmit={handleSubmit}>
+          <TextField
+            label="Email Address"
+            type="email"
+            variant="outlined"
+            fullWidth
+            required
+            margin="normal"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            sx={{
+              backgroundColor: darkMode ? "#333" : "#ffffff",
+              color: darkMode ? "#e0e0e0" : "#333",
+              "& .MuiInputLabel-root": {
+                color: darkMode ? "#e0e0e0" : "#333",
+              },
+              "& .MuiOutlinedInput-root": {
+                "& fieldset": {
+                  borderColor: darkMode ? "#444" : "#ccc",
+                },
+                "&:hover fieldset": {
+                  borderColor: darkMode ? "#ff1493" : "#9b4dff",
+                },
+                "&.Mui-focused fieldset": {
+                  borderColor: darkMode ? "#ff1493" : "#9b4dff",
+                },
+              },
+            }}
+          />
+
+          <TextField
+            label="Password"
+            type="password"
+            variant="outlined"
+            fullWidth
+            required
+            margin="normal"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            sx={{
+              backgroundColor: darkMode ? "#333" : "#ffffff",
+              color: darkMode ? "#e0e0e0" : "#333",
+              "& .MuiInputLabel-root": {
+                color: darkMode ? "#e0e0e0" : "#333",
+              },
+              "& .MuiOutlinedInput-root": {
+                "& fieldset": {
+                  borderColor: darkMode ? "#444" : "#ccc",
+                },
+                "&:hover fieldset": {
+                  borderColor: darkMode ? "#ff1493" : "#9b4dff",
+                },
+                "&.Mui-focused fieldset": {
+                  borderColor: darkMode ? "#ff1493" : "#9b4dff",
+                },
+              },
+            }}
+          />
+
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color={darkMode ? "secondary" : "primary"}
+            sx={{
+              marginTop: "16px",
+              backgroundColor: darkMode ? "#ff1493" : "#9b4dff",
+            }}
+          >
             Submit
-          </button>
+          </Button>
         </form>
-      </div>
+      </Paper>
     </div>
   );
 }

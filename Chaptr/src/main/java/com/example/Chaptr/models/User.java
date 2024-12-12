@@ -24,11 +24,6 @@ public class User extends AbstractEntity {
     @Size(min=5)
     private String pwHash;
 
-   /* @NotNull
-    @Size(min=5)
-    private String verifyPassword;
-    */
-
     @NotNull
     @NotBlank(message = "Email cannot be blank")
     @Email(message = "Please provide a valid email address")
@@ -53,9 +48,7 @@ public class User extends AbstractEntity {
         this.email = email;
         this.location = location;
         this.setName(firstName, lastName);
-        //this.setUserImage(userImage);
-        //this.verifyPassword = encoder.encode(valueOf(isMatchingPassword(password)));
-
+        this.setUserImage(userImage);
     }
 
     public void setName(String firstName, String lastName) {
