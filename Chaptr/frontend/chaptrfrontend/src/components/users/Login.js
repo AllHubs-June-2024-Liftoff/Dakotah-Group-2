@@ -1,14 +1,28 @@
 import React, { useState } from "react";
 import { TextField, Button, Paper, Typography } from "@mui/material";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function Login({ darkMode }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-    console.log("Logging in with:", email, password);
+    const loginData = {
+      email,
+      password,
+    };
+
+    const response = await axios.post("http://localhost:8080/login", loginData);
+    if (response.status === 200) {
+      navigate("/");
+      console.log("Logging in with:", email, password);
+    } else {
+      console.log("A error has occurred. Please try again!");
+    }
   };
 
   return (

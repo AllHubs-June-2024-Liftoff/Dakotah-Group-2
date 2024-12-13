@@ -1,6 +1,7 @@
 package com.example.Chaptr.models;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.Email;
@@ -27,6 +28,7 @@ public class User extends AbstractEntity {
     @NotNull
     @NotBlank(message = "Email cannot be blank")
     @Email(message = "Please provide a valid email address")
+    @Column(unique = true)
     private String email;
 
     @NotNull

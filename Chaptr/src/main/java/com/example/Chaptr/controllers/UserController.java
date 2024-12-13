@@ -70,6 +70,18 @@ public class UserController {
         userRepository.deleteById(id);
     }
 
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody User user) {
+        Optional<User> optionalUser = userRepository.findByEmail(user.getEmail());
+
+        if (optionalUser.isPresent() && user.isMatchingPassword(user.getPwHash())) {
+            return ResponseEntity.ok("Login was successful!");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Invalid email or password. Please try again!");
+        }
+    }
+}
+
     /* @PostMapping("/editUser")
     public ResponseEntity<?> addUser(@Valid @RequestBody User newUser,
                                      @RequestParam("file") MultipartFile file,
@@ -89,4 +101,3 @@ public class UserController {
         }
     } */
 
-}
