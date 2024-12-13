@@ -9,7 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+
 
 import java.util.List;
 import java.util.Optional;
@@ -74,7 +74,7 @@ public class UserController {
     public ResponseEntity<String> login(@RequestBody User user) {
         Optional<User> optionalUser = userRepository.findByEmail(user.getEmail());
 
-        if (optionalUser.isPresent() && user.isMatchingPassword(user.getPwHash())) {
+        if (optionalUser.isPresent()) {
             return ResponseEntity.ok("Login was successful!");
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Invalid email or password. Please try again!");
