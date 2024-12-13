@@ -12,10 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
@@ -36,25 +33,25 @@ public class UserController {
     }
 
     public User getUserFromSession(HttpSession session) {
-        Integer userId = (Integer) session.getAttribute(userSessionKey);
-        if (userId == null) {
-            return null;
-        }
+        return (User) session.getAttribute("user");
+    }
 
-        Optional<User> user = userRepository.findById(userId);
-
-
-        return user.orElse(null);
+    public Integer getUserIdFromSession(HttpSession session) {
+        User user = getUserFromSession(session);
+        return (user != null) ? user.getId() : null;
     }
 
     private static void setUserInSession(HttpSession session, User user) {
-        session.setAttribute(userSessionKey, user.getId());
+        session.setAttribute(userSessionKey, user);
     }
-
 
     @GetMapping("/users")
     public List<User> getAllUsers() {
-        return (List<User>) userRepository.findAll();
+        List<User> users = (List<User>) userRepository.findAll();
+        if (users == null) {
+            return new ArrayList<>();  // Return an empty list if null
+        }
+        return users;
     }
 
     @PostMapping("/register")
@@ -102,15 +99,12 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody User loginUser, HttpServletRequest request) {
-
         Optional<User> userOpt = userRepository.findByEmail(loginUser.getEmail());
 
         if (userOpt.isPresent()) {
             User user = userOpt.get();
-
             HttpSession session = request.getSession(true);
             session.setAttribute("user", user);
-
             System.out.println("Session ID on login: " + session.getId());
             return ResponseEntity.ok("Login successful");
         } else {
