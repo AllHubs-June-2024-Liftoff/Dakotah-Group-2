@@ -4,7 +4,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 export default function Register({ darkMode }) {
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
   const [user, setUser] = useState({
     firstName: "",
@@ -22,7 +22,7 @@ export default function Register({ darkMode }) {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    await axios.post("http://localhost:8080/user", user);
+    await axios.post("http://localhost:8080/register", user);
     navigate("/");
   };
 

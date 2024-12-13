@@ -3,6 +3,8 @@ package com.example.Chaptr.controllers;
 import com.example.Chaptr.data.UserRepository;
 import com.example.Chaptr.models.User;
 import com.example.Chaptr.services.ImageService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,12 +12,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin("http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
 public class UserController {
 
     @Autowired
@@ -24,22 +27,43 @@ public class UserController {
     @Autowired
     ImageService imageService;
 
+    private static final String userSessionKey = "user";
+
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public UserController(BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
+    public User getUserFromSession(HttpSession session) {
+        Integer userId = (Integer) session.getAttribute(userSessionKey);
+        if (userId == null) {
+            return null;
+        }
+
+        Optional<User> user = userRepository.findById(userId);
+
+
+        return user.orElse(null);
+    }
+
+    private static void setUserInSession(HttpSession session, User user) {
+        session.setAttribute(userSessionKey, user.getId());
+    }
+
+
     @GetMapping("/users")
     public List<User> getAllUsers() {
         return (List<User>) userRepository.findAll();
     }
 
-    @PostMapping("/user")
-    User newUser(@RequestBody User newUser) {
+    @PostMapping("/register")
+    User newUser(@Valid @RequestBody User newUser, HttpServletRequest request) {
         newUser.setPwHash(bCryptPasswordEncoder.encode(newUser.getPwHash()));
         newUser.setName(newUser.getFirstName(), newUser.getLastName());
-        return userRepository.save(newUser);
+        userRepository.save(newUser);
+        setUserInSession(request.getSession(), newUser);
+        return newUser;
     }
 
     @PutMapping("/user/{id}")
@@ -66,22 +90,51 @@ public class UserController {
     }
 
     @DeleteMapping("/user/{id}")
-    public void deleteUser(@PathVariable("id") Integer id){
-        userRepository.deleteById(id);
+    public ResponseEntity<String> deleteUser(@PathVariable("id") Integer id) {
+        Optional<User> userOpt = userRepository.findById(id);
+        if (userOpt.isPresent()) {
+            userRepository.deleteById(id);
+            return ResponseEntity.ok("User deleted successfully!");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found!");
+        }
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody User user) {
-        Optional<User> optionalUser = userRepository.findByEmail(user.getEmail());
+    public ResponseEntity<String> login(@RequestBody User loginUser, HttpServletRequest request) {
 
-        if (optionalUser.isPresent()) {
-            return ResponseEntity.ok("Login was successful!");
+        Optional<User> userOpt = userRepository.findByEmail(loginUser.getEmail());
+
+        if (userOpt.isPresent()) {
+            User user = userOpt.get();
+
+            HttpSession session = request.getSession(true);
+            session.setAttribute("user", user);
+
+            System.out.println("Session ID on login: " + session.getId());
+            return ResponseEntity.ok("Login successful");
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Invalid email or password. Please try again!");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
         }
     }
-}
 
+    @GetMapping("/logout")
+    public void logout(HttpServletRequest request) {
+        request.getSession().invalidate();
+        System.out.println("Session invalidated");
+    }
+
+    @GetMapping("/checkLogin")
+    public ResponseEntity<Map<String, Boolean>> checkLoginStatus(HttpSession session) {
+        User user = getUserFromSession(session);  // your existing session handling logic
+
+        // Return the login status in the response
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("loggedIn", user != null);
+
+        return ResponseEntity.ok(response);
+    }
+}
     /* @PostMapping("/editUser")
     public ResponseEntity<?> addUser(@Valid @RequestBody User newUser,
                                      @RequestParam("file") MultipartFile file,
