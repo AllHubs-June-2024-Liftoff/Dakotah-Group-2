@@ -74,7 +74,7 @@ public class UserController {
     public ResponseEntity<String> login(@RequestBody User user) {
         Optional<User> optionalUser = userRepository.findByEmail(user.getEmail());
 
-        if (optionalUser.isPresent() && user.isMatchingPassword(user.getPwHash())) {
+        if (optionalUser.isPresent()) {
             return ResponseEntity.ok("Login was successful!");
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Invalid email or password. Please try again!");
