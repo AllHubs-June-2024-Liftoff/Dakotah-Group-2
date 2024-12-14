@@ -1,21 +1,25 @@
 package com.example.Chaptr.controllers;
 
 import com.example.Chaptr.data.UserRepository;
+import com.example.Chaptr.dto.LoginRequest;
 import com.example.Chaptr.models.User;
 import com.example.Chaptr.services.ImageService;
+import com.example.Chaptr.services.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
+@CrossOrigin(origins = "http://localhost:3000")
 public class UserController {
 
     @Autowired
@@ -24,12 +28,17 @@ public class UserController {
     @Autowired
     ImageService imageService;
 
+    @Autowired
+    private final UserService userService;
+
+    @Autowired
+    private final PasswordEncoder passwordEncoder;
+
     private static final String userSessionKey = "user";
 
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
-
-    public UserController(BCryptPasswordEncoder bCryptPasswordEncoder) {
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+    public UserController(UserService userService, PasswordEncoder passwordEncoder) {
+        this.userService = userService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public User getUserFromSession(HttpSession session) {
@@ -49,18 +58,29 @@ public class UserController {
     public List<User> getAllUsers() {
         List<User> users = (List<User>) userRepository.findAll();
         if (users == null) {
-            return new ArrayList<>();  // Return an empty list if null
+            return new ArrayList<>();
         }
         return users;
     }
 
     @PostMapping("/register")
-    User newUser(@Valid @RequestBody User newUser, HttpServletRequest request) {
-        newUser.setPwHash(bCryptPasswordEncoder.encode(newUser.getPwHash()));
-        newUser.setName(newUser.getFirstName(), newUser.getLastName());
-        userRepository.save(newUser);
-        setUserInSession(request.getSession(), newUser);
-        return newUser;
+    ResponseEntity<?> userRegistration(@Valid @RequestBody User newUser, Errors errors) {
+        if (errors.hasErrors()) {
+            Map<String, String> registerErrors = new HashMap<>();
+            errors.getFieldErrors().forEach(error ->
+                    registerErrors.put(error.getField(), error.getDefaultMessage()));
+            return new ResponseEntity<>(registerErrors, HttpStatus.BAD_REQUEST);
+        }
+
+        try {
+            userService.saveUser(newUser);
+            return new ResponseEntity<>("User registration was successful", HttpStatus.CREATED );
+        } catch (DataIntegrityViolationException exception) {
+            if (exception.getMessage().contains("UK_email")) {
+                return new ResponseEntity<>(Map.of("email","Email already in use"), HttpStatus.BAD_REQUEST);
+            }
+            return new ResponseEntity<>(Map.of("error", "An unexpected error has occurred"), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @PutMapping("/user/{id}")
@@ -80,7 +100,7 @@ public class UserController {
             existingUser.setLocation(newUser.getLocation());
 
             if (newUser.getPwHash() != null && !newUser.getPwHash().equals(existingUser.getPwHash())) {
-                existingUser.setPwHash(bCryptPasswordEncoder.encode(newUser.getPwHash()));
+                existingUser.setPwHash(passwordEncoder.encode(newUser.getPwHash()));
             }
         }
         return userRepository.save(existingUser);
@@ -98,35 +118,47 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody User loginUser, HttpServletRequest request) {
-        Optional<User> userOpt = userRepository.findByEmail(loginUser.getEmail());
+    public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest, HttpSession session) {
 
-        if (userOpt.isPresent()) {
-            User user = userOpt.get();
-            HttpSession session = request.getSession(true);
-            session.setAttribute("user", user);
-            System.out.println("Session ID on login: " + session.getId());
-            return ResponseEntity.ok("Login successful");
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        if (loginRequest.getEmail() == null || loginRequest.getEmail().isEmpty() ||
+                loginRequest.getPassword() == null || loginRequest.getPassword().isEmpty()) {
+            return new ResponseEntity<>("Email and password are required", HttpStatus.BAD_REQUEST);
         }
+
+        Optional<User> userOptional = userRepository.findByEmail(loginRequest.getEmail());
+
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+
+            if (passwordEncoder.matches(loginRequest.getPassword(), user.getPwHash())) {
+                // Store the user ID in session
+                session.setAttribute("user", user.getId());
+                return new ResponseEntity<>("Login successful!", HttpStatus.OK);
+            }
+        }
+
+        return new ResponseEntity<>("Invalid email or password", HttpStatus.UNAUTHORIZED);
     }
 
-    @GetMapping("/logout")
-    public void logout(HttpServletRequest request) {
-        request.getSession().invalidate();
-        System.out.println("Session invalidated");
+    @PostMapping("/logout")
+    public ResponseEntity<String> logout(HttpSession session) {
+        session.invalidate();
+        return new ResponseEntity<>("Logged out successfully", HttpStatus.OK);
     }
 
     @GetMapping("/checkLogin")
-    public ResponseEntity<Map<String, Boolean>> checkLoginStatus(HttpSession session) {
-        User user = getUserFromSession(session);  // your existing session handling logic
+    public ResponseEntity<?> checkLogin(HttpSession session) {
+        Integer userId = (Integer) session.getAttribute("user");  // Corrected key
+        if (userId == null) {
+            return new ResponseEntity<>("No user is logged in", HttpStatus.UNAUTHORIZED);
+        }
 
-        // Return the login status in the response
-        Map<String, Boolean> response = new HashMap<>();
-        response.put("loggedIn", user != null);
+        Optional<User> userOpt = userRepository.findById(userId);
+        if (userOpt.isPresent()) {
+            return new ResponseEntity<>("User: " + userOpt.get().getEmail(), HttpStatus.OK);
+        }
 
-        return ResponseEntity.ok(response);
+        return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
     }
 }
     /* @PostMapping("/editUser")

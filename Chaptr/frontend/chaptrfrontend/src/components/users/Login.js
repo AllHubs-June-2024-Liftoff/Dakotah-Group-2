@@ -13,14 +13,10 @@ export default function Login({ darkMode }) {
 
     const loginData = {
       email,
-      pwHash: password,
+      password,
     };
 
-    const response = await axios.post(
-      "http://localhost:8080/login",
-      loginData,
-      { withCredentials: true }
-    );
+    const response = await axios.post("http://localhost:8080/login", loginData);
     if (response.status === 200) {
       navigate("/");
       console.log("Logging in with:", email, password);
