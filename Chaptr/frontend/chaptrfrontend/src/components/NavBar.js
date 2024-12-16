@@ -14,11 +14,14 @@ export default function NavBar({ darkMode, toggleDarkMode }) {
         >
           <Button
             variant="contained"
-            color={darkMode ? "secondary" : "primary"}
-            onClick={toggleDarkMode}
-            sx={{ marginRight: 2, backgroundColor: "#daa520" }}
+            component={Link}
+            sx={{
+              marginRight: 2,
+              backgroundColor: "#92B9BD",
+            }}
+            to="/Chaptr"
           >
-            Dark Mode
+            Chaptr
           </Button>
 
           <Button
@@ -26,34 +29,45 @@ export default function NavBar({ darkMode, toggleDarkMode }) {
             component={Link}
             sx={{
               marginRight: 2,
-              backgroundColor: "#9b4dff",
+              backgroundColor: "#92B9BD",
             }}
-            to="/"
+            to="/Profile"
           >
-            Charactr
+            Profile
           </Button>
+
           <Button
             variant="contained"
             component={Link}
             sx={{
               marginRight: 2,
-              backgroundColor: "#ff1493",
+              backgroundColor: "#92B9BD",
             }}
-            to="/Login"
+            to="/Dev"
           >
-            Login
+            Dev
           </Button>
+
           <Button
             variant="contained"
-            component={Link}
+            color={darkMode ? "secondary" : "primary"}
+            onClick={toggleDarkMode}
+            sx={{ marginRight: 2, backgroundColor: "#92B9BD" }}
+          >
+            Dark Mode
+          </Button>
+
+          <Button
+            variant="contained"
+            // onClick={logOut}
             sx={{
               marginRight: 2,
-              backgroundColor: "#40e0d0",
+              backgroundColor: "#92B9BD",
             }}
-            to="/Register"
           >
-            Register
+            Logout
           </Button>
+          
         </div>
       </nav>
     </div>

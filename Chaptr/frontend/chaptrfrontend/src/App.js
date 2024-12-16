@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import "./App.css";
 import NavBar from "./components/NavBar";
+import Chaptr from "./components/Chaptr";
+import Profile from "./components/Profile";
+import Dev from "./components/Dev";
+import SearchTBR from "./components/SearchTBR";
 import Home from "./components/Home";
 import Register from "./components/users/Register";
 import Login from "./components/users/Login";
@@ -29,17 +33,14 @@ function App() {
         <Router>
           <NavBar darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
           <Routes>
-            <Route path="/" element={<Home darkMode={darkMode} />} />
+            <Route path="/Chaptr" element={<Chaptr darkMode={darkMode} />} />
             <Route
-              path="/Register"
-              element={<Register darkMode={darkMode} />}
+              path="/Profile"
+              element={<Profile darkMode={darkMode} />}
             />
-            <Route path="/Login" element={<Login darkMode={darkMode} />} />
-            <Route
-              path="/EditUser"
-              element={<EditUser darkMode={darkMode} />}
-            />
-            <Route path="/View" element={<ViewUser darkMode={darkMode} />} />
+            <Route path="/Dev" element={<Dev darkMode={darkMode} />} />
+            <Route path="/SearchTBR" element={<SearchTBR darkMode={darkMode} />} />
+            
           </Routes>
         </Router>
       </div>
