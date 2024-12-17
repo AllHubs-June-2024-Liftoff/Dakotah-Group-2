@@ -1,6 +1,6 @@
 package com.example.Chaptr.models;
 
-//import jakarta.persistence.CascadeType;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToOne;
 
