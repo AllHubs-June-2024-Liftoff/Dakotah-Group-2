@@ -5,4 +5,5 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface TBRRepository extends CrudRepository<TBR, Integer> {}
+public interface TBRRepository extends CrudRepository<TBR, Integer> {
+}

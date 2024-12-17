@@ -13,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @Entity
 public class User extends AbstractEntity {
 
+    @OneToOne
     private TBR tbr;
 
     @NotNull(message = "Enter your First Name")
