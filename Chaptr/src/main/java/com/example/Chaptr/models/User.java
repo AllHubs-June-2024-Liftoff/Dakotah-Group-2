@@ -1,8 +1,6 @@
 package com.example.Chaptr.models;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -10,6 +8,10 @@ import jakarta.validation.constraints.Size;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Entity
+@Table(
+        name = "user",
+        uniqueConstraints = @UniqueConstraint(name = "UK_email", columnNames = "email")
+)
 public class User extends AbstractEntity {
 
     @NotNull(message = "Enter your First Name")
@@ -25,8 +27,9 @@ public class User extends AbstractEntity {
     private String pwHash;
 
     @NotNull
-    @NotBlank(message = "Email cannot be blank")
-    @Email(message = "Please provide a valid email address")
+    @NotBlank(message = "Email address is required")
+    @Email(message = "Please provide a strongly formed email address")
+    @Column(unique = true)
     private String email;
 
     @NotNull
@@ -36,15 +39,13 @@ public class User extends AbstractEntity {
     @OneToOne(cascade = CascadeType.ALL)
     private Image userImage;
 
-    private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-
     public User() {}
 
     public User(String firstName, String lastName, String password, String email, String location) {
         super();
         this.firstName = firstName;
         this.lastName = lastName;
-        this.pwHash = encoder.encode(password);
+        this.pwHash = password;
         this.email = email;
         this.location = location;
         this.setName(firstName, lastName);
@@ -93,10 +94,6 @@ public class User extends AbstractEntity {
 
     public void setLocation(@NotNull @NotBlank(message = "location cannot be blank") String location) {
         this.location = location;
-    }
-
-    public boolean isMatchingPassword(String password) {
-        return encoder.matches(password, pwHash);
     }
 
     public Image getUserImage() {
