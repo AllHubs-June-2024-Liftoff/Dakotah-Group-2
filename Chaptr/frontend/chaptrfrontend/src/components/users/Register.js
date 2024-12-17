@@ -27,7 +27,7 @@ export default function Register({ darkMode }) {
   };
 
   const onCancel = () => {
-    navigate("/");
+    navigate("/Chaptr");
   };
 
   return (
