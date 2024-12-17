@@ -14,6 +14,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 )
 public class User extends AbstractEntity {
 
+    @OneToOne
+    private TBR tbr;
+
     @NotNull(message = "Enter your First Name")
     @Size(min=3, max = 50, message = "First Name must be between 3-50 characters")
     private String firstName;

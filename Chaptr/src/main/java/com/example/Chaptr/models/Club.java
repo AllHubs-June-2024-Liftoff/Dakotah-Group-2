@@ -1,7 +1,9 @@
 package com.example.Chaptr.models;
 
 
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.OneToOne;
 import org.hibernate.engine.internal.Cascade;
 
 import java.util.ArrayList;
@@ -9,7 +11,7 @@ import java.util.ArrayList;
 @Entity
 public class Club extends AbstractEntity{
 
-    @ManyToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Book bookOfTheMonth;
 
     private String clubMessage;
@@ -20,9 +22,6 @@ public class Club extends AbstractEntity{
         super();
         this.bookOfTheMonth = bookOfTheMonth;
         this.clubMessage = clubMessage;
-    }
-
-    public Club() {
     }
 
     public void addMember(User newMember){
