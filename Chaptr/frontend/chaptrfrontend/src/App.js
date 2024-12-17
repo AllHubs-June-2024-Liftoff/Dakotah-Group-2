@@ -4,7 +4,7 @@ import NavBar from "./components/NavBar";
 import Chaptr from "./components/Chaptr";
 import Profile from "./components/Profile";
 import Dev from "./components/Dev";
-import SearchTBR from "./components/SearchTBR";
+import SearchTBR from "./components/search/SearchTBR";
 // import Home from "./components/Home";
 import Register from "./components/users/Register";
 // import Login from "./components/users/Login";
