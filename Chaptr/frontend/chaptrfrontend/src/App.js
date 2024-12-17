@@ -6,7 +6,7 @@ import Profile from "./components/Profile";
 import Dev from "./components/Dev";
 import SearchTBR from "./components/SearchTBR";
 // import Home from "./components/Home";
-// import Register from "./components/users/Register";
+import Register from "./components/users/Register";
 // import Login from "./components/users/Login";
 // import EditUser from "./components/users/EditUser";
 // import ViewUser from "./components/users/View";
@@ -40,6 +40,7 @@ function App() {
             />
             <Route path="/Dev" element={<Dev darkMode={darkMode} />} />
             <Route path="/SearchTBR" element={<SearchTBR darkMode={darkMode} />} />
+            <Route path="/Register" element={<Register darkMode={darkMode} />} />
             
           </Routes>
         </Router>
