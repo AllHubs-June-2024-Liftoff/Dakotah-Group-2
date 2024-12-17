@@ -3,7 +3,7 @@ package com.example.Chaptr.models;
 import jakarta.persistence.Entity;
 
 import java.util.List;
-
+//
 @Entity
 public class TBR extends AbstractEntity{
 
