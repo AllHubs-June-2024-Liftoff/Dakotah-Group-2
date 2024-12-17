@@ -22,6 +22,7 @@ export default function Login({ darkMode }) {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
+        padding: "12rem",
       }}
     >
       <Paper
