@@ -5,11 +5,11 @@ import Chaptr from "./components/Chaptr";
 import Profile from "./components/Profile";
 import Dev from "./components/Dev";
 import SearchTBR from "./components/SearchTBR";
-import Home from "./components/Home";
-import Register from "./components/users/Register";
-import Login from "./components/users/Login";
-import EditUser from "./components/users/EditUser";
-import ViewUser from "./components/users/View";
+// import Home from "./components/Home";
+// import Register from "./components/users/Register";
+// import Login from "./components/users/Login";
+// import EditUser from "./components/users/EditUser";
+// import ViewUser from "./components/users/View";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { CssBaseline, ThemeProvider, createTheme } from "@mui/material";
 
