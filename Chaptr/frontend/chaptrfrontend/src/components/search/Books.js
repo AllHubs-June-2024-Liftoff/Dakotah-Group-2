@@ -30,7 +30,7 @@ export default function Books(){
         <div className="books">
             <SearchArea handleSearch={handleSearch} searchBook={searchBook} />
             <h3>Books</h3>
-            <BookList />
+            <BookList books={books} />
         </div>
     );
 
