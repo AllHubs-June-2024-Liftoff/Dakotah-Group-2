@@ -1,8 +1,11 @@
 package com.example.Chaptr.models;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Book extends AbstractEntity{
@@ -13,8 +16,11 @@ public class Book extends AbstractEntity{
 
     private String publicationDate;
 
-    @OneToMany
-    private Club club;
+    @OneToMany(mappedBy = "BookOfTheMonth")
+    private final List<Club> clubs = new ArrayList<>();
+
+    @ManyToMany(mappedBy = "tbr")
+    private final List<Book> tbr = new ArrayList<>();
 
     public Book(String bookCover, String author, String publicationDate) {
         super();

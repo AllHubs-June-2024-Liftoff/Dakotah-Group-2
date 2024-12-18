@@ -1,6 +1,7 @@
 package com.example.Chaptr.models;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.Email;
@@ -11,6 +12,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Entity
 public class User extends AbstractEntity {
+
+    @OneToOne
+    private TBR tbr;
 
     @NotNull(message = "Enter your First Name")
     @Size(min=3, max = 50, message = "First Name must be between 3-50 characters")
@@ -27,6 +31,7 @@ public class User extends AbstractEntity {
     @NotNull
     @NotBlank(message = "Email cannot be blank")
     @Email(message = "Please provide a valid email address")
+    @Column(unique = true)
     private String email;
 
     @NotNull
