@@ -1,40 +1,55 @@
 package com.example.Chaptr.models;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class TBR extends AbstractEntity{
+public class TBR extends AbstractEntity {
 
     @ManyToMany
+    @JoinTable(
+            name = "user_tbr_books", // name of the join table
+            joinColumns = @JoinColumn(name = "tbr_id"), // column for TBR entity
+            inverseJoinColumns = @JoinColumn(name = "book_id") // column for Book entity
+    )
     private List<Book> tbr;
 
-//    @OneToOne(mappedBy = "tbr")//not including (cascade = cascadeType.ALL) because a CRUD action on TBR should not cascade to User
-    private User user; //foreign key
+    @OneToOne(mappedBy = "tbr")
+    private User user;
 
-    public TBR(User user, List<Book> tbrBooks){
+    public TBR(User user, List<Book> tbrBooks) {
         super();
         this.user = user;
         this.tbr = tbrBooks;
     }
 
-    public TBR(){}
+    public TBR() {}
 
-    public void addToTBR(Book bookToAdd){
-        if (!(tbr.contains(bookToAdd))){
+    public List<Book> getTbr() {
+        return tbr;
+    }
+
+    public void setTbr(List<Book> tbr) {
+        this.tbr = tbr;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public void addToTBR(Book bookToAdd) {
+        if (!tbr.contains(bookToAdd)) {
             tbr.add(bookToAdd);
-        } //else display book already in TBR
+        }
     }
 
-    public List<Book> getTbrBooks(){
-        if (!(tbr.isEmpty())){
-            return tbr;
-        } //else display a message that no books are in TBR
-        return tbr; //remove when else statement has a return
+    public List<Book> getTbrBooks() {
+        return tbr.isEmpty() ? tbr : new ArrayList<>();
     }
-
 }

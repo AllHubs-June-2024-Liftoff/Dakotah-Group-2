@@ -8,19 +8,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Book extends AbstractEntity{
+public class Book extends AbstractEntity {
 
     private String bookCover;
-
     private String author;
-
     private String publicationDate;
 
     @OneToMany(mappedBy = "bookOfTheMonth")
     private final List<Club> clubs = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "tbr")
-    private final List<Book> tbr = new ArrayList<>();
+    // Remove the ManyToMany from here as TBR owns the relationship
+    // private final List<TBR> tbr = new ArrayList<>();
 
     public Book(String bookCover, String author, String publicationDate) {
         super();
