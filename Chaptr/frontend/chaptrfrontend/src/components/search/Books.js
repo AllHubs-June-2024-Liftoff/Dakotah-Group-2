@@ -1,11 +1,24 @@
 import React, { useState } from "react";
 import SearchArea from "./SearchArea";
 
+
 export default function Books(){
 
     const [books, setBooks] = useState([]);
     const [searchField, setSearchField] = useState("");
     
+
+    const searchBook = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${searchField}`)
+            const data = await response.json();
+            console.log(data);
+            console.log("--------- DATA UP HERE! ---------");
+        } catch (error) {
+            console.error("Error: ", error);
+        }
+    };
 
     const handleSearch = (e) => {
         setSearchField(e.target.value);
@@ -13,7 +26,7 @@ export default function Books(){
 
     return (
         <div className="books">
-            <SearchArea handleSearch={handleSearch}/>
+            <SearchArea handleSearch={handleSearch} searchBook={searchBook} />
             <h3>Books</h3>
         </div>
     );
