@@ -16,7 +16,7 @@ public class Book extends AbstractEntity{
 
     private String publicationDate;
 
-    @OneToMany(mappedBy = "BookOfTheMonth")
+    @OneToMany(mappedBy = "bookOfTheMonth")
     private final List<Club> clubs = new ArrayList<>();
 
     @ManyToMany(mappedBy = "tbr")

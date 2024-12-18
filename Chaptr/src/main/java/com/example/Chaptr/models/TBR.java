@@ -13,7 +13,7 @@ public class TBR extends AbstractEntity{
     @ManyToMany
     private List<Book> tbr;
 
-    @OneToOne(mappedBy = "tbr")//not including (cascade = cascadeType.ALL) because a CRUD action on TBR should not cascade to User
+//    @OneToOne(mappedBy = "tbr")//not including (cascade = cascadeType.ALL) because a CRUD action on TBR should not cascade to User
     private User user; //foreign key
 
     public TBR(User user, List<Book> tbrBooks){
