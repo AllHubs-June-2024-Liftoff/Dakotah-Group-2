@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import SearchArea from "./SearchArea";
+import BookList from "./BookList";
 
 
 export default function Books(){
@@ -15,6 +16,7 @@ export default function Books(){
             const data = await response.json();
             console.log(data);
             console.log("--------- DATA UP HERE! ---------");
+            setBooks(data.items || [] );
         } catch (error) {
             console.error("Error: ", error);
         }
@@ -28,6 +30,7 @@ export default function Books(){
         <div className="books">
             <SearchArea handleSearch={handleSearch} searchBook={searchBook} />
             <h3>Books</h3>
+            <BookList />
         </div>
     );
 
