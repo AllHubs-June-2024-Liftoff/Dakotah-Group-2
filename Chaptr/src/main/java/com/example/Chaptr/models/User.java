@@ -1,9 +1,7 @@
 package com.example.Chaptr.models;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToOne;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -14,6 +12,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class User extends AbstractEntity {
 
     @OneToOne
+    @JoinColumn(name = "tbr_id")
+    @JsonIgnore
     private TBR tbr;
 
     @NotNull(message = "Enter your First Name")
@@ -53,7 +53,17 @@ public class User extends AbstractEntity {
         this.email = email;
         this.location = location;
         this.setName(firstName, lastName);
-        this.setUserImage(userImage);
+    }
+
+    public User(String firstName, String lastName, String password, String email, String location, Image userImage) {
+        super();
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.pwHash = encoder.encode(password);
+        this.email = email;
+        this.location = location;
+        this.setName(firstName, lastName);
+        this.userImage = userImage;
     }
 
     public void setName(String firstName, String lastName) {
@@ -112,4 +122,11 @@ public class User extends AbstractEntity {
         this.userImage = userImage;
     }
 
+    public TBR getTbr() {
+        return tbr;
+    }
+
+    public void setTbr(TBR tbr) {
+        this.tbr = tbr;
+    }
 }

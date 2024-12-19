@@ -1,28 +1,29 @@
 package com.example.Chaptr.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 public class TBR extends AbstractEntity {
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(
-            name = "user_tbr_books", // name of the join table
-            joinColumns = @JoinColumn(name = "tbr_id"), // column for TBR entity
-            inverseJoinColumns = @JoinColumn(name = "book_id") // column for Book entity
+            name = "user_tbr_books",
+            joinColumns = @JoinColumn(name = "tbr_id"),
+            inverseJoinColumns = @JoinColumn(name = "book_id")
     )
-    private List<Book> tbr;
+    private List<Book> tbr = new ArrayList<>();
 
     @OneToOne(mappedBy = "tbr")
+    @JsonIgnore
     private User user;
 
     public TBR(User user, List<Book> tbrBooks) {
         super();
         this.user = user;
-        this.tbr = tbrBooks;
+        this.tbr = tbrBooks != null ? tbrBooks : new ArrayList<>();
     }
 
     public TBR() {}
@@ -50,6 +51,14 @@ public class TBR extends AbstractEntity {
     }
 
     public List<Book> getTbrBooks() {
-        return tbr.isEmpty() ? tbr : new ArrayList<>();
+        return tbr;
+    }
+
+    public void removeFromTBR(Book bookToRemove) {
+        tbr.remove(bookToRemove);
+    }
+
+    public void clearTBR() {
+        tbr.clear();
     }
 }

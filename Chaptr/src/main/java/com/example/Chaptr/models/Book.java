@@ -1,24 +1,34 @@
 package com.example.Chaptr.models;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
-
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 public class Book extends AbstractEntity {
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String bookCover;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String author;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String publicationDate;
+
 
     @OneToMany(mappedBy = "bookOfTheMonth")
     private final List<Club> clubs = new ArrayList<>();
 
-    // Remove the ManyToMany from here as TBR owns the relationship
-    // private final List<TBR> tbr = new ArrayList<>();
+    @ManyToMany(mappedBy = "tbr")
+    private final List<TBR> tbr = new ArrayList<>();
+
+    public Book() {
+        super();
+    }
 
     public Book(String bookCover, String author, String publicationDate) {
         super();
