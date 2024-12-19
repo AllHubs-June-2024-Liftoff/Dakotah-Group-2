@@ -35,7 +35,7 @@ public class UserController {
         return (List<User>) userRepository.findAll();
     }
 
-    @PostMapping("/user")
+    @PostMapping("/register")
     User newUser(@RequestBody User newUser) {
         newUser.setPwHash(bCryptPasswordEncoder.encode(newUser.getPwHash()));
         newUser.setName(newUser.getFirstName(), newUser.getLastName());
