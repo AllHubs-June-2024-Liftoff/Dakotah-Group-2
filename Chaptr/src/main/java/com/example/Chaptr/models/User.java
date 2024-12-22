@@ -11,11 +11,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @Entity
 public class User extends AbstractEntity {
 
-    @OneToOne
-    @JoinColumn(name = "tbr_id")
-    @JsonIgnore
-    private TBR tbr;
-
     @NotNull(message = "Enter your First Name")
     @Size(min=3, max = 50, message = "First Name must be between 3-50 characters")
     private String firstName;
@@ -40,6 +35,16 @@ public class User extends AbstractEntity {
 
     @OneToOne(cascade = CascadeType.ALL)
     private Image userImage;
+
+    @OneToOne
+    @JoinColumn(name = "tbr_id")
+    @JsonIgnore
+    private TBR tbr;
+
+    @OneToOne
+    @JoinColumn(name = "favoritesList_id")
+    @JsonIgnore
+    private Favorites favoritesList;
 
     private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
