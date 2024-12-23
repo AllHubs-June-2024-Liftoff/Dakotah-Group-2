@@ -9,6 +9,7 @@ export default function BookCard(props){
                 <h3>{props.author}</h3>
                 <p>{props.publishedDate}</p>
             </div>
+            <button>Add to TBR</button>
         </div>
     );
 
