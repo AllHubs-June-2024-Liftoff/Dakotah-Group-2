@@ -7,7 +7,7 @@ export default function Books(){
 
     const [books, setBooks] = useState([]);
     const [searchField, setSearchField] = useState("");
-    const [sort, setSort] = useState("");
+   
     
 
     const searchBook = async (e) => {
@@ -30,7 +30,7 @@ export default function Books(){
 
     const handleSort = (e) => {
         const sortOption = e.target.value
-        setSort(sortOption);
+        
 
         const sortedBooks = [...books].sort((a,b) => {
             if(sortOption === 'Newest') {
