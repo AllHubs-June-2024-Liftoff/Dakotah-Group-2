@@ -18,6 +18,8 @@ public class Club extends AbstractEntity{
 
     private final ArrayList<User> members = new ArrayList<>();
 
+    public Club(){}
+
     public Club(Book bookOfTheMonth, String clubMessage) {
         super();
         this.bookOfTheMonth = bookOfTheMonth;
