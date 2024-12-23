@@ -1,26 +1,8 @@
 import * as React from "react";
-import axios from "axios";
 import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 
 export default function NavBar({ darkMode, toggleDarkMode }) {
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    axios
-      .post("http://localhost:8080/logout")
-      .then(() => {
-        localStorage.removeItem("userToken");
-        sessionStorage.removeItem("userToken");
-
-        navigate("/");
-      })
-      .catch((error) => {
-        console.error("Logout failed: ", error.response || error);
-      });
-  };
-
   return (
     <div>
       <nav>
@@ -32,21 +14,12 @@ export default function NavBar({ darkMode, toggleDarkMode }) {
         >
           <Button
             variant="contained"
-            color={darkMode ? "secondary" : "primary"}
-            onClick={toggleDarkMode}
-            sx={{ marginRight: 2, backgroundColor: "#daa520" }}
-          >
-            Dark Mode
-          </Button>
-
-          <Button
-            variant="contained"
             component={Link}
             sx={{
               marginRight: 2,
-              backgroundColor: "#9b4dff",
+              backgroundColor: "#92B9BD",
             }}
-            to="/"
+            to="/Chaptr"
           >
             Chaptr
           </Button>
@@ -56,11 +29,11 @@ export default function NavBar({ darkMode, toggleDarkMode }) {
             component={Link}
             sx={{
               marginRight: 2,
-              backgroundColor: "#ff1493",
+              backgroundColor: "#92B9BD",
             }}
-            to="/Login"
+            to="/Profile"
           >
-            Login
+            Profile
           </Button>
 
           <Button
@@ -68,23 +41,33 @@ export default function NavBar({ darkMode, toggleDarkMode }) {
             component={Link}
             sx={{
               marginRight: 2,
-              backgroundColor: "#40e0d0",
+              backgroundColor: "#92B9BD",
             }}
-            to="/Register"
+            to="/Dev"
           >
-            Register
+            Dev
           </Button>
 
           <Button
             variant="contained"
-            onClick={handleLogout}
+            color={darkMode ? "secondary" : "primary"}
+            onClick={toggleDarkMode}
+            sx={{ marginRight: 2, backgroundColor: "#92B9BD" }}
+          >
+            Dark Mode
+          </Button>
+
+          <Button
+            variant="contained"
+            // onClick={logOut}
             sx={{
               marginRight: 2,
-              backgroundColor: "#ff6347",
+              backgroundColor: "#92B9BD",
             }}
           >
             Logout
           </Button>
+          
         </div>
       </nav>
     </div>

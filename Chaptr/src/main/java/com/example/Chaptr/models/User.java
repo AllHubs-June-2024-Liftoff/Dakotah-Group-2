@@ -1,5 +1,6 @@
 package com.example.Chaptr.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -8,13 +9,11 @@ import jakarta.validation.constraints.Size;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Entity
-@Table(
-        name = "user",
-        uniqueConstraints = @UniqueConstraint(name = "UK_email", columnNames = "email")
-)
 public class User extends AbstractEntity {
 
     @OneToOne
+    @JoinColumn(name = "tbr_id")
+    @JsonIgnore
     private TBR tbr;
 
     @NotNull(message = "Enter your First Name")
@@ -30,8 +29,8 @@ public class User extends AbstractEntity {
     private String pwHash;
 
     @NotNull
-    @NotBlank(message = "Email address is required")
-    @Email(message = "Please provide a strongly formed email address")
+    @NotBlank(message = "Email cannot be blank")
+    @Email(message = "Please provide a valid email address")
     @Column(unique = true)
     private String email;
 
@@ -42,17 +41,29 @@ public class User extends AbstractEntity {
     @OneToOne(cascade = CascadeType.ALL)
     private Image userImage;
 
+    private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
     public User() {}
 
     public User(String firstName, String lastName, String password, String email, String location) {
         super();
         this.firstName = firstName;
         this.lastName = lastName;
-        this.pwHash = password;
+        this.pwHash = encoder.encode(password);
         this.email = email;
         this.location = location;
         this.setName(firstName, lastName);
-        this.setUserImage(userImage);
+    }
+
+    public User(String firstName, String lastName, String password, String email, String location, Image userImage) {
+        super();
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.pwHash = encoder.encode(password);
+        this.email = email;
+        this.location = location;
+        this.setName(firstName, lastName);
+        this.userImage = userImage;
     }
 
     public void setName(String firstName, String lastName) {
@@ -99,6 +110,10 @@ public class User extends AbstractEntity {
         this.location = location;
     }
 
+    public boolean isMatchingPassword(String password) {
+        return encoder.matches(password, pwHash);
+    }
+
     public Image getUserImage() {
         return userImage;
     }
@@ -107,4 +122,11 @@ public class User extends AbstractEntity {
         this.userImage = userImage;
     }
 
+    public TBR getTbr() {
+        return tbr;
+    }
+
+    public void setTbr(TBR tbr) {
+        this.tbr = tbr;
+    }
 }

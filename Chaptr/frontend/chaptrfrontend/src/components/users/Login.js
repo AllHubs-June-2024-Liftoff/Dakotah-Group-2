@@ -1,39 +1,28 @@
 import React, { useState } from "react";
 import { TextField, Button, Paper, Typography } from "@mui/material";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+
 
 export default function Login({ darkMode }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = (event) => {
+    event.preventDefault();
 
-    const loginData = {
-      email,
-      password,
-    };
-
-    const response = await axios.post("http://localhost:8080/login", loginData);
-    if (response.status === 200) {
-      navigate("/");
-      console.log("Logging in with:", email, password);
-    } else {
-      console.log("A error has occurred. Please try again!");
-    }
+    console.log("Logging in with:", email, password);
   };
 
   return (
     <div
       style={{
-        backgroundColor: darkMode ? "#121212" : "#f5f5f5",
+        backgroundColor: darkMode ? "#121212" : "#ffffff",
         color: darkMode ? "#e0e0e0" : "#333",
         height: "50vh",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
+        padding: "12rem",
       }}
     >
       <Paper
@@ -42,7 +31,7 @@ export default function Login({ darkMode }) {
           padding: "20px",
           borderRadius: "8px",
           width: "400px",
-          backgroundColor: darkMode ? "#1c1c1c" : "#ffffff",
+          backgroundColor: darkMode ? "#121212" : "#ffffff",
         }}
       >
         <Typography
@@ -126,6 +115,19 @@ export default function Login({ darkMode }) {
             }}
           >
             Submit
+          </Button>
+          <Button
+            component={Link}
+            fullWidth
+            variant="contained"
+            color={darkMode ? "secondary" : "primary"}
+            sx={{
+              marginTop: "16px",
+              backgroundColor: darkMode ? "#ff1493" : "#9b4dff",
+            }}
+            to ="/Register"
+          >
+            Register
           </Button>
         </form>
       </Paper>
