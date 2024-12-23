@@ -26,22 +26,26 @@ public class Favorites extends AbstractEntity {
 
     public Favorites(){}
 
-//Add, Remove, and Clear
-//    public void addToFavoritesList(Book bookToAdd) {
-//        //if it does not contain, add AND if it is not full
-//        //if (!tbr.contains(bookToAdd)){
-//        //{tbr.add(bookToAdd);
-//        //}
-//    }
-//
-//    public void removeFromFavoritesList(Book bookToRemove){
-//        //remove a book from the list
-//        //tbr.remove(bookToRemove);
-//    }
-//
-//    public void clearFavoritesList(){
-//       // favoritesList.clear();
-//    }
+    public void addToFavoritesList(Book bookToAdd) {
+        if (favoritesList[0] == null){
+            favoritesList[0] = bookToAdd;
+        } else if (favoritesList[1] == null){
+            favoritesList[1] = bookToAdd;
+        } else if (favoritesList[2] == null){
+            favoritesList[2] = bookToAdd;
+        } //This should do something like throw an exception or have an event listener
+        //this still allows a user to add the same book twice
+    }
+
+    public void removeFromFavoritesList(Integer i){ //will require front end to have buttons for each position of favorites book
+        favoritesList[i] = null;
+    }
+
+    public void clearFavoritesList(){
+       for (Book book : favoritesList){
+           book = null;
+       }
+    }
 
     public Book[] getFavoritesList() {
         return favoritesList;
