@@ -13,7 +13,7 @@ export default function EditUser({ darkMode }) {
   const [user, setUser] = useState({
     firstName: existingUser.firstName || "",
     lastName: existingUser.lastName || "",
-    email: existingUser.email || "",
+    email: existingUser.email,
     location: existingUser.location || "",
     pwHash: "",
     verifyPassword: "",
@@ -24,7 +24,7 @@ export default function EditUser({ darkMode }) {
 
   const [loading, setLoading] = useState(false);
 
-  const { firstName, lastName, email, location, pwHash, verifyPassword } = user;
+  const { firstName, lastName, location, pwHash, verifyPassword } = user;
 
   const selectImage = () => {
     inputRef.current.click();
@@ -131,7 +131,7 @@ export default function EditUser({ darkMode }) {
           color: darkMode ? "#40e0d0" : "#9b4dff",
         }}
       >
-        Edit User
+        <h1>{`Edit ${user.firstName + " " + user.lastName}'s Profile`}</h1>
       </Typography>
       <form>
         <input
@@ -158,15 +158,6 @@ export default function EditUser({ darkMode }) {
           label="Last Name"
           name="lastName"
           value={lastName}
-          onChange={onInputChange}
-          fullWidth
-          variant="outlined"
-          sx={{ marginBottom: 2 }}
-        />
-        <TextField
-          label="Email Address"
-          name="email"
-          value={email}
           onChange={onInputChange}
           fullWidth
           variant="outlined"

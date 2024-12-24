@@ -61,7 +61,6 @@ public class UserController {
             existingUser.setFirstName(updateUser.getFirstName());
             existingUser.setLastName(updateUser.getLastName());
             existingUser.setName(String.format("%s %s", updateUser.getFirstName(), updateUser.getLastName()).trim());
-            existingUser.setEmail(updateUser.getEmail());
             existingUser.setLocation(updateUser.getLocation());
 
             if (updateUser.getPwHash() != null && !updateUser.getPwHash().equals(existingUser.getPwHash())) {
