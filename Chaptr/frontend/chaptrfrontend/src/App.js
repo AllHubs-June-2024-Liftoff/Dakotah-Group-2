@@ -8,7 +8,7 @@ import SearchTBR from "./components/search/SearchTBR";
 // import Home from "./components/Home";
 import Register from "./components/users/Register";
 // import Login from "./components/users/Login";
-// import EditUser from "./components/users/EditUser";
+import EditUser from "./components/users/EditUser";
 // import ViewUser from "./components/users/View";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { CssBaseline, ThemeProvider, createTheme } from "@mui/material";
@@ -35,6 +35,10 @@ function App() {
           <Routes>
             <Route path="/Chaptr" element={<Chaptr darkMode={darkMode} />} />
             <Route path="/Profile" element={<Profile darkMode={darkMode} />} />
+            <Route
+              path="/EditUSer"
+              element={<EditUser darkMode={darkMode} />}
+            />
             <Route path="/Dev" element={<Dev darkMode={darkMode} />} />
             <Route
               path="/SearchTBR"

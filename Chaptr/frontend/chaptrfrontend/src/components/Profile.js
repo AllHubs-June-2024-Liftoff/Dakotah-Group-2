@@ -1,45 +1,61 @@
-import React, { useEffect /* useState */ } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import { Link, useNavigate } from "react-router-dom";
-// import axios from "axios"
 
 export default function Profile() {
-  /* const [book, setBook] = useState({
-    name: "",
-    author: "",
-    book_cover: "",
-    publication_date: "",
-  }); */
-
+  const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
-  const user = JSON.parse(localStorage.getItem("user"));
-
   useEffect(() => {
-    if (!user) {
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+
+    if (storedUser) {
+      setUser(storedUser);
+    } else {
       navigate("/Chaptr");
     }
-  }, [user, navigate]);
+
+    const handleStorageChange = () => {
+      const updatedUser = JSON.parse(localStorage.getItem("user"));
+      if (updatedUser) {
+        setUser(updatedUser);
+      }
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, [navigate]);
 
   if (!user) {
-    return null;
+    return <div>Loading...</div>;
   }
-
-  /* const onSubmit = async (e) => {
-    e.preventDefault();
-    await axios.post("http://localhost:8080/tbr", book);
-    setBook({ ...book, [e.target.name]: e.target.value });
-    navigate("/Profile");
-  }; */
 
   return (
     <div>
-      <h1>{`${user.name}'s profile`}</h1>
+      <h1>{`${user.firstName + " " + user.lastName}'s profile`}</h1>
+
+      <div>
+        <img
+          src={user.userImage || "path/to/default/image.jpg"}
+          alt={user.firstName}
+        />
+        <Button
+          variant="contained"
+          component={Link}
+          sx={{
+            marginRight: 2,
+            backgroundColor: "#92B9BD",
+          }}
+          to="/EditUser"
+        >
+          Upload Image
+        </Button>
+      </div>
 
       <Button
-        /* onClick={(e) => onSubmit(e)} */
-        /* type="submit" */
-        /* value={book} */
         variant="contained"
         component={Link}
         sx={{
