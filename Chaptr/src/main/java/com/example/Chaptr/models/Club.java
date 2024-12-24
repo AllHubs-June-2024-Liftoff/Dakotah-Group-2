@@ -24,6 +24,13 @@ public class Club extends AbstractEntity{
         this.clubMessage = clubMessage;
     }
 
+    public Club(String clubMessage) {
+        this.clubMessage = clubMessage;
+    }
+
+    public Club() {
+    }
+
     public void addMember(User newMember){
         members.add(newMember);
     }
