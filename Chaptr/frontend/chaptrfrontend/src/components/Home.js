@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { Typography, Paper, Button, Box } from "@mui/material";
 
 export default function Home({ darkMode }) {
@@ -8,19 +7,24 @@ export default function Home({ darkMode }) {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    loadUsers();
+    fetch("http://localhost:8080/users")
+      .then((response) => response.json())
+      .then((data) => {
+        if (Array.isArray(data)) {
+          setUsers(data); // Set users in state
+          setLoading(false); // Set loading to false after data is fetched
+        } else {
+          console.error("Expected an array, got:", data);
+          setError("Failed to load users.");
+          setLoading(false);
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+        setError("Failed to load users.");
+        setLoading(false); // Set loading to false even if there is an error
+      });
   }, []);
-
-  const loadUsers = async () => {
-    try {
-      const result = await axios.get("http://localhost:8080/users");
-      setUsers(result.data);
-      setLoading(false);
-    } catch (error) {
-      setError("An error occurred while fetching users.");
-      setLoading(false);
-    }
-  };
 
   if (loading) {
     return (
@@ -142,7 +146,19 @@ export default function Home({ darkMode }) {
                     border: `1px solid ${darkMode ? "#444" : "#ccc"}`,
                   }}
                 >
-                  {user.image}
+                  {user.image ? (
+                    <img
+                      src={user.image}
+                      alt={user.name}
+                      style={{
+                        width: "50px",
+                        height: "50px",
+                        borderRadius: "50%",
+                      }}
+                    />
+                  ) : (
+                    "No Image"
+                  )}
                 </td>
                 <td
                   style={{

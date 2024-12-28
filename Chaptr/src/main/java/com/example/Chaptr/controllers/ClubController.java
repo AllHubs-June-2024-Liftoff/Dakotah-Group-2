@@ -4,6 +4,7 @@ import com.example.Chaptr.data.BookRepository;
 import com.example.Chaptr.data.ClubRepository;
 import com.example.Chaptr.models.Book;
 import com.example.Chaptr.models.Club;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +16,11 @@ import java.util.Optional;
 @RequestMapping("club")
 public class ClubController {
 
+
+
+    @Autowired
     private ClubRepository clubRepository;
+
 
     private BookRepository bookRepository;
 
@@ -25,7 +30,8 @@ public class ClubController {
     }
 
     @GetMapping("/{clubId}")
-    public Club displayClub(int clubId){
+    public Club displayClub(@PathVariable int clubId){
+
         Optional<Club> optClub = clubRepository.findById(clubId);
         Club club = null;
 
@@ -36,12 +42,13 @@ public class ClubController {
     }
 
     @PostMapping("/create")
-    public void createClub(Club newClub){
+    public void createClub(@RequestBody Club newClub){
         clubRepository.save(newClub);
     }
 
     @PostMapping("{clubId}/book")
-    public void updateBOTM(int clubId, Book newBook){
+
+    public void updateBOTM(@PathVariable int clubId, Book newBook){
         Optional<Club> optClub = clubRepository.findById(clubId);
         Club club = null;
 
@@ -52,7 +59,7 @@ public class ClubController {
     }
 
     @PostMapping("{clubId}/description")
-    public void updateDescription(int clubId, String newDescription){
+    public void updateDescription(@PathVariable Integer clubId, @RequestBody String newDescription){
         Optional<Club> optClub = clubRepository.findById(clubId);
         Club club = null;
 

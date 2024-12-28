@@ -1,14 +1,46 @@
 import React, { useState } from "react";
 import { TextField, Button, Paper, Typography } from "@mui/material";
-import { Link } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function Login({ darkMode }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
+
+    if (!email || !password) {
+      alert("Email and Password are required.");
+      return;
+    }
+
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(email)) {
+      alert("Please enter a valid email address.");
+      return;
+    }
+
+    try {
+      const response = await axios.post("http://localhost:8080/login", {
+        email: email,
+        pwHash: password,
+      });
+
+      const user = response.data;
+
+      if (user && user.id) {
+        localStorage.setItem("user", JSON.stringify(user));
+        console.log("User logged in: ", user);
+        navigate("/Profile");
+      } else {
+        console.log("No user data returned");
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+      alert("Login failed. Please check your credentials.");
+    }
 
     console.log("Logging in with:", email, password);
   };
@@ -125,7 +157,7 @@ export default function Login({ darkMode }) {
               marginTop: "16px",
               backgroundColor: darkMode ? "#ff1493" : "#9b4dff",
             }}
-            to ="/Register"
+            to="/Register"
           >
             Register
           </Button>
