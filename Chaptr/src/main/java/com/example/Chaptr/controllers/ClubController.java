@@ -16,10 +16,12 @@ import java.util.Optional;
 @RequestMapping("club")
 public class ClubController {
 
+
+
     @Autowired
     private ClubRepository clubRepository;
 
-    @Autowired
+
     private BookRepository bookRepository;
 
     @GetMapping
@@ -29,6 +31,7 @@ public class ClubController {
 
     @GetMapping("/{clubId}")
     public Club displayClub(@PathVariable int clubId){
+
         Optional<Club> optClub = clubRepository.findById(clubId);
         Club club = null;
 
@@ -44,6 +47,7 @@ public class ClubController {
     }
 
     @PostMapping("{clubId}/book")
+
     public void updateBOTM(@PathVariable int clubId, Book newBook){
         Optional<Club> optClub = clubRepository.findById(clubId);
         Club club = null;

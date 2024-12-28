@@ -3,7 +3,11 @@ package com.example.Chaptr.models;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import java.util.ArrayList;
+import java.util.List;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +24,7 @@ public class Book extends AbstractEntity {
     private String publicationDate;
 
 
+
     @OneToMany(mappedBy = "bookOfTheMonth")
     private final List<Club> clubs = new ArrayList<>();
 
@@ -32,7 +37,6 @@ public class Book extends AbstractEntity {
     public Book() {
         super();
     }
-
     public Book(String bookCover, String author, String publicationDate) {
         super();
         this.bookCover = bookCover;

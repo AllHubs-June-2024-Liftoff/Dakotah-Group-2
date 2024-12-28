@@ -1,9 +1,6 @@
 package com.example.Chaptr.models;
 
-
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import org.hibernate.engine.internal.Cascade;
 
 import java.util.ArrayList;
@@ -24,9 +21,11 @@ public class Club extends AbstractEntity{
         this.clubMessage = clubMessage;
     }
 
+
     public Club(String clubMessage) {
         this.clubMessage = clubMessage;
     }
+
 
     public Club() {
     }
