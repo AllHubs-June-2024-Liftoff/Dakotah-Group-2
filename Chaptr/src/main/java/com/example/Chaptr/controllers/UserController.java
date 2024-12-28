@@ -13,8 +13,15 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
+
+import static com.example.Chaptr.services.imageDirectory.IMAGE_DIRECTORY;
+import static org.springframework.http.MediaType.IMAGE_JPEG_VALUE;
+import static org.springframework.http.MediaType.IMAGE_PNG_VALUE;
 
 @RestController
 @CrossOrigin("http://localhost:3000")
@@ -44,21 +51,20 @@ public class UserController {
         return userRepository.save(newUser);
     }
 
-    @PutMapping("/user/{id}")
-    public ResponseEntity<User> updateUser(@Valid @RequestBody User newUser, @PathVariable int id) {
-        Optional<User> optUser = userRepository.findById(id);
+    @PutMapping("/editUser/{email}")
+    public ResponseEntity<User> updateUser(@Valid @RequestBody User updateUser, @PathVariable String email) {
+        Optional<User> optUser = userRepository.findByEmail(email);
 
         if (optUser.isPresent()) {
             User existingUser = optUser.get();
 
-            existingUser.setFirstName(newUser.getFirstName());
-            existingUser.setLastName(newUser.getLastName());
-            existingUser.setName(String.format("%s %s", newUser.getFirstName(), newUser.getLastName()).trim());
-            existingUser.setEmail(newUser.getEmail());
-            existingUser.setLocation(newUser.getLocation());
+            existingUser.setFirstName(updateUser.getFirstName());
+            existingUser.setLastName(updateUser.getLastName());
+            existingUser.setName(String.format("%s %s", updateUser.getFirstName(), updateUser.getLastName()).trim());
+            existingUser.setLocation(updateUser.getLocation());
 
-            if (newUser.getPwHash() != null && !newUser.getPwHash().equals(existingUser.getPwHash())) {
-                existingUser.setPwHash(bCryptPasswordEncoder.encode(newUser.getPwHash()));
+            if (updateUser.getPwHash() != null && !updateUser.getPwHash().equals(existingUser.getPwHash())) {
+                existingUser.setPwHash(bCryptPasswordEncoder.encode(updateUser.getPwHash()));
             }
 
             return ResponseEntity.ok(userRepository.save(existingUser));
@@ -108,24 +114,14 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No active session found.");
         }
     }
+
+    @PutMapping("/image")
+    public ResponseEntity<String> uploadImage(@RequestParam("email") String email, @RequestParam("file")MultipartFile file) {
+        return ResponseEntity.ok().body(imageService.uploadImage(email, file));
+    }
+
+    @GetMapping(path = "/image/{filename}", produces = { IMAGE_PNG_VALUE, IMAGE_JPEG_VALUE })
+    public byte[] getImage(@PathVariable("filename") String filename) throws IOException {
+        return Files.readAllBytes(Paths.get(IMAGE_DIRECTORY + filename));
+    }
 }
-
-    /* @PostMapping("/editUser")
-    public ResponseEntity<?> addUser(@Valid @RequestBody User newUser,
-                                     @RequestParam("file") MultipartFile file,
-                                     @RequestParam("fileName") String fileName) {
-        try {
-            Image tempImage = new Image();
-            tempImage = imageService.saveImage(tempImage, fileName, file);
-
-            newUser.setUserImage(tempImage);
-            userRepository.save(newUser);
-
-            return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
-        } catch (Exception e) {
-
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body("Error uploading image: " + e.getMessage());
-        }
-    } */
-

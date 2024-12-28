@@ -33,8 +33,7 @@ public class User extends AbstractEntity {
     @NotBlank(message = "location cannot be blank")
     private String location;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    private Image userImage;
+    private String userImage;
 
     @OneToOne
     @JoinColumn(name = "tbr_id")
@@ -60,7 +59,7 @@ public class User extends AbstractEntity {
         this.setName(firstName, lastName);
     }
 
-    public User(String firstName, String lastName, String password, String email, String location, Image userImage) {
+    public User(String firstName, String lastName, String password, String email, String location, String userImage) {
         super();
         this.firstName = firstName;
         this.lastName = lastName;
@@ -119,11 +118,11 @@ public class User extends AbstractEntity {
         return encoder.matches(password, pwHash);
     }
 
-    public Image getUserImage() {
+    public String getUserImage() {
         return userImage;
     }
 
-    public void setUserImage(Image userImage) {
+    public void setUserImage(String userImage) {
         this.userImage = userImage;
     }
 
