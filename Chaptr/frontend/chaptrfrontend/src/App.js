@@ -34,14 +34,16 @@ function App() {
           <NavBar darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
           <Routes>
             <Route path="/Chaptr" element={<Chaptr darkMode={darkMode} />} />
-            <Route
-              path="/Profile"
-              element={<Profile darkMode={darkMode} />}
-            />
+            <Route path="/Profile" element={<Profile darkMode={darkMode} />} />
             <Route path="/Dev" element={<Dev darkMode={darkMode} />} />
-            <Route path="/SearchTBR" element={<SearchTBR darkMode={darkMode} />} />
-            <Route path="/Register" element={<Register darkMode={darkMode} />} />
-            
+            <Route
+              path="/SearchTBR"
+              element={<SearchTBR darkMode={darkMode} />}
+            />
+            <Route
+              path="/Register"
+              element={<Register darkMode={darkMode} />}
+            />
           </Routes>
         </Router>
       </div>

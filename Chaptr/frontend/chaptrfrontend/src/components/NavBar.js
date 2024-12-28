@@ -1,8 +1,15 @@
 import * as React from "react";
 import Button from "@mui/material/Button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function NavBar({ darkMode, toggleDarkMode }) {
+  const navigate = useNavigate();
+
+  const Logout = () => {
+    localStorage.removeItem("user");
+    navigate("/Chaptr");
+  };
+
   return (
     <div>
       <nav>
@@ -59,7 +66,7 @@ export default function NavBar({ darkMode, toggleDarkMode }) {
 
           <Button
             variant="contained"
-            // onClick={logOut}
+            onClick={Logout}
             sx={{
               marginRight: 2,
               backgroundColor: "#92B9BD",
@@ -67,7 +74,6 @@ export default function NavBar({ darkMode, toggleDarkMode }) {
           >
             Logout
           </Button>
-          
         </div>
       </nav>
     </div>

@@ -26,6 +26,9 @@ public class Book extends AbstractEntity {
     @ManyToMany(mappedBy = "tbr")
     private final List<TBR> tbr = new ArrayList<>();
 
+    @ManyToMany(mappedBy = "favoritesList")
+    private final List<Favorites> favoritesList = new ArrayList<>();
+
     public Book() {
         super();
     }
