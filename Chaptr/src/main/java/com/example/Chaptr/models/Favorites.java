@@ -27,14 +27,21 @@ public class Favorites extends AbstractEntity {
     public Favorites(){}
 
     public void addToFavoritesList(Book bookToAdd) {
-        if (favoritesList[0] == null){
-            favoritesList[0] = bookToAdd;
-        } else if (favoritesList[1] == null){
-            favoritesList[1] = bookToAdd;
-        } else if (favoritesList[2] == null){
-            favoritesList[2] = bookToAdd;
-        } //This should do something like throw an exception or have an event listener
-        //this still allows a user to add the same book twice
+        // Check if the book is already in the favorites list
+        for (int i = 0; i < favoritesList.length; i++) {
+            if (favoritesList[i] != null && favoritesList[i].equals(bookToAdd)) {
+                return; // Do nothing if the book is already in the list
+            }
+        }
+        // Add the book to the first available spot in the array
+        for (int i = 0; i < favoritesList.length; i++) {
+            if (favoritesList[i] == null) {
+                favoritesList[i] = bookToAdd;
+                return;
+            }
+        }
+        // If the list is full, throw an exception
+        throw new IllegalStateException("Favorites list is full, cannot add more books.");
     }
 
     public void removeFromFavoritesList(Integer i){ //will require front end to have buttons for each position of favorites book

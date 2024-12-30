@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -33,10 +34,10 @@ public class UserController {
     @Autowired
     ImageService imageService;
 
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserController(BCryptPasswordEncoder bCryptPasswordEncoder) {
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+    public UserController(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
     }
 
     @GetMapping("/users")
@@ -46,7 +47,7 @@ public class UserController {
 
     @PostMapping("/register")
     User newUser(@RequestBody User newUser) {
-        newUser.setPwHash(bCryptPasswordEncoder.encode(newUser.getPwHash()));
+        newUser.setPwHash(passwordEncoder.encode(newUser.getPwHash()));
         newUser.setName(newUser.getFirstName(), newUser.getLastName());
         return userRepository.save(newUser);
     }
@@ -64,7 +65,7 @@ public class UserController {
             existingUser.setLocation(updateUser.getLocation());
 
             if (updateUser.getPwHash() != null && !updateUser.getPwHash().equals(existingUser.getPwHash())) {
-                existingUser.setPwHash(bCryptPasswordEncoder.encode(updateUser.getPwHash()));
+                existingUser.setPwHash(passwordEncoder.encode(updateUser.getPwHash()));
             }
 
             return ResponseEntity.ok(userRepository.save(existingUser));

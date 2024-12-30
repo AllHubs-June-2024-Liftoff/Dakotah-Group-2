@@ -23,7 +23,7 @@ export default function Register({ darkMode }) {
   const onSubmit = async (e) => {
     e.preventDefault();
     await axios.post("http://localhost:8080/register", user);
-    navigate("/");
+    navigate("/Chaptr");
   };
 
   const onCancel = () => {
