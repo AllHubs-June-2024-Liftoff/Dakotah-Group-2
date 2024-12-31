@@ -10,6 +10,7 @@ export default function Profile({ darkMode }) {
 
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
+    const storedTBR = JSON.parse(localStorage.getItem("tbrList"));
 
     if (storedUser) {
       setUser(storedUser);
@@ -43,6 +44,12 @@ export default function Profile({ darkMode }) {
     } catch (error) {
       console.error("Error fetching TBR Lists:", error);
     }
+  };
+
+  const onDelete = async (e) => {
+    e.preventDefault();
+    await axios.delete(`http://localhost:8080/tbr/${tbr.id}`);
+    localStorage.removeItem("tbrList");
   };
 
   if (!user) {
@@ -187,6 +194,18 @@ export default function Profile({ darkMode }) {
           to="/SearchTBR"
         >
           Add book to TBR
+        </Button>
+        <Button
+          onClick={(e) => onDelete(e)}
+          variant="contained"
+          component={Link}
+          sx={{
+            marginRight: 2,
+            backgroundColor: "#92B9BD",
+          }}
+          to="/Profile"
+        >
+          Delete TBR List
         </Button>
       </div>
     </div>

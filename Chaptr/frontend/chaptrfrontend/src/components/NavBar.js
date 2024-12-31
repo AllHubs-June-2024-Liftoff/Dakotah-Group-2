@@ -4,9 +4,11 @@ import { Link, useNavigate } from "react-router-dom";
 
 export default function NavBar({ darkMode, toggleDarkMode }) {
   const navigate = useNavigate();
+  const storedTBR = JSON.parse(localStorage.getItem("tbrList"));
 
   const Logout = () => {
     localStorage.removeItem("user");
+    localStorage.removeItem("tbrList");
     navigate("/Chaptr");
   };
 
