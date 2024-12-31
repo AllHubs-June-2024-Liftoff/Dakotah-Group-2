@@ -64,6 +64,7 @@ export default function Profile({ darkMode }) {
         <img
           src={user.userImage || "path/to/default/image.jpg"}
           alt={user.firstName}
+          style={{ width: "100px", height: "100px", borderRadius: "50%" }}
         />
         <Button
           variant="contained"
@@ -193,7 +194,7 @@ export default function Profile({ darkMode }) {
           }}
           to="/SearchTBR"
         >
-          Add book to TBR
+          Search Books
         </Button>
         <Button
           onClick={(e) => onDelete(e)}
