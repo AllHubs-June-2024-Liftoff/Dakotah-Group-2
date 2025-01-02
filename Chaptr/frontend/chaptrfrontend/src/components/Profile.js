@@ -10,7 +10,7 @@ export default function Profile({ darkMode }) {
 
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
-    const storedTBR = JSON.parse(localStorage.getItem("tbrList"));
+    //const storedTBR = JSON.parse(localStorage.getItem("tbrList"));
 
     if (storedUser) {
       setUser(storedUser);

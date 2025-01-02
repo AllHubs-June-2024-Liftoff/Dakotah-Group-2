@@ -10,6 +10,8 @@ export default function Login({ darkMode }) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    localStorage.removeItem("user");
+    localStorage.removeItem("tbrList");
 
     if (!email || !password) {
       alert("Email and Password are required.");

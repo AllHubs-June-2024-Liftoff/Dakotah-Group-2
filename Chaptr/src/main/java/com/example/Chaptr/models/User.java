@@ -8,6 +8,8 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import java.util.ArrayList;
+
 @Entity
 public class User extends AbstractEntity {
 
@@ -35,12 +37,12 @@ public class User extends AbstractEntity {
 
     private String userImage;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "tbr_id")
     @JsonIgnore
     private TBR tbr;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "favoritesList_id")
     @JsonIgnore
     private Favorites favoritesList;
@@ -57,6 +59,7 @@ public class User extends AbstractEntity {
         this.email = email;
         this.location = location;
         this.setName(firstName, lastName);
+        this.tbr = new TBR(this, new ArrayList<>());
     }
 
     public User(String firstName, String lastName, String password, String email, String location, String userImage) {
@@ -133,4 +136,5 @@ public class User extends AbstractEntity {
     public void setTbr(TBR tbr) {
         this.tbr = tbr;
     }
+
 }
