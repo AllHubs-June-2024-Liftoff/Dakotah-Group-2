@@ -9,6 +9,7 @@ import com.example.Chaptr.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -55,6 +56,7 @@ public class TBRController {
         }
     }
 
+    @Transactional
     @PostMapping("/newTbr/email/{email}")
     public ResponseEntity<?> newTBR(@PathVariable String email, @RequestParam Integer bookId) {
         Optional<User> existingUser = userRepository.findByEmail(email);
@@ -67,7 +69,7 @@ public class TBRController {
                 return ResponseEntity.status(HttpStatus.CONFLICT)
                         .body("User already has a TBR list.");
             }
-
+            
             TBR userTBR = new TBR();
             userTBR.setUser(user);
             user.setTbr(userTBR);
@@ -81,8 +83,10 @@ public class TBRController {
                 Book book = existingBook.get();
                 userTBR.addToTBR(book);
 
-                TBR updatedTBR = tbrRepository.save(userTBR);
-                return ResponseEntity.ok(updatedTBR);
+                tbrRepository.save(userTBR);
+                userRepository.save(user);
+
+                return ResponseEntity.ok(userTBR);
             } else {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND)
                         .body("Book not found.");
@@ -93,6 +97,7 @@ public class TBRController {
         }
     }
 
+    @Transactional
     @PutMapping("/tbr/{email}")
     public ResponseEntity<?> updateUserTBR(@RequestBody Book newBook, @PathVariable String email) {
         Optional<User> userOptional = userRepository.findByEmail(email);
@@ -111,6 +116,8 @@ public class TBRController {
                     existingTBR.addToTBR(book);
 
                     TBR updatedTBR = tbrRepository.save(existingTBR);
+                    userRepository.save(user);
+
                     return ResponseEntity.ok(updatedTBR);
                 } else {
                     return ResponseEntity.status(HttpStatus.NOT_FOUND)
@@ -125,8 +132,11 @@ public class TBRController {
                     Book book = bookOptional.get();
                     newTBR.addToTBR(book);
 
-                    TBR savedTBR = tbrRepository.save(newTBR);
-                    return ResponseEntity.ok(savedTBR);
+                    tbrRepository.save(newTBR);
+                    user.setTbr(newTBR);
+                    userRepository.save(user);
+
+                    return ResponseEntity.ok(newTBR);
                 } else {
                     return ResponseEntity.status(HttpStatus.NOT_FOUND)
                             .body("Book not found.");

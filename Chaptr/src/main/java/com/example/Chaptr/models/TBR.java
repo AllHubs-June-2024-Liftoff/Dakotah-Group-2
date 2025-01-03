@@ -8,7 +8,7 @@ import java.util.List;
 @Entity
 public class TBR extends AbstractEntity {
 
-    @ManyToMany(cascade = CascadeType.MERGE)
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "user_tbr_books",
             joinColumns = @JoinColumn(name = "tbr_id"),

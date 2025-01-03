@@ -15,6 +15,7 @@ export default function BookCard(props) {
       : [props.author];
 
     const bookData = {
+      id: props.id,
       name: props.title,
       author: formattedAuthor,
       bookCover: props.image,
@@ -48,7 +49,14 @@ export default function BookCard(props) {
         alert("Book added to TBR list");
       } else {
         const addToTBRResponse = await axios.put(
-          `http://localhost:8080/tbr/${storedUser.email}?bookId=${addedBook.id}`
+          `http://localhost:8080/tbr/${storedUser.email}`,
+          {
+            id: addedBook.id,
+            name: addedBook.name,
+            author: addedBook.author,
+            bookCover: addedBook.bookCover,
+            publicationDate: addedBook.publicationDate,
+          }
         );
 
         if (addToTBRResponse.status === 200) {
