@@ -1,10 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, version } from "react";
 import axios from "axios";
 import { Button } from "@mui/material";
-import { Navigate, NavLink } from "react-router-dom";
+import { Navigate, NavLink, useNavigate, useHistory } from "react-router-dom";
+import Club from "./Club";
 
 const ClubsList = ({ darkMode }) => {
+    const navigate = useNavigate();
+
     const [clubs, setClubs] = useState([]);
+    const [showClub, setShowClub] = useState(false);
 
     useEffect(() => {
         getClubs();
@@ -13,7 +17,14 @@ const ClubsList = ({ darkMode }) => {
     const getClubs = async () => {
         const response = await axios.get("http://localhost:8080/club");
         setClubs(response.data);
+        sessionStorage.setItem("clubId", null);
     };
+
+    const navToClub = () => {
+        navigate("/Club");
+    };
+
+    console.log(version);
 
     return (
         <>
@@ -98,8 +109,17 @@ const ClubsList = ({ darkMode }) => {
                                 border: `1px solid ${darkMode ? "#444" : "#ccc"}`,
                             }}
                         >
-                            <Button variant="contained" color="primary" style={{ marginRight: "5px", backgroundColor: "#9b4dff" }}>
-                                <NavLink to={{ pathname: "/Club", state: { id: club.id } }}>View</NavLink>
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                style={{ marginRight: "5px", backgroundColor: "#9b4dff" }}
+                                onClick={async () => {
+                                    sessionStorage.setItem("clubId", club.id);
+                                    // setTimeout(() => navToClub(), 1000);
+                                    navToClub();
+                                }}
+                            >
+                                View
                             </Button>
                         </td>
                     </tr>

@@ -5,13 +5,10 @@ import { useLocation } from "react-router-dom";
 const Club = () => {
     const [club, setClub] = useState({});
 
-    const location = useLocation();
-    console.log(location);
-    const id = location.state.id;
-    console.log(id);
+    const clubId = sessionStorage.getItem("clubId");
 
     const getClub = async () => {
-        const response = await axios.get(`http://localhost:8080/club/${id}`);
+        const response = await axios.get(`http://localhost:8080/club/${clubId}`);
         setClub(response.data);
     };
 
