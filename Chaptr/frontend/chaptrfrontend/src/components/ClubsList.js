@@ -1,14 +1,12 @@
 import React, { useState, useEffect, version } from "react";
 import axios from "axios";
 import { Button } from "@mui/material";
-import { Navigate, NavLink, useNavigate, useHistory } from "react-router-dom";
-import Club from "./Club";
+import { useNavigate } from "react-router-dom";
 
 const ClubsList = ({ darkMode }) => {
     const navigate = useNavigate();
 
     const [clubs, setClubs] = useState([]);
-    const [showClub, setShowClub] = useState(false);
 
     useEffect(() => {
         getClubs();
@@ -28,7 +26,26 @@ const ClubsList = ({ darkMode }) => {
 
     return (
         <>
-            <h2>Clubs</h2>
+            <div style={{}}>
+                <span>
+                    <h2>Clubs</h2>
+
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        style={{
+                            marginRight: "5px",
+                            marginBottom: "10px",
+                            marginTop: "-10px",
+                            alignItems: "right",
+                            backgroundColor: "#9b4dff",
+                        }}
+                    >
+                        Create Club
+                    </Button>
+                </span>
+            </div>
+
             <table
                 style={{
                     width: "100%",
@@ -115,7 +132,6 @@ const ClubsList = ({ darkMode }) => {
                                 style={{ marginRight: "5px", backgroundColor: "#9b4dff" }}
                                 onClick={async () => {
                                     sessionStorage.setItem("clubId", club.id);
-                                    // setTimeout(() => navToClub(), 1000);
                                     navToClub();
                                 }}
                             >
