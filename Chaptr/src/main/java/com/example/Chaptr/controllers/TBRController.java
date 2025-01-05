@@ -69,7 +69,7 @@ public class TBRController {
                 return ResponseEntity.status(HttpStatus.CONFLICT)
                         .body("User already has a TBR list.");
             }
-            
+
             TBR userTBR = new TBR();
             userTBR.setUser(user);
             user.setTbr(userTBR);

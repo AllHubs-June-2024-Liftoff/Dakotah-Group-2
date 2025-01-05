@@ -22,8 +22,6 @@ export default function EditUser({ darkMode }) {
 
   const [imagePreview, setImagePreview] = useState(existingUser.userImage);
 
-  const [loading, setLoading] = useState(false);
-
   const { firstName, lastName, location, pwHash, verifyPassword } = user;
 
   const selectImage = () => {
@@ -36,8 +34,6 @@ export default function EditUser({ darkMode }) {
     const formData = new FormData();
     formData.append("file", file, file.name);
     formData.append("email", existingUser.email);
-
-    setLoading(true);
 
     try {
       const response = await axios.put("http://localhost:8080/image", formData);
@@ -55,8 +51,6 @@ export default function EditUser({ darkMode }) {
     } catch (error) {
       console.error("Image upload failed:", error);
       alert("Failed to upload image.");
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -67,8 +61,59 @@ export default function EditUser({ darkMode }) {
   const onSubmit = async (e) => {
     e.preventDefault();
 
-    if (pwHash !== verifyPassword) {
+    if (!user.firstName) {
+      alert(
+        "First Name must not be blank and should be between 3-50 characters."
+      );
+      return;
+    }
+    if (user.firstName.length < 3 || user.firstName.length > 50) {
+      alert("First Name must be between 3-50 characters.");
+      return;
+    }
+
+    if (!user.lastName) {
+      alert(
+        "Last Name must not be blank and should be between 3-50 characters."
+      );
+      return;
+    }
+    if (user.lastName.length < 3 || user.lastName.length > 50) {
+      alert("Last Name must be between 3-50 characters.");
+      return;
+    }
+
+    if (!user.pwHash) {
+      alert("Password must not be blank and should be at least 5 characters.");
+      return;
+    }
+    if (user.pwHash.length < 5) {
+      alert("Password must be at least 5 characters.");
+      return;
+    }
+
+    if (!user.verifyPassword || user.verifyPassword.trim() === "") {
+      alert("Please confirm your password.");
+      return;
+    }
+
+    if (user.pwHash !== user.verifyPassword) {
       alert("Passwords do not match.");
+      return;
+    }
+
+    if (!user.email) {
+      alert("Email must not be blank.");
+      return;
+    }
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(user.email)) {
+      alert("Please provide a valid email address.");
+      return;
+    }
+
+    if (!user.location) {
+      alert("Location must not be blank.");
       return;
     }
 
@@ -95,7 +140,7 @@ export default function EditUser({ darkMode }) {
       alert(
         "There was an error updating the user data. Please try again later."
       );
-      navigate("/Chaptr");
+      navigate("/Profile");
     }
   };
 
@@ -115,7 +160,7 @@ export default function EditUser({ darkMode }) {
       <div>
         <img
           src={imagePreview || existingUser.userImage}
-          alt={`Profile photo of ${existingUser.firstName}`}
+          alt={existingUser.firstName}
           style={{ width: "100px", height: "100px", borderRadius: "50%" }}
         />
         <div>
@@ -198,9 +243,8 @@ export default function EditUser({ darkMode }) {
             type="submit"
             color="primary"
             sx={{ width: "48%" }}
-            disabled={loading}
           >
-            {loading ? "Updating..." : "Submit"}
+            Submit
           </Button>
           <Button
             onClick={onCancel}

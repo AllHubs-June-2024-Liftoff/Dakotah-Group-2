@@ -9,7 +9,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import static com.example.Chaptr.services.imageDirectory.IMAGE_DIRECTORY;
@@ -30,22 +29,28 @@ public class ImageService {
 
     public String uploadImage(String email, MultipartFile file) {
         User user = getUser(email);
-        String imageUrl = photoFunction.apply(email, file);
+        String imageUrl = storeImage.apply(email, file);
             user.setUserImage(imageUrl);
         userRepository.save(user);
         return imageUrl;
     }
 
 
-    private final Function<String, String> fileExtension = filename -> Optional.of(filename).filter(name -> name.contains("."))
-            .map(name -> "." + name.substring(filename.lastIndexOf(".") + 1)).orElse(".png");
+    private final Function<String, String> fileExtension = filename -> {
+        int dotIndex = filename.lastIndexOf(".");
+        if (dotIndex > 0) {
+            return "." + filename.substring(dotIndex + 1);
+        }
+        return ".png";
+    };
 
-    private final BiFunction<String, MultipartFile, String> photoFunction = (id, image) -> {
+    private final BiFunction<String, MultipartFile, String> storeImage = (id, image) -> {
         String filename = id + fileExtension.apply(image.getOriginalFilename());
         try {
             Path fileStorageLocation = Paths.get(IMAGE_DIRECTORY).toAbsolutePath().normalize();
-            if(!Files.exists((java.nio.file.Path) fileStorageLocation)) { Files.createDirectories((java.nio.file.Path) fileStorageLocation); }
-            Files.copy(image.getInputStream(), ((java.nio.file.Path) fileStorageLocation).resolve(filename), REPLACE_EXISTING);
+            if (!Files.exists(fileStorageLocation)) {
+                Files.createDirectories(fileStorageLocation);  }
+            Files.copy(image.getInputStream(), fileStorageLocation.resolve(filename), REPLACE_EXISTING);
             return ServletUriComponentsBuilder
                     .fromCurrentContextPath()
                     .path("/image/" + filename).toUriString();

@@ -156,7 +156,9 @@ export default function Profile({ darkMode }) {
                       border: `1px solid ${darkMode ? "#444" : "#ccc"}`,
                     }}
                   >
-                    {book.author}
+                    {Array.isArray(book.author)
+                      ? book.author.join(", ")
+                      : book.author}
                   </td>
                   <td
                     style={{
