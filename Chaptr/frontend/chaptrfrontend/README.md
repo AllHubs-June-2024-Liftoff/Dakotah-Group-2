@@ -1,3 +1,14 @@
+## Environment Variables
+
+1. Copy the `.env.example` file to `.env` in the project root.
+2. Replace the placeholder values with the actual API keys.
+3. Save the `.env` file.
+
+Example: REACT_APP_GOOGLE_BOOKS_API_KEY=your-api-key-here
+
+4. Restart the development server: `npm start`.
+
+Example:
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
