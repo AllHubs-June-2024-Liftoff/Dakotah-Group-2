@@ -14,7 +14,6 @@ export default function Books(){
         e.preventDefault();
         try {
             const API_KEY = process.env.REACT_APP_GOOGLE_BOOKS_API_KEY;
-            console.log("API Key:", process.env.REACT_APP_GOOGLE_BOOKS_API_KEY);
             const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${searchField}&key=${API_KEY}`)
             const data = await response.json();
             console.log(data);
