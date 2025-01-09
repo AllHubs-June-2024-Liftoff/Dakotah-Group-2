@@ -48,8 +48,18 @@ export default function Profile({ darkMode }) {
 
   const onDelete = async (e) => {
     e.preventDefault();
-    await axios.delete(`http://localhost:8080/tbr/${tbr.id}`);
-    localStorage.removeItem("tbrList");
+
+    if (!tbr.tbr || tbr.tbr.length === 0) {
+      alert(`${user.firstName}'s TBR List is empty!`);
+    } else {
+      try {
+        await axios.delete(`http://localhost:8080/tbr/${tbr.id}`);
+        localStorage.removeItem("tbrList");
+        alert("TBR List deleted successfully!");
+      } catch (error) {
+        console.error(`Error deleting ${user.name}'s TBR List:`, error);
+      }
+    }
   };
 
   if (!user) {
