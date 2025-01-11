@@ -2,8 +2,10 @@ package com.example.Chaptr.controllers;
 
 import com.example.Chaptr.data.BookRepository;
 import com.example.Chaptr.data.ClubRepository;
+import com.example.Chaptr.data.UserRepository;
 import com.example.Chaptr.models.Book;
 import com.example.Chaptr.models.Club;
+import com.example.Chaptr.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -21,8 +23,11 @@ public class ClubController {
     @Autowired
     private ClubRepository clubRepository;
 
-
+    @Autowired
     private BookRepository bookRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @GetMapping
     public List<Club> displayAllClubs(){
@@ -66,6 +71,39 @@ public class ClubController {
         if (optClub.isPresent()){
             club = optClub.get();
             club.setClubMessage(newDescription);
+        }
+    }
+
+    @GetMapping("{clubId}/getMembers")
+    public List<User> getMembers(@PathVariable Integer clubId){
+        Optional<Club> optClub = clubRepository.findById(clubId);
+        Club club = null;
+
+        if (optClub.isPresent()){
+            club = optClub.get();
+        }
+
+        return club.getMembers();
+    }
+
+    @PostMapping("{clubId}/addMember/{userId}")
+    public void addMember(@PathVariable Integer clubId, @PathVariable Integer userId){
+        Optional<User> optUser = userRepository.findById(userId);
+        User user = null;
+
+        if (optUser.isPresent()){
+            user = optUser.get();
+        }
+
+        Optional<Club> optClub = clubRepository.findById(clubId);
+        Club club = null;
+
+        if (optClub.isPresent()){
+            club = optClub.get();
+        }
+
+        if (optClub.isPresent() && optUser.isPresent()){
+            club.addMember(user);
         }
     }
 }

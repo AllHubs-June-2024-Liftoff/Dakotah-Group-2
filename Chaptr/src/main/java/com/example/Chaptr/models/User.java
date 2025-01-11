@@ -8,6 +8,9 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 public class User extends AbstractEntity {
 
@@ -44,6 +47,9 @@ public class User extends AbstractEntity {
     @JoinColumn(name = "favoritesList_id")
     @JsonIgnore
     private Favorites favoritesList;
+
+    @ManyToMany(mappedBy = "members")
+    private final List<Club> clubs = new ArrayList<>();
 
     private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
