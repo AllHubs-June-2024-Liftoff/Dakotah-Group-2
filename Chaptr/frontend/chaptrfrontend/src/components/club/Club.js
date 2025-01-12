@@ -1,14 +1,57 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const Club = ({ darkMode }) => {
   const [club, setClub] = useState({});
+  const [members, setMembers] = useState([]);
+  const navigate = useNavigate();
 
   const clubId = sessionStorage.getItem("clubId");
+  const user = localStorage.getItem("user");
+
+  console.log(`club id: ${clubId}`);
+  console.log(`user: ${user}`);
 
   const getClub = async () => {
-    const response = await axios.get(`http://localhost:8080/club/${clubId}`);
-    setClub(response.data);
+    try {
+      const response = await axios.get(`http://localhost:8080/club/${clubId}`);
+      setClub(response.data);
+      const membersData = response.data.members || [];
+      console.log("Updated members data: ", membersData);
+      setMembers(membersData);
+    } catch (error) {
+      console.error("Error fetching club data:", error);
+      alert("Error fetching club data!");
+    }
+  };
+
+  const joinClub = async (e) => {
+    e.preventDefault();
+
+    if (!user) {
+      navigate("/Chaptr");
+      return;
+    }
+
+    const usersEmail = JSON.parse(user);
+    const email = usersEmail.email;
+
+    try {
+      const response = await axios.post(
+        `http://localhost:8080/club/joinClub/${clubId}?email=${email}`
+      );
+
+      if (response.status === 200) {
+        getClub();
+      } else {
+        console.log("Error joining club, response status:", response.status);
+      }
+    } catch (error) {
+      console.error("Error joining club:", error);
+      alert("Error joining club, please try again!");
+    }
   };
 
   useEffect(() => {
@@ -17,17 +60,22 @@ const Club = ({ darkMode }) => {
 
   return (
     <div>
-      <h2>{club.name}</h2>
+      <h2>{club.name || "Club name not available"}</h2>
       <div>
-        {club.bookOfTheMonth == null ? "No book set yet!" : club.bookOfTheMonth}
+        <p>{club.bookOfTheMonth || "No book set yet!"}</p>
+        <p>{club.clubMessage || "No description added!"}</p>
       </div>
       <div>
-        <p>
-          {club.clubMessage == null
-            ? "No description added!"
-            : club.clubMessage}
-        </p>
+        <Button
+          variant="contained"
+          color="primary"
+          style={{ margin: "10px 0", backgroundColor: "#9b4dff" }}
+          onClick={joinClub}
+        >
+          Join Club
+        </Button>
       </div>
+
       <div>
         <table
           style={{
@@ -50,25 +98,17 @@ const Club = ({ darkMode }) => {
             </tr>
           </thead>
           <tbody>
-            {club.members != undefined ? (
-              club.members.map((user) => {
-                return (
-                  <tr
-                    style={{
-                      backgroundColor: darkMode ? "#333" : "#fafafa",
-                    }}
-                    key={user.id}
-                  >
-                    <td>{user.name}</td>
-                  </tr>
-                );
-              })
+            {members.length > 0 ? (
+              members.map((member) => (
+                <tr
+                  key={member.id}
+                  style={{ backgroundColor: darkMode ? "#333" : "#fafafa" }}
+                >
+                  <td>{member.name}</td>
+                </tr>
+              ))
             ) : (
-              <tr
-                style={{
-                  backgroundColor: darkMode ? "#333" : "#fafafa",
-                }}
-              >
+              <tr style={{ backgroundColor: darkMode ? "#333" : "#fafafa" }}>
                 <td
                   style={{
                     padding: "8px",

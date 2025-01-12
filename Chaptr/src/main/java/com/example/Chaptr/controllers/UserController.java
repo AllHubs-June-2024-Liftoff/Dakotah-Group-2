@@ -9,7 +9,6 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -46,10 +45,23 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    User newUser(@RequestBody User newUser) {
+    public ResponseEntity<User> registerUser(@RequestBody User newUser) {
+        if (newUser.getFirstName() == null || newUser.getFirstName().isEmpty()) {
+            return ResponseEntity.badRequest().body(null);
+        }
+        if (newUser.getLastName() == null || newUser.getLastName().isEmpty()) {
+            return ResponseEntity.badRequest().body(null);
+        }
+        if (newUser.getPwHash() == null || newUser.getPwHash().isEmpty()) {
+            return ResponseEntity.badRequest().body(null);
+        }
         newUser.setPwHash(passwordEncoder.encode(newUser.getPwHash()));
+
         newUser.setName(newUser.getFirstName(), newUser.getLastName());
-        return userRepository.save(newUser);
+
+        User savedUser = userRepository.save(newUser);
+
+        return ResponseEntity.ok(savedUser);
     }
 
     @PutMapping("/editUser/{email}")
