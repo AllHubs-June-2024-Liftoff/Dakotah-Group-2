@@ -45,7 +45,6 @@ export default function BookCard(props) {
           { bookId: addedBook.id }
         );
         console.log("New TBR created:", newTBRResponse.data);
-
         alert("Book added to TBR list");
       } else {
         const addToTBRResponse = await axios.put(

@@ -44,6 +44,7 @@ export default function Register({ darkMode }) {
       );
       return;
     }
+
     if (user.firstName.length < 3 || user.firstName.length > 50) {
       alert("First Name must be between 3-50 characters.");
       return;
@@ -55,6 +56,7 @@ export default function Register({ darkMode }) {
       );
       return;
     }
+
     if (user.lastName.length < 3 || user.lastName.length > 50) {
       alert("Last Name must be between 3-50 characters.");
       return;
@@ -64,6 +66,7 @@ export default function Register({ darkMode }) {
       alert("Password must not be blank and should be at least 5 characters.");
       return;
     }
+
     if (user.pwHash.length < 5) {
       alert("Password must be at least 5 characters.");
       return;
@@ -83,6 +86,7 @@ export default function Register({ darkMode }) {
       alert("Email must not be blank.");
       return;
     }
+
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!emailRegex.test(user.email)) {
       alert("Please provide a valid email address.");
@@ -95,8 +99,10 @@ export default function Register({ darkMode }) {
     }
 
     const emailExists = existingUsers.some(
-      (existingUser) => existingUser.email === user.email
+      (existingUser) =>
+        existingUser.email.toLowerCase() === user.email.toLowerCase()
     );
+
     if (emailExists) {
       alert("Email is already registered to a user.");
       return;

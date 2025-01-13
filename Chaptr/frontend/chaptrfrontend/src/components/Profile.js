@@ -62,10 +62,6 @@ export default function Profile({ darkMode }) {
     }
   };
 
-  if (!user) {
-    return <div>Loading...</div>;
-  }
-
   return (
     <div>
       <p>{`${user.firstName + " " + user.lastName}'s profile`}</p>

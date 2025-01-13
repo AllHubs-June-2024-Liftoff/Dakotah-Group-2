@@ -5,11 +5,8 @@ import { useNavigate } from "react-router-dom";
 
 export default function EditUser({ darkMode }) {
   const existingUser = JSON.parse(localStorage.getItem("user"));
-
-  let navigate = useNavigate();
-
+  const navigate = useNavigate();
   const inputRef = useRef();
-
   const [user, setUser] = useState({
     firstName: existingUser.firstName || "",
     lastName: existingUser.lastName || "",
@@ -19,9 +16,7 @@ export default function EditUser({ darkMode }) {
     verifyPassword: "",
     userImage: existingUser.userImage || "",
   });
-
   const [imagePreview, setImagePreview] = useState(existingUser.userImage);
-
   const { firstName, lastName, location, pwHash, verifyPassword } = user;
 
   const selectImage = () => {
@@ -67,6 +62,7 @@ export default function EditUser({ darkMode }) {
       );
       return;
     }
+
     if (user.firstName.length < 3 || user.firstName.length > 50) {
       alert("First Name must be between 3-50 characters.");
       return;
@@ -78,6 +74,7 @@ export default function EditUser({ darkMode }) {
       );
       return;
     }
+
     if (user.lastName.length < 3 || user.lastName.length > 50) {
       alert("Last Name must be between 3-50 characters.");
       return;
@@ -87,6 +84,7 @@ export default function EditUser({ darkMode }) {
       alert("Password must not be blank and should be at least 5 characters.");
       return;
     }
+
     if (user.pwHash.length < 5) {
       alert("Password must be at least 5 characters.");
       return;
@@ -106,6 +104,7 @@ export default function EditUser({ darkMode }) {
       alert("Email must not be blank.");
       return;
     }
+
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!emailRegex.test(user.email)) {
       alert("Please provide a valid email address.");
@@ -131,9 +130,7 @@ export default function EditUser({ darkMode }) {
       );
 
       localStorage.setItem("user", JSON.stringify(updatedUser));
-
       setUser(updatedUser);
-
       navigate("/Profile");
     } catch (error) {
       console.error("Failed to update user information:", error);
