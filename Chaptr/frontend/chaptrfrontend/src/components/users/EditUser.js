@@ -1,16 +1,16 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { TextField, Button, Paper, Typography } from "@mui/material";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 export default function EditUser({ darkMode }) {
-  const existingUser = JSON.parse(localStorage.getItem("user"));
+  const existingUser = JSON.parse(localStorage.getItem("user")) || {};
   const navigate = useNavigate();
   const inputRef = useRef();
   const [user, setUser] = useState({
     firstName: existingUser.firstName || "",
     lastName: existingUser.lastName || "",
-    email: existingUser.email,
+    email: existingUser.email || "",
     location: existingUser.location || "",
     pwHash: "",
     verifyPassword: "",
@@ -18,6 +18,16 @@ export default function EditUser({ darkMode }) {
   });
   const [imagePreview, setImagePreview] = useState(existingUser.userImage);
   const { firstName, lastName, location, pwHash, verifyPassword } = user;
+
+  useEffect(() => {
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    if (storedUser) {
+      setUser((prev) => ({
+        ...prev,
+        ...storedUser,
+      }));
+    }
+  }, []);
 
   const selectImage = () => {
     inputRef.current.click();
@@ -135,7 +145,7 @@ export default function EditUser({ darkMode }) {
     } catch (error) {
       console.error("Failed to update user information:", error);
       alert(
-        "There was an error updating the user data. Please try again later."
+        `There was an error updating ${user.name}'s data. Please try again later.`
       );
       navigate("/Profile");
     }
@@ -164,7 +174,6 @@ export default function EditUser({ darkMode }) {
           <button onClick={selectImage}>Change Image</button>
         </div>
       </div>
-
       <Typography
         variant="h4"
         align="center"
@@ -185,7 +194,6 @@ export default function EditUser({ darkMode }) {
           style={{ display: "none" }}
         />
       </form>
-
       <form onSubmit={onSubmit}>
         <TextField
           label="First Name"
