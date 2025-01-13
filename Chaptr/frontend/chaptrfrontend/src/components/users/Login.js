@@ -28,7 +28,7 @@ export default function Login({ darkMode }) {
       return;
     }
 
-    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{3,}$/;
     if (!emailRegex.test(email)) {
       alert("Please provide a valid email address.");
       return;

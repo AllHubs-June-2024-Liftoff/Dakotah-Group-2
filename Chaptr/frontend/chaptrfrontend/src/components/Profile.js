@@ -9,26 +9,35 @@ export default function Profile({ darkMode }) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem("user"));
-    //const storedTBR = JSON.parse(localStorage.getItem("tbrList"));
+    const storedUser = localStorage.getItem("user");
 
     if (storedUser) {
-      setUser(storedUser);
-      loadTBRLists(storedUser.email);
+      try {
+        const parsedUser = JSON.parse(storedUser);
+        setUser(parsedUser);
+        loadTBRLists(parsedUser.email);
+      } catch (error) {
+        console.error("Error parsing user data:", error);
+        navigate("/Chaptr");
+      }
     } else {
       navigate("/Chaptr");
     }
 
     const handleStorageChange = () => {
-      const updatedUser = JSON.parse(localStorage.getItem("user"));
+      const updatedUser = localStorage.getItem("user");
       if (updatedUser) {
-        setUser(updatedUser);
-        loadTBRLists(updatedUser.email);
+        try {
+          const parsedUser = JSON.parse(updatedUser);
+          setUser(parsedUser);
+          loadTBRLists(parsedUser.email);
+        } catch (error) {
+          console.error("Error parsing updated user data:", error);
+        }
       }
     };
 
     window.addEventListener("storage", handleStorageChange);
-
     return () => {
       window.removeEventListener("storage", handleStorageChange);
     };
@@ -61,6 +70,10 @@ export default function Profile({ darkMode }) {
       }
     }
   };
+
+  if (!user) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div>
@@ -192,7 +205,6 @@ export default function Profile({ darkMode }) {
             )}
           </tbody>
         </table>
-
         <Button
           variant="contained"
           component={Link}
