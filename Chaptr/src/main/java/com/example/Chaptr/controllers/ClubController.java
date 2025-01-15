@@ -9,6 +9,7 @@ import com.example.Chaptr.models.Club;
 import com.example.Chaptr.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -94,14 +95,30 @@ public class ClubController {
         }
     }
 
-    @PostMapping("{clubId}/description")
-    public void updateDescription(@PathVariable Integer clubId, @RequestBody String newDescription){
+    @PostMapping("{clubId}/description/{newDescription}")
+    public void updateDescription(@PathVariable Integer clubId, @PathVariable String newDescription){
         Optional<Club> optClub = clubRepository.findById(clubId);
         Club club = null;
 
         if (optClub.isPresent()){
             club = optClub.get();
             club.setClubMessage(newDescription);
+            clubRepository.save(club);
         }
     }
+
+//    @PostMapping("{clubId}/description")
+//    public ResponseEntity<String> updateDescription(@PathVariable Integer clubId, @RequestBody ClubDto dto){
+//        Optional<Club> optClub = clubRepository.findById(clubId);
+//        Club club = null;
+//
+//        if (optClub.isPresent()){
+//            club = optClub.get();
+//            dto.setClubMessage();
+//            club.setClubMessage(dto.getClubMessage());
+//            clubRepository.save(club);
+//        }
+//
+//        return  ResponseEntity.ok("Received String: " + dto.getClubMessage());
+//    }
 }

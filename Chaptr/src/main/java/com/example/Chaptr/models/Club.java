@@ -2,6 +2,8 @@ package com.example.Chaptr.models;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -11,6 +13,7 @@ public class Club extends AbstractEntity{
     @OneToOne(cascade = CascadeType.ALL)
     private Book bookOfTheMonth;
 
+    @Size(max =  500, message = "Must be less than 500 characters!")
     private String clubMessage;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)

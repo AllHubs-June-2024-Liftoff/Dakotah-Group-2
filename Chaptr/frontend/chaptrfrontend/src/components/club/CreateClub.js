@@ -3,58 +3,48 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const CreateClub = () => {
-  const navigate = useNavigate();
+    const navigate = useNavigate();
 
-  const [newClub, setNewClub] = useState({
-    name: "",
-    clubMessage: "",
-  });
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setNewClub({
-      ...newClub,
-      [name]: value,
+    const [newClub, setNewClub] = useState({
+        name: "",
+        clubMessage: "",
     });
-  };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const newClubObject = {
-      name: newClub.name,
-      clubMessage: newClub.clubMessage,
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setNewClub({
+            ...newClub,
+            [name]: value,
+        });
     };
 
-    await axios.post("http://localhost:8080/club/create", newClubObject);
+    const handleSubmit = async (e) => {
+        e.preventDefault();
 
-    navigate("/ClubsList");
-  };
+        const newClubObject = {
+            name: newClub.name,
+            clubMessage: newClub.clubMessage,
+        };
 
-  return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label>Name</label>
-        <input
-          type="text"
-          name="name"
-          value={newClub.name}
-          onChange={handleInputChange}
-        />
-      </div>
-      <div>
-        <label>Description</label>
-        <input
-          type="text"
-          name="clubMessage"
-          value={newClub.clubMessage}
-          onChange={handleInputChange}
-        />
-      </div>
+        await axios.post("http://localhost:8080/club/create", newClubObject);
 
-      <button type="submit">Submit</button>
-    </form>
-  );
+        navigate("/ClubsList");
+    };
+
+    return (
+        <form onSubmit={handleSubmit}>
+            <div>
+                <label>Name</label>
+                <input type="text" name="name" value={newClub.name} onChange={handleInputChange} />
+            </div>
+            <div>
+                <label>Description</label>
+                <input type="text" name="clubMessage" value={newClub.clubMessage} onChange={handleInputChange} />
+            </div>
+
+            <button type="submit">Submit</button>
+        </form>
+    );
 };
 
 export default CreateClub;
