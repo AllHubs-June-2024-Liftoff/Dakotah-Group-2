@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { TextField, Button } from "@mui/material";
 
 const CreateClub = () => {
     const navigate = useNavigate();
@@ -31,18 +32,57 @@ const CreateClub = () => {
         navigate("/ClubsList");
     };
 
+    const onCancel = () => {
+        navigate("/ClubsList");
+    };
+
     return (
         <form onSubmit={handleSubmit}>
-            <div>
+            {/* <div>
                 <label>Name</label>
                 <input type="text" name="name" value={newClub.name} onChange={handleInputChange} />
-            </div>
+            </div> */}
             <div>
-                <label>Description</label>
-                <input type="text" name="clubMessage" value={newClub.clubMessage} onChange={handleInputChange} />
+                <TextField
+                    label="Club Name"
+                    name="name"
+                    value={newClub.name}
+                    onChange={handleInputChange}
+                    variant="outlined"
+                    sx={{ marginBottom: 2 }}
+                    style={{ width: 500 }}
+                />
             </div>
 
-            <button type="submit">Submit</button>
+            {/* <div>
+                <label>Description</label>
+                <input type="text" name="clubMessage" value={newClub.clubMessage} onChange={handleInputChange} />
+            </div> */}
+            <div>
+                <TextField
+                    label="Club Description"
+                    name="clubMessage"
+                    value={newClub.clubMessage}
+                    onChange={handleInputChange}
+                    fullWidth
+                    multiline
+                    variant="outlined"
+                    sx={{ marginBottom: 2 }}
+                    style={{ width: 500 }}
+                />
+            </div>
+            <div style={{ display: "flex", justifyContent: "center" }}>
+                <div>
+                    <Button variant="contained" type="submit" color="primary" sx={{ width: "50%" }}>
+                        Submit
+                    </Button>
+                </div>
+                <div>
+                    <Button onClick={() => onCancel()} variant="outlined" color="secondary" sx={{ width: "50%" }}>
+                        Cancel
+                    </Button>
+                </div>
+            </div>
         </form>
     );
 };
