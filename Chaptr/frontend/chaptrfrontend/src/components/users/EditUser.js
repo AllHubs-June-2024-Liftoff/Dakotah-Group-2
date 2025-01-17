@@ -24,7 +24,6 @@ export default function EditUser({ darkMode }) {
     if (storedUser) {
       setUser((prev) => ({
         ...prev,
-        ...storedUser,
       }));
     }
   }, []);

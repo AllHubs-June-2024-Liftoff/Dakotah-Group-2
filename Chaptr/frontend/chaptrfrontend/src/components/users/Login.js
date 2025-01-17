@@ -54,7 +54,7 @@ export default function Login({ darkMode }) {
       alert("Login failed. Please check your credentials.");
     }
 
-    console.log("Logging in with:", email, password);
+    console.log("Logging in with:", email);
   };
 
   return (
