@@ -100,26 +100,6 @@ public class TBRController {
         }
     }
 
-    @GetMapping("/tbr/email/{email}")
-    public ResponseEntity<?> getTBRByUserEmail(@PathVariable String email) {
-        Optional<User> userOptional = userRepository.findByEmail(email);
-
-        if (userOptional.isPresent()) {
-            User user = userOptional.get();
-            Optional<TBR> tbrOptional = tbrRepository.findByUser(user);
-
-            if (tbrOptional.isPresent()) {
-                return ResponseEntity.ok(tbrOptional.get());
-            } else {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                        .body("TBR list not found for this user.");
-            }
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("User with this email does not exist.");
-        }
-    }
-
     @DeleteMapping("/tbr/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable("id") Integer id) {
         Optional<TBR> tbrOptional = tbrRepository.findById(id);

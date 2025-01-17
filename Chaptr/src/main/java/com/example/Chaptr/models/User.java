@@ -1,8 +1,6 @@
 package com.example.Chaptr.models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -10,11 +8,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import java.util.HashSet;
-import java.util.Set;
-
 @Entity
-@JsonIgnoreProperties("clubs")
 public class User extends AbstractEntity {
 
     @NotNull(message = "Enter your First Name")
@@ -40,10 +34,6 @@ public class User extends AbstractEntity {
     private String location;
 
     private String userImage;
-
-    @ManyToMany(mappedBy = "members")
-    @JsonBackReference
-    private Set<Club> clubs = new HashSet<>();
 
     @OneToOne
     @JoinColumn(name = "tbr_id")
@@ -142,13 +132,5 @@ public class User extends AbstractEntity {
 
     public void setTbr(TBR tbr) {
         this.tbr = tbr;
-    }
-
-    public Set<Club> getClubs() {
-        return clubs;
-    }
-
-    public void setClubs(Set<Club> clubs) {
-        this.clubs = clubs;
     }
 }
