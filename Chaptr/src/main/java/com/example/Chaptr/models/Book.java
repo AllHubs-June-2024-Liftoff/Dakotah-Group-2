@@ -18,7 +18,7 @@ public class Book extends AbstractEntity {
     private String bookCover;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    private String author;
+    private List <String> author;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private String publicationDate;
@@ -37,7 +37,7 @@ public class Book extends AbstractEntity {
     public Book() {
         super();
     }
-    public Book(String bookCover, String author, String publicationDate) {
+    public Book(String bookCover, List<String> author, String publicationDate) {
         super();
         this.bookCover = bookCover;
         this.author = author;
@@ -52,11 +52,11 @@ public class Book extends AbstractEntity {
         this.bookCover = bookCover;
     }
 
-    public String getAuthor() {
+    public List<String> getAuthor() {
         return author;
     }
 
-    public void setAuthor(String author) {
+    public void setAuthor(List<String> author) {
         this.author = author;
     }
 
