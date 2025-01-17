@@ -18,7 +18,7 @@ public class BookController {
 
     @GetMapping("/books")
     public List<Book> getAllBooks() {
-        return (List<Book>) bookRepository.findAll();
+        return (List<Book>) bookRepository.findAll(); // No need to cast to List<Book>
     }
 
     @PostMapping("/addBook")
@@ -39,7 +39,7 @@ public class BookController {
             Book updatedBook = bookRepository.save(existingBook);
             return ResponseEntity.ok(updatedBook);
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null); // More specific error response
         }
     }
 
@@ -47,9 +47,9 @@ public class BookController {
     public ResponseEntity<Void> deleteBook(@PathVariable int id) {
         if (bookRepository.existsById(id)) {
             bookRepository.deleteById(id);
-            return ResponseEntity.noContent().build();
+            return ResponseEntity.noContent().build(); // Success response
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build(); // More specific error response
         }
     }
 }
