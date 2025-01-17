@@ -1,10 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { TextField, Button, Paper, Typography } from "@mui/material";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 export default function Register({ darkMode }) {
-  let navigate = useNavigate();
+  const navigate = useNavigate();
+  const [existingUsers, setExistingUsers] = useState([]);
+
+  useEffect(() => {
+    loadUsers();
+  }, []);
+
+  const loadUsers = async () => {
+    try {
+      const response = await axios.get("http://localhost:8080/users");
+      setExistingUsers(response.data);
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    }
+  };
 
   const [user, setUser] = useState({
     firstName: "",
@@ -12,6 +26,7 @@ export default function Register({ darkMode }) {
     email: "",
     location: "",
     pwHash: "",
+    verifyPassword: "",
   });
 
   const { firstName, lastName, email, location, pwHash, verifyPassword } = user;
@@ -22,6 +37,77 @@ export default function Register({ darkMode }) {
 
   const onSubmit = async (e) => {
     e.preventDefault();
+
+    if (!user.firstName) {
+      alert(
+        "First Name must not be blank and should be between 3-50 characters."
+      );
+      return;
+    }
+
+    if (user.firstName.length < 3 || user.firstName.length > 50) {
+      alert("First Name must be between 3-50 characters.");
+      return;
+    }
+
+    if (!user.lastName) {
+      alert(
+        "Last Name must not be blank and should be between 3-50 characters."
+      );
+      return;
+    }
+
+    if (user.lastName.length < 3 || user.lastName.length > 50) {
+      alert("Last Name must be between 3-50 characters.");
+      return;
+    }
+
+    if (!user.pwHash) {
+      alert("Password must not be blank and should be at least 5 characters.");
+      return;
+    }
+
+    if (user.pwHash.length < 5) {
+      alert("Password must be at least 5 characters.");
+      return;
+    }
+
+    if (!user.verifyPassword || user.verifyPassword.trim() === "") {
+      alert("Please confirm your password.");
+      return;
+    }
+
+    if (user.pwHash !== user.verifyPassword) {
+      alert("Passwords do not match.");
+      return;
+    }
+
+    if (!user.email) {
+      alert("Email must not be blank.");
+      return;
+    }
+
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{3,}$/;
+    if (!emailRegex.test(user.email)) {
+      alert("Please provide a valid email address.");
+      return;
+    }
+
+    if (!user.location) {
+      alert("Location must not be blank.");
+      return;
+    }
+
+    const emailExists = existingUsers.some(
+      (existingUser) =>
+        existingUser.email.toLowerCase() === user.email.toLowerCase()
+    );
+
+    if (emailExists) {
+      alert("Email is already registered to a user.");
+      return;
+    }
+
     await axios.post("http://localhost:8080/register", user);
     navigate("/Chaptr");
   };

@@ -10,15 +10,27 @@ export default function Login({ darkMode }) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    localStorage.removeItem("user");
+    localStorage.removeItem("tbrList");
 
-    if (!email || !password) {
-      alert("Email and Password are required.");
+    if (!password) {
+      alert("Password must not be blank and should be at least 5 characters.");
       return;
     }
 
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (password.length < 5) {
+      alert("Password must be at least 5 characters.");
+      return;
+    }
+
+    if (!email) {
+      alert("Email must not be blank.");
+      return;
+    }
+
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{3,}$/;
     if (!emailRegex.test(email)) {
-      alert("Please enter a valid email address.");
+      alert("Please provide a valid email address.");
       return;
     }
 

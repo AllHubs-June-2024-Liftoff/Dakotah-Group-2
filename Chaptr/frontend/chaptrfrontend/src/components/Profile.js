@@ -9,26 +9,35 @@ export default function Profile({ darkMode }) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem("user"));
-    const storedTBR = JSON.parse(localStorage.getItem("tbrList"));
+    const storedUser = localStorage.getItem("user");
 
     if (storedUser) {
-      setUser(storedUser);
-      loadTBRLists(storedUser.email);
+      try {
+        const parsedUser = JSON.parse(storedUser);
+        setUser(parsedUser);
+        loadTBRLists(parsedUser.email);
+      } catch (error) {
+        console.error("Error parsing user data:", error);
+        navigate("/Chaptr");
+      }
     } else {
       navigate("/Chaptr");
     }
 
     const handleStorageChange = () => {
-      const updatedUser = JSON.parse(localStorage.getItem("user"));
+      const updatedUser = localStorage.getItem("user");
       if (updatedUser) {
-        setUser(updatedUser);
-        loadTBRLists(updatedUser.email);
+        try {
+          const parsedUser = JSON.parse(updatedUser);
+          setUser(parsedUser);
+          loadTBRLists(parsedUser.email);
+        } catch (error) {
+          console.error("Error parsing updated user data:", error);
+        }
       }
     };
 
     window.addEventListener("storage", handleStorageChange);
-
     return () => {
       window.removeEventListener("storage", handleStorageChange);
     };
@@ -48,8 +57,18 @@ export default function Profile({ darkMode }) {
 
   const onDelete = async (e) => {
     e.preventDefault();
-    await axios.delete(`http://localhost:8080/tbr/${tbr.id}`);
-    localStorage.removeItem("tbrList");
+
+    if (!tbr.tbr || tbr.tbr.length === 0) {
+      alert(`${user.firstName}'s TBR List is empty!`);
+    } else {
+      try {
+        await axios.delete(`http://localhost:8080/tbr/${tbr.id}`);
+        localStorage.removeItem("tbrList");
+        alert("TBR List deleted successfully!");
+      } catch (error) {
+        console.error(`Error deleting ${user.name}'s TBR List:`, error);
+      }
+    }
   };
 
   if (!user) {
@@ -156,7 +175,9 @@ export default function Profile({ darkMode }) {
                       border: `1px solid ${darkMode ? "#444" : "#ccc"}`,
                     }}
                   >
-                    {book.author}
+                    {Array.isArray(book.author)
+                      ? book.author.join(", ")
+                      : book.author}
                   </td>
                   <td
                     style={{
@@ -184,7 +205,6 @@ export default function Profile({ darkMode }) {
             )}
           </tbody>
         </table>
-
         <Button
           variant="contained"
           component={Link}

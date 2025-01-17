@@ -3,17 +3,15 @@ import "./App.css";
 import NavBar from "./components/NavBar";
 import Chaptr from "./components/Chaptr";
 import Profile from "./components/Profile";
-import Dev from "./components/Dev";
 import SearchTBR from "./components/search/SearchTBR";
-// import Home from "./components/Home";
 import Register from "./components/users/Register";
-// import Login from "./components/users/Login";
 import EditUser from "./components/users/EditUser";
-// import ViewUser from "./components/users/View";
-import Club from "./components/club/Club";
-import ClubsList from "./components/club/ClubsList";
-import CreateClub from "./components/club/CreateClub";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import { CssBaseline, ThemeProvider, createTheme } from "@mui/material";
 
 function App() {
@@ -36,13 +34,13 @@ function App() {
         <Router>
           <NavBar darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
           <Routes>
+            <Route path="/" element={<Navigate to="/Chaptr" />} />
             <Route path="/Chaptr" element={<Chaptr darkMode={darkMode} />} />
             <Route path="/Profile" element={<Profile darkMode={darkMode} />} />
             <Route
               path="/EditUser"
               element={<EditUser darkMode={darkMode} />}
             />
-            <Route path="/Dev" element={<Dev darkMode={darkMode} />} />
             <Route
               path="/SearchTBR"
               element={<SearchTBR darkMode={darkMode} />}
@@ -50,15 +48,6 @@ function App() {
             <Route
               path="/Register"
               element={<Register darkMode={darkMode} />}
-            />
-            <Route
-              path="/ClubsList"
-              element={<ClubsList darkMode={darkMode} />}
-            />
-            <Route path="/Club" element={<Club darkMode={darkMode} />} />
-            <Route
-              path="/CreateClub"
-              element={<CreateClub darkMode={darkMode} />}
             />
           </Routes>
         </Router>
