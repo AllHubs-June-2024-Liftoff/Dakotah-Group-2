@@ -27,20 +27,20 @@ public class Favorites extends AbstractEntity {
     public Favorites(){}
 
     public void addToFavoritesList(Book bookToAdd) {
-        // Check if the book is already in the favorites list
+
         for (int i = 0; i < favoritesList.length; i++) {
             if (favoritesList[i] != null && favoritesList[i].equals(bookToAdd)) {
-                return; // Do nothing if the book is already in the list
+                return;
             }
         }
-        // Add the book to the first available spot in the array
+
         for (int i = 0; i < favoritesList.length; i++) {
             if (favoritesList[i] == null) {
                 favoritesList[i] = bookToAdd;
                 return;
             }
         }
-        // If the list is full, throw an exception
+
         throw new IllegalStateException("Favorites list is full, cannot add more books.");
     }
 

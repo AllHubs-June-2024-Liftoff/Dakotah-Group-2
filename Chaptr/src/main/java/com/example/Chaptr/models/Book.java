@@ -8,9 +8,6 @@ import jakarta.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Entity
 public class Book extends AbstractEntity {
 

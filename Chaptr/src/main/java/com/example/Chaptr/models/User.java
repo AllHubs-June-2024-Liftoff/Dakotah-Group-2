@@ -1,6 +1,8 @@
 package com.example.Chaptr.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -8,9 +10,11 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
+@JsonIgnoreProperties("clubs")
 public class User extends AbstractEntity {
 
     @NotNull(message = "Enter your First Name")
@@ -37,12 +41,16 @@ public class User extends AbstractEntity {
 
     private String userImage;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "members")
+    @JsonBackReference
+    private Set<Club> clubs = new HashSet<>();
+
+    @OneToOne
     @JoinColumn(name = "tbr_id")
     @JsonIgnore
     private TBR tbr;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "favoritesList_id")
     @JsonIgnore
     private Favorites favoritesList;
@@ -59,7 +67,6 @@ public class User extends AbstractEntity {
         this.email = email;
         this.location = location;
         this.setName(firstName, lastName);
-        this.tbr = new TBR(this, new ArrayList<>());
     }
 
     public User(String firstName, String lastName, String password, String email, String location, String userImage) {
@@ -137,4 +144,11 @@ public class User extends AbstractEntity {
         this.tbr = tbr;
     }
 
+    public Set<Club> getClubs() {
+        return clubs;
+    }
+
+    public void setClubs(Set<Club> clubs) {
+        this.clubs = clubs;
+    }
 }

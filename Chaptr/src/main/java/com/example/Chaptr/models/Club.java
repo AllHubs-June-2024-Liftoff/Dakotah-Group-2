@@ -1,9 +1,11 @@
 package com.example.Chaptr.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import org.hibernate.engine.internal.Cascade;
+import jakarta.validation.constraints.Size;
 
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Club extends AbstractEntity{
@@ -11,9 +13,18 @@ public class Club extends AbstractEntity{
     @OneToOne(cascade = CascadeType.ALL)
     private Book bookOfTheMonth;
 
+    @Size(max =  500, message = "Must be less than 500 characters!")
     private String clubMessage;
 
-    private final ArrayList<User> members = new ArrayList<>();
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "club_members",
+            joinColumns = @JoinColumn(name = "club_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    @JsonManagedReference
+    private Set<User> members = new HashSet<>();
+
 
     public Club(Book bookOfTheMonth, String clubMessage) {
         super();
@@ -34,7 +45,7 @@ public class Club extends AbstractEntity{
         members.add(newMember);
     }
 
-    public ArrayList<User> getMembers() {
+    public Set<User> getMembers() {
         return members;
     }
 

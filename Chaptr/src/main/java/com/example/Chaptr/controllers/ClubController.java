@@ -2,14 +2,19 @@ package com.example.Chaptr.controllers;
 
 import com.example.Chaptr.data.BookRepository;
 import com.example.Chaptr.data.ClubRepository;
+import com.example.Chaptr.data.UserRepository;
+import com.example.Chaptr.dto.ClubDTO;
 import com.example.Chaptr.models.Book;
 import com.example.Chaptr.models.Club;
+import com.example.Chaptr.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @RestController
 @CrossOrigin("http://localhost:3000")
@@ -21,8 +26,11 @@ public class ClubController {
     @Autowired
     private ClubRepository clubRepository;
 
-
+    @Autowired
     private BookRepository bookRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @GetMapping
     public List<Club> displayAllClubs(){
@@ -42,8 +50,36 @@ public class ClubController {
     }
 
     @PostMapping("/create")
-    public void createClub(@RequestBody Club newClub){
+    public void createClub(@RequestBody ClubDTO clubCreateDTO) {
+        Club newClub = new Club();
+        newClub.setClubMessage(clubCreateDTO.getClubMessage());
+        newClub.setName(clubCreateDTO.getName());
+
         clubRepository.save(newClub);
+    }
+
+    @PostMapping("/joinClub/{clubId}")
+    public Set<User> joinClub(@PathVariable int clubId, @RequestParam String email) {
+        Optional<Club> optClub = clubRepository.findById(clubId);
+        Optional<User> optUser = userRepository.findByEmail(email);
+
+        if (!optClub.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Club not found");
+        }
+
+        if (!optUser.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
+        }
+
+        Club club = optClub.get();
+        User user = optUser.get();
+
+        if (!club.getMembers().contains(user)) {
+            club.addMember(user);
+            clubRepository.save(club);
+        }
+
+        return club.getMembers();
     }
 
     @PostMapping("{clubId}/book")
@@ -58,14 +94,30 @@ public class ClubController {
         }
     }
 
-    @PostMapping("{clubId}/description")
-    public void updateDescription(@PathVariable Integer clubId, @RequestBody String newDescription){
+    @PostMapping("{clubId}/description/{newDescription}")
+    public void updateDescription(@PathVariable Integer clubId, @PathVariable String newDescription){
         Optional<Club> optClub = clubRepository.findById(clubId);
         Club club = null;
 
         if (optClub.isPresent()){
             club = optClub.get();
             club.setClubMessage(newDescription);
+            clubRepository.save(club);
         }
     }
+
+//    @PostMapping("{clubId}/description")
+//    public ResponseEntity<String> updateDescription(@PathVariable Integer clubId, @RequestBody ClubDto dto){
+//        Optional<Club> optClub = clubRepository.findById(clubId);
+//        Club club = null;
+//
+//        if (optClub.isPresent()){
+//            club = optClub.get();
+//            dto.setClubMessage();
+//            club.setClubMessage(dto.getClubMessage());
+//            clubRepository.save(club);
+//        }
+//
+//        return  ResponseEntity.ok("Received String: " + dto.getClubMessage());
+//    }
 }
