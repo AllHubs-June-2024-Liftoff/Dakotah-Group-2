@@ -4,8 +4,6 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Description = ({ clubId, onRefresh, hideDescription }) => {
-    const navigate = useNavigate();
-
     const [newDescription, setNewDescription] = useState("");
 
     const submitDescription = async (e) => {
