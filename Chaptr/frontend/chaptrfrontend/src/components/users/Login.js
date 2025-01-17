@@ -10,8 +10,8 @@ export default function Login({ darkMode }) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    localStorage.removeItem("user");
-    localStorage.removeItem("tbrList");
+    sessionStorage.removeItem("user");
+    sessionStorage.removeItem("tbrList");
 
     if (!password) {
       alert("Password must not be blank and should be at least 5 characters.");
@@ -43,8 +43,7 @@ export default function Login({ darkMode }) {
       const user = response.data;
 
       if (user && user.id) {
-        localStorage.setItem("user", JSON.stringify(user));
-        console.log("User logged in: ", user);
+        sessionStorage.setItem("user", JSON.stringify(user));
         navigate("/Profile");
       } else {
         console.log("No user data returned");

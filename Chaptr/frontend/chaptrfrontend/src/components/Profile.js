@@ -9,7 +9,7 @@ export default function Profile({ darkMode }) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
+    const storedUser = sessionStorage.getItem("user");
 
     if (storedUser) {
       try {
@@ -25,7 +25,7 @@ export default function Profile({ darkMode }) {
     }
 
     const handleStorageChange = () => {
-      const updatedUser = localStorage.getItem("user");
+      const updatedUser = sessionStorage.getItem("user");
       if (updatedUser) {
         try {
           const parsedUser = JSON.parse(updatedUser);
@@ -49,7 +49,7 @@ export default function Profile({ darkMode }) {
         `http://localhost:8080/tbr/email/${userEmail}`
       );
       setTbr(response.data);
-      localStorage.setItem("tbrList", JSON.stringify(response.data));
+      sessionStorage.setItem("tbrList", JSON.stringify(response.data));
     } catch (error) {
       console.error("Error fetching TBR Lists:", error);
     }
@@ -63,7 +63,7 @@ export default function Profile({ darkMode }) {
     } else {
       try {
         await axios.delete(`http://localhost:8080/tbr/${tbr.id}`);
-        localStorage.removeItem("tbrList");
+        sessionStorage.removeItem("tbrList");
         alert("TBR List deleted successfully!");
       } catch (error) {
         console.error(`Error deleting ${user.name}'s TBR List:`, error);

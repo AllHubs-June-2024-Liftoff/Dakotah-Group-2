@@ -6,8 +6,8 @@ export default function NavBar({ darkMode, toggleDarkMode }) {
   const navigate = useNavigate();
 
   const Logout = () => {
-    localStorage.removeItem("user");
-    localStorage.removeItem("tbrList");
+    sessionStorage.removeItem("user");
+    sessionStorage.removeItem("tbrList");
     sessionStorage.removeItem("clubId");
     navigate("/Chaptr");
   };
