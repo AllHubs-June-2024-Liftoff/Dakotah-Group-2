@@ -4,9 +4,11 @@ import { Link, useNavigate } from "react-router-dom";
 
 export default function NavBar({ darkMode, toggleDarkMode }) {
   const navigate = useNavigate();
+  const storedTBR = JSON.parse(localStorage.getItem("tbrList"));
 
   const Logout = () => {
     localStorage.removeItem("user");
+    localStorage.removeItem("tbrList");
     navigate("/Chaptr");
   };
 
@@ -41,6 +43,18 @@ export default function NavBar({ darkMode, toggleDarkMode }) {
             to="/Profile"
           >
             Profile
+          </Button>
+
+          <Button
+            variant="contained"
+            component={Link}
+            sx={{
+              marginRight: 2,
+              backgroundColor: "#92B9BD",
+            }}
+            to="/ClubsList"
+          >
+            Clubs
           </Button>
 
           <Button

@@ -23,8 +23,6 @@ public class Book extends AbstractEntity {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private String publicationDate;
 
-
-
     @OneToMany(mappedBy = "bookOfTheMonth")
     private final List<Club> clubs = new ArrayList<>();
 
