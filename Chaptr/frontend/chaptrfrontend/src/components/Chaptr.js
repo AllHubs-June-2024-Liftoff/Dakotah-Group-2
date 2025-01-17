@@ -2,7 +2,7 @@ import React from "react";
 import Login from "../components/users/Login";
 import { useNavigate } from "react-router-dom";
 
-export default function Chaptr() {
+export default function Chaptr({ darkMode }) {
   const navigate = useNavigate();
 
   const user = JSON.parse(sessionStorage.getItem("user"));
@@ -14,7 +14,7 @@ export default function Chaptr() {
   return (
     <div>
       <h1>Welcome to Chaptr</h1>
-      <Login />
+      <Login darkMode={darkMode} />
     </div>
   );
 }
