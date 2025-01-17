@@ -4,7 +4,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 export default function EditUser({ darkMode }) {
-  const existingUser = JSON.parse(localStorage.getItem("user")) || {};
+  const existingUser = JSON.parse(sessionStorage.getItem("user")) || {};
   const navigate = useNavigate();
   const inputRef = useRef();
   const [user, setUser] = useState({
@@ -20,11 +20,10 @@ export default function EditUser({ darkMode }) {
   const { firstName, lastName, location, pwHash, verifyPassword } = user;
 
   useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem("user"));
+    const storedUser = JSON.parse(sessionStorage.getItem("user"));
     if (storedUser) {
       setUser((prev) => ({
         ...prev,
-        ...storedUser,
       }));
     }
   }, []);
@@ -52,7 +51,7 @@ export default function EditUser({ darkMode }) {
       setImagePreview(URL.createObjectURL(file));
 
       const updatedUser = { ...user, userImage: updatedImageUrl };
-      localStorage.setItem("user", JSON.stringify(updatedUser));
+      sessionStorage.setItem("user", JSON.stringify(updatedUser));
     } catch (error) {
       console.error("Image upload failed:", error);
       alert("Failed to upload image.");

@@ -3,7 +3,7 @@ import axios from "axios";
 
 export default function BookCard(props) {
   const addToTBR = async () => {
-    const storedUser = JSON.parse(localStorage.getItem("user"));
+    const storedUser = JSON.parse(sessionStorage.getItem("user"));
 
     if (!storedUser) {
       alert("User is not logged in.");
