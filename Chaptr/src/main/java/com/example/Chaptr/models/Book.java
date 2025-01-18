@@ -3,7 +3,6 @@ package com.example.Chaptr.models;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,8 +18,6 @@ public class Book extends AbstractEntity {
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private String publicationDate;
-
-
 
     @OneToMany(mappedBy = "bookOfTheMonth")
     private final List<Club> clubs = new ArrayList<>();

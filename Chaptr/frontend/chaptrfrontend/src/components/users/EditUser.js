@@ -138,7 +138,7 @@ export default function EditUser({ darkMode }) {
         updatedUser
       );
 
-      localStorage.setItem("user", JSON.stringify(updatedUser));
+      sessionStorage.setItem("user", JSON.stringify(updatedUser));
       setUser(updatedUser);
       navigate("/Profile");
     } catch (error) {

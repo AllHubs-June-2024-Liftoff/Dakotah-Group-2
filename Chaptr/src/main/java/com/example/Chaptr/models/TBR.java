@@ -20,10 +20,13 @@ public class TBR extends AbstractEntity {
     @JsonIgnore
     private User user;
 
-    public TBR(User user, List<Book> tbrBooks) {
+    private String name;
+
+    public TBR(User user, List<Book> tbrBooks, String name) {
         super();
         this.user = user;
         this.tbr = tbrBooks != null ? tbrBooks : new ArrayList<>();
+        this.name = name;
     }
 
     public TBR() {}
@@ -45,7 +48,7 @@ public class TBR extends AbstractEntity {
     }
 
     public void addToTBR(Book bookToAdd) {
-        if (!tbr.contains(bookToAdd)) {
+        if (bookToAdd != null && !tbr.contains(bookToAdd)) {
             tbr.add(bookToAdd);
         }
     }
@@ -55,10 +58,20 @@ public class TBR extends AbstractEntity {
     }
 
     public void removeFromTBR(Book bookToRemove) {
-        tbr.remove(bookToRemove);
+        if (bookToRemove != null) {
+            tbr.remove(bookToRemove);
+        }
     }
 
     public void clearTBR() {
         tbr.clear();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

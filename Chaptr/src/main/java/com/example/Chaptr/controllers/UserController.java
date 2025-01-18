@@ -56,9 +56,8 @@ public class UserController {
             return ResponseEntity.badRequest().body(null);
         }
         newUser.setPwHash(passwordEncoder.encode(newUser.getPwHash()));
-
         newUser.setName(newUser.getFirstName(), newUser.getLastName());
-
+        newUser.setTbr(null);
         User savedUser = userRepository.save(newUser);
 
         return ResponseEntity.ok(savedUser);

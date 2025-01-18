@@ -3,17 +3,15 @@ import axios from "axios";
 
 export default function BookCard(props) {
   const addToTBR = async () => {
-    const storedUser = JSON.parse(sessionStorage.getItem("user"));
+    const existingUser = JSON.parse(sessionStorage.getItem("user"));
 
-    if (!storedUser) {
+    if (!existingUser) {
       alert("User is not logged in.");
       return;
     }
-
     const formattedAuthor = Array.isArray(props.author)
       ? props.author
       : [props.author];
-
     const bookData = {
       id: props.id,
       name: props.title,
@@ -21,45 +19,39 @@ export default function BookCard(props) {
       bookCover: props.image,
       publicationDate: props.publishedDate,
     };
-
     console.log("Sending book data:", bookData);
 
     try {
-      const addBookResponse = await axios.post(
+      const newBookResponse = await axios.post(
         "http://localhost:8080/addBook",
         bookData
       );
-      console.log("Book added:", addBookResponse.data);
-
-      const addedBook = addBookResponse.data;
-
+      console.log("Book added:", newBookResponse.data);
+      const userBook = newBookResponse.data;
       const tbrResponse = await axios.get(
-        `http://localhost:8080/tbr/email/${storedUser.email}`
+        `http://localhost:8080/tbr/email/${existingUser.email}`
       );
 
-      if (tbrResponse.status === 404) {
-        console.log(`Creating TBR List for: ${storedUser.name}`);
-
+      if (
+        tbrResponse.status === 404 ||
+        !tbrResponse.data ||
+        !tbrResponse.data.id
+      ) {
+        console.log(`Creating TBR List for: ${existingUser.name}`);
         const newTBRResponse = await axios.post(
-          `http://localhost:8080/newTbr/email/${storedUser.email}`,
-          { bookId: addedBook.id }
+          `http://localhost:8080/newTbr/email/${existingUser.email}`,
+          { bookId: userBook.id }
         );
         console.log("New TBR created:", newTBRResponse.data);
         alert("Book added to TBR list");
       } else {
         const addToTBRResponse = await axios.put(
-          `http://localhost:8080/tbr/${storedUser.email}`,
-          {
-            id: addedBook.id,
-            name: addedBook.name,
-            author: addedBook.author,
-            bookCover: addedBook.bookCover,
-            publicationDate: addedBook.publicationDate,
-          }
+          `http://localhost:8080/tbr/${existingUser.email}`,
+          userBook
         );
 
         if (addToTBRResponse.status === 200) {
-          alert(`${addedBook.name} added to ${storedUser.name}'s TBR list`);
+          alert(`${userBook.name} added to ${existingUser.name}'s TBR list`);
         }
       }
     } catch (error) {

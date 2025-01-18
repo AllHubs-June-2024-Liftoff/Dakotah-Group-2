@@ -47,6 +47,8 @@ public class TBRController {
             } else {
                 TBR newTBR = new TBR();
                 newTBR.setUser(user);
+                String tbrName = user.getName() + "'s TBR List";
+                newTBR.setName(tbrName);
                 tbrRepository.save(newTBR);
 
                 return ResponseEntity.status(HttpStatus.CREATED).body(newTBR);
@@ -69,23 +71,18 @@ public class TBRController {
                 return ResponseEntity.status(HttpStatus.CONFLICT)
                         .body("User already has a TBR list.");
             }
-
             TBR userTBR = new TBR();
             userTBR.setUser(user);
-            user.setTbr(userTBR);
-
-            if (userTBR.getName() == null || userTBR.getName().isEmpty()) {
-                userTBR.setName(user.getName() + "'s TBR List");
-            }
+            String tbrName = user.getName() + "'s TBR List";
+            userTBR.setName(tbrName);
 
             Optional<Book> existingBook = bookRepository.findById(bookId);
             if (existingBook.isPresent()) {
                 Book book = existingBook.get();
                 userTBR.addToTBR(book);
-
                 tbrRepository.save(userTBR);
+                user.setTbr(userTBR);
                 userRepository.save(user);
-
                 return ResponseEntity.ok(userTBR);
             } else {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND)
@@ -102,54 +99,44 @@ public class TBRController {
     public ResponseEntity<?> updateUserTBR(@RequestBody Book newBook, @PathVariable String email) {
         Optional<User> userOptional = userRepository.findByEmail(email);
 
-        if (userOptional.isPresent()) {
-            User user = userOptional.get();
-
-            Optional<TBR> existingTBROptional = tbrRepository.findByUser(user);
-
-            if (existingTBROptional.isPresent()) {
-                TBR existingTBR = existingTBROptional.get();
-
-                Optional<Book> existingBook = bookRepository.findById(newBook.getId());
-                if (existingBook.isPresent()) {
-                    Book book = existingBook.get();
-                    existingTBR.addToTBR(book);
-
-                    TBR updatedTBR = tbrRepository.save(existingTBR);
-                    userRepository.save(user);
-
-                    return ResponseEntity.ok(updatedTBR);
-                } else {
-                    return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                            .body("Book not found.");
-                }
-            } else {
-                TBR newTBR = new TBR();
-                newTBR.setUser(user);
-
-                Optional<Book> bookOptional = bookRepository.findById(newBook.getId());
-                if (bookOptional.isPresent()) {
-                    Book book = bookOptional.get();
-                    newTBR.addToTBR(book);
-
-                    tbrRepository.save(newTBR);
-                    user.setTbr(newTBR);
-                    userRepository.save(user);
-
-                    return ResponseEntity.ok(newTBR);
-                } else {
-                    return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                            .body("Book not found.");
-                }
-            }
-        } else {
+        if (!userOptional.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("User with this email does not exist.");
+                    .body("User with email " + email + " does not exist.");
         }
+        User user = userOptional.get();
+
+        Optional<TBR> existingTBROptional = tbrRepository.findByUser(user);
+
+        TBR existingTBR;
+        if (existingTBROptional.isPresent()) {
+            existingTBR = existingTBROptional.get();
+        } else {
+            existingTBR = new TBR();
+            existingTBR.setName(user.getName() + "'s TBR List");
+            existingTBR.setUser(user);
+        }
+
+        Optional<Book> existingBookOptional = bookRepository.findById(newBook.getId());
+
+        if (!existingBookOptional.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Book with ID " + newBook.getId() + " not found.");
+        }
+        Book existingBook = existingBookOptional.get();
+
+        if (existingTBR.getTbr().contains(existingBook)) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("Book '" + existingBook.getName() + "' is already in the TBR list.");
+        }
+        existingTBR.addToTBR(existingBook);
+        tbrRepository.save(existingTBR);
+        user.setTbr(existingTBR);
+        userRepository.save(user);
+        return ResponseEntity.ok(existingTBR);
     }
 
     @DeleteMapping("/tbr/{id}")
-    public ResponseEntity<?> deleteUser(@PathVariable("id") Integer id) {
+    public ResponseEntity<?> deleteUserTBR(@PathVariable("id") Integer id) {
         Optional<TBR> tbrOptional = tbrRepository.findById(id);
 
         if (tbrOptional.isPresent()) {
