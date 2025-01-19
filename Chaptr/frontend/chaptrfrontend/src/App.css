@@ -2,26 +2,28 @@
   text-align: center;
 }
 
-
 nav {
   text-align: right;
 }
 
+/* CHAPTR.JS LANDING PAGE */
 
 .chaptr-container {
   display: flex;
 }
-
 
 .chaptr-desc {
   flex: 1;
   padding: 20px;
 }
 
-
 .chaptr-login {
   flex: 1;
   padding: 20px;
+}
+
+.login {
+  padding: 60px;
 }
 
 /* COLOR PALETTE */

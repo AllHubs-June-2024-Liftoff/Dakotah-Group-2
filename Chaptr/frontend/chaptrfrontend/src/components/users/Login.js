@@ -57,7 +57,7 @@ export default function Login({ darkMode }) {
   };
 
   return (
-    <div
+    <div className="login"
       style={{
         backgroundColor: darkMode ? "#121212" : "#ffffff",
         color: darkMode ? "#e0e0e0" : "#333",
@@ -73,14 +73,14 @@ export default function Login({ darkMode }) {
         }}
       >
         <Typography
-          variant="h4"
+          variant="h3"
           align="center"
           sx={{
             marginBottom: 3,
             color: darkMode ? "#ff1493" : "#9b4dff",
           }}
         >
-          Login
+          Sign in
         </Typography>
 
         <form onSubmit={handleSubmit}>
