@@ -12,9 +12,37 @@ export default function Chaptr({ darkMode }) {
   }
 
   return (
-    <div>
-      <h1>Welcome to Chaptr</h1>
-      <Login darkMode={darkMode} />
+    <div className="chaptr-container">
+      <div className="chaptr-desc">
+        <div className="logo-title">
+          <i class="fa-regular fa-book"></i>
+          <h1>Chaptr</h1>
+        </div>
+
+
+        <h2>Discover your next favorite book</h2>
+        <p>Search through over 40 million books to start your next adventure</p> <br />
+
+
+        <h2>Save to your TBR</h2>
+        <p>Keep all the books you want to read in one place</p><br />
+
+
+        <h2>Join a book club</h2>
+        <p>Start a book club with your friends and view the book of the month</p><br />
+
+
+        <h2>Compare TBR Lists</h2>
+        <p>Can't decide on the club's next read? View TBR lists of other memebers to choose which book you'll discuss next</p><br />
+       
+      </div>
+
+
+      <div className="chaptr-login">
+        <Login darkMode={darkMode} />
+      </div>
+     
+     
     </div>
   );
 }
