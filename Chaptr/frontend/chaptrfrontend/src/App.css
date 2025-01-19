@@ -16,7 +16,6 @@ nav {
   flex: 1;
   padding: 50px;
   text-align: left;
-
 }
 
 .chaptr-login {
@@ -28,6 +27,11 @@ nav {
   padding: 60px;
 }
 
+.logo-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
 /* COLOR PALETTE */
 /* purple #5F464B */
 /* orange  #CB793A*/
