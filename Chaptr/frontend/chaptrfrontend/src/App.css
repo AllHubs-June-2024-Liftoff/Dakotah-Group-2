@@ -2,10 +2,27 @@
   text-align: center;
 }
 
+
 nav {
   text-align: right;
 }
 
+
+.chaptr-container {
+  display: flex;
+}
+
+
+.chaptr-desc {
+  flex: 1;
+  padding: 20px;
+}
+
+
+.chaptr-login {
+  flex: 1;
+  padding: 20px;
+}
 
 /* COLOR PALETTE */
 /* purple #5F464B */
@@ -13,3 +30,5 @@ nav {
 /* green #56876D */
 /* offwhite #F2E5D7 */
 /* light blue #92B9BD */
+
+

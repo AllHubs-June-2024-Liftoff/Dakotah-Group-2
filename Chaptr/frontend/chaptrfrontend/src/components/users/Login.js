@@ -61,11 +61,6 @@ export default function Login({ darkMode }) {
       style={{
         backgroundColor: darkMode ? "#121212" : "#ffffff",
         color: darkMode ? "#e0e0e0" : "#333",
-        height: "50vh",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        padding: "12rem",
       }}
     >
       <Paper
