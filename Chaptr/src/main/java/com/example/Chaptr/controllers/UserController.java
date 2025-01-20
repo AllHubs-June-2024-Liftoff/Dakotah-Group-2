@@ -24,7 +24,6 @@ import static org.springframework.http.MediaType.IMAGE_JPEG_VALUE;
 import static org.springframework.http.MediaType.IMAGE_PNG_VALUE;
 
 @RestController
-@CrossOrigin("http://localhost:3000")
 public class UserController {
 
     @Autowired
@@ -42,6 +41,12 @@ public class UserController {
     @GetMapping("/users")
     public List<User> getAllUsers() {
         return (List<User>) userRepository.findAll();
+    }
+
+    @GetMapping("/owner/{id}")
+    public Optional<User> profileOwner(@PathVariable("id") Integer id){
+        Optional<User> owner = userRepository.findById(id);
+        return owner;
     }
 
     @PostMapping("/register")

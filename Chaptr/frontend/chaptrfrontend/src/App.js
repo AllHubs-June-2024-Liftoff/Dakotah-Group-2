@@ -9,6 +9,7 @@ import EditUser from "./components/users/EditUser";
 import Club from "./components/club/Club";
 import ClubsList from "./components/club/ClubsList";
 import CreateClub from "./components/club/CreateClub";
+import ProfileOwner from "./components/users/ProfileOwner";
 import {
   BrowserRouter as Router,
   Routes,
@@ -40,6 +41,10 @@ function App() {
             <Route path="/" element={<Navigate to="/Chaptr" />} />
             <Route path="/Chaptr" element={<Chaptr darkMode={darkMode} />} />
             <Route path="/Profile" element={<Profile darkMode={darkMode} />} />
+            <Route
+              path="/ProfileOwner/:id"
+              element={<ProfileOwner darkMode={darkMode} />}
+            />
             <Route
               path="/EditUser"
               element={<EditUser darkMode={darkMode} />}

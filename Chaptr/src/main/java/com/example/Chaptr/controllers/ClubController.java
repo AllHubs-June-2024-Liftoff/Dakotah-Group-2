@@ -17,7 +17,6 @@ import java.util.Optional;
 import java.util.Set;
 
 @RestController
-@CrossOrigin("http://localhost:3000")
 @RequestMapping("club")
 public class ClubController {
 

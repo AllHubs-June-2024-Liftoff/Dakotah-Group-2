@@ -135,6 +135,14 @@ const Club = ({ darkMode }) => {
               >
                 Members
               </th>
+              <th
+                style={{
+                  padding: "10px",
+                  border: `1px solid ${darkMode ? "#444" : "#ccc"}`,
+                }}
+              >
+                View Profile
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -145,6 +153,16 @@ const Club = ({ darkMode }) => {
                   style={{ backgroundColor: darkMode ? "#333" : "#fafafa" }}
                 >
                   <td>{member.name}</td>
+                  <td>
+                    <Button
+                      onClick={() => navigate(`/ProfileOwner/${member.id}`)}
+                      variant="contained"
+                      color="primary"
+                      style={{ backgroundColor: "#9b4dff" }}
+                    >
+                      {member.firstName}'s profile
+                    </Button>
+                  </td>
                 </tr>
               ))
             ) : (
