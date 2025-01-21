@@ -84,13 +84,14 @@ public class ClubController {
 
     @PostMapping("{clubId}/book")
 
-    public void updateBOTM(@PathVariable int clubId, Book newBook){
+    public void updateBOTM(@PathVariable int clubId, @RequestBody Book newBook){
         Optional<Club> optClub = clubRepository.findById(clubId);
         Club club = null;
 
         if (optClub.isPresent()){
             club = optClub.get();
             club.setBookOfTheMonth(newBook);
+            bookRepository.save(newBook);
         }
     }
 
