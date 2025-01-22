@@ -74,10 +74,11 @@ export default function Login({ darkMode }) {
       >
         <Typography
           variant="h3"
-          align="center"
+          align="left"
           sx={{
             marginBottom: 3,
             color: darkMode ? "#ff1493" : "#9b4dff",
+            fontWeight: 600,
           }}
         >
           Sign in
