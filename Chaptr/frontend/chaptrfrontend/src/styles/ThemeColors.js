@@ -8,6 +8,8 @@ export const colors = {
     blueGrey: "#333",
     silverGrey: "#CCCCCC",
     white: "ffffff",
+    whitesmoke: "#f5f5f5",
+    whitersmoke: "#fafafa",
     offWhite: "#F2E5D7",    
   };
 
