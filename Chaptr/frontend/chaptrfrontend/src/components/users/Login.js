@@ -68,9 +68,12 @@ export default function Login({ darkMode }) {
       <Paper
         elevation={3}
         sx={{
-          padding: "90px",
+          padding: "4rem",
           borderRadius: "8px",
-          width: "400px",
+          width: "90%",
+          maxWidth: "400px",
+          minWidth: "325px",
+          margin: "0 auto",
           backgroundColor: darkMode ? colors.black : colors.white,
         }}
       >

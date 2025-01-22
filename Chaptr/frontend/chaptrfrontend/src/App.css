@@ -14,7 +14,7 @@ nav {
 
 .chaptr-desc {
   flex: 1;
-  padding: 100px;
+  padding: 3rem;
   text-align: left;
 }
 
@@ -25,7 +25,7 @@ nav {
 
 .login {
   padding: 60px;
-  margin-top: 40px;
+  margin-top: 2rem;
 }
 
 .logo-title {
@@ -34,4 +34,22 @@ nav {
   gap: 10px;
 }
 
+/* Mobile view stacked layout */
+
+@media (max-width: 768px) {
+  .chaptr-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .login {
+    padding: 0;
+  }
+  .chaptr-login {
+    order: -1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
 
