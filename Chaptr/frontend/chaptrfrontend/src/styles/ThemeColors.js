@@ -12,4 +12,6 @@ export const colors = {
     lightGrey: "e0e0e0",
     silverGrey: "#CCCCCC"
   };
+
+  /*old light blue #92B9BD */
   
