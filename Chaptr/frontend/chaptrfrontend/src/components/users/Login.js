@@ -39,7 +39,6 @@ export default function Login({ darkMode }) {
         email: email,
         pwHash: password,
       });
-
       const user = response.data;
 
       if (user && user.id) {
@@ -52,7 +51,6 @@ export default function Login({ darkMode }) {
       console.error("Login error:", error);
       alert("Login failed. Please check your credentials.");
     }
-
     console.log("Logging in with:", email);
   };
 

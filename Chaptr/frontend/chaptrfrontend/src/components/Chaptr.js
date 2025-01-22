@@ -5,9 +5,9 @@ import { useNavigate } from "react-router-dom";
 export default function Chaptr({ darkMode }) {
   const navigate = useNavigate();
 
-  const user = JSON.parse(sessionStorage.getItem("user"));
+  const storedUser = JSON.parse(sessionStorage.getItem("user"));
   useEffect(() => {
-    if (user) {
+    if (storedUser) {
       navigate("/Profile");
     }
   });

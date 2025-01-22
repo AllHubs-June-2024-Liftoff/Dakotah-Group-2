@@ -15,7 +15,12 @@ export default function Profile({ darkMode }) {
       try {
         const parsedUser = JSON.parse(storedUser);
         setUser(parsedUser);
-        loadTBRLists(parsedUser.email);
+        const storedTbrList = sessionStorage.getItem("tbrList");
+        if (storedTbrList) {
+          setTbr(JSON.parse(storedTbrList));
+        } else {
+          loadTBRLists(parsedUser.email);
+        }
       } catch (error) {
         console.error("Error parsing user data:", error);
         navigate("/Chaptr");
@@ -23,24 +28,6 @@ export default function Profile({ darkMode }) {
     } else {
       navigate("/Chaptr");
     }
-
-    const handleStorageChange = () => {
-      const updatedUser = sessionStorage.getItem("user");
-      if (updatedUser) {
-        try {
-          const parsedUser = JSON.parse(updatedUser);
-          setUser(parsedUser);
-          loadTBRLists(parsedUser.email);
-        } catch (error) {
-          console.error("Error parsing updated user data:", error);
-        }
-      }
-    };
-
-    window.addEventListener("storage", handleStorageChange);
-    return () => {
-      window.removeEventListener("storage", handleStorageChange);
-    };
   }, [navigate]);
 
   const loadTBRLists = async (userEmail) => {
@@ -58,16 +45,18 @@ export default function Profile({ darkMode }) {
   const onDelete = async (e) => {
     e.preventDefault();
 
-    if (!tbr.tbr || tbr.tbr.length === 0) {
+    if (!tbr.tbr.length) {
       alert(`${user.firstName}'s TBR List is empty!`);
-    } else {
-      try {
-        await axios.delete(`http://localhost:8080/tbr/${tbr.id}`);
-        sessionStorage.removeItem("tbrList");
-        alert("TBR List deleted successfully!");
-      } catch (error) {
-        console.error(`Error deleting ${user.name}'s TBR List:`, error);
-      }
+      return;
+    }
+
+    try {
+      await axios.delete(`http://localhost:8080/tbr/${tbr.id}`);
+      sessionStorage.removeItem("tbrList");
+      alert(`${user.firstName}TBR List deleted successfully!`);
+      setTbr({ tbr: [] });
+    } catch (error) {
+      console.error(`Error deleting ${user.firstName}'s TBR List:`, error);
     }
   };
 
@@ -77,7 +66,7 @@ export default function Profile({ darkMode }) {
 
   return (
     <div>
-      <p>{`${user.firstName + " " + user.lastName}'s profile`}</p>
+      <p>{`${user.firstName} ${user.lastName}'s profile`}</p>
 
       <div>
         <img
@@ -88,10 +77,7 @@ export default function Profile({ darkMode }) {
         <Button
           variant="contained"
           component={Link}
-          sx={{
-            marginRight: 2,
-            backgroundColor: "#92B9BD",
-          }}
+          sx={{ marginRight: 2, backgroundColor: "#92B9BD" }}
           to="/EditUser"
         >
           Upload Image
@@ -110,36 +96,16 @@ export default function Profile({ darkMode }) {
         >
           <thead>
             <tr style={{ backgroundColor: darkMode ? "#121212" : "#f5f5f5" }}>
-              <th
-                style={{
-                  padding: "10px",
-                  border: `1px solid ${darkMode ? "#444" : "#ccc"}`,
-                }}
-              >
+              <th style={{ padding: "10px", border: "1px solid #ccc" }}>
                 Name
               </th>
-              <th
-                style={{
-                  padding: "10px",
-                  border: `1px solid ${darkMode ? "#444" : "#ccc"}`,
-                }}
-              >
+              <th style={{ padding: "10px", border: "1px solid #ccc" }}>
                 Cover
               </th>
-              <th
-                style={{
-                  padding: "10px",
-                  border: `1px solid ${darkMode ? "#444" : "#ccc"}`,
-                }}
-              >
+              <th style={{ padding: "10px", border: "1px solid #ccc" }}>
                 Author
               </th>
-              <th
-                style={{
-                  padding: "10px",
-                  border: `1px solid ${darkMode ? "#444" : "#ccc"}`,
-                }}
-              >
+              <th style={{ padding: "10px", border: "1px solid #ccc" }}>
                 Publication Date
               </th>
             </tr>
@@ -149,42 +115,20 @@ export default function Profile({ darkMode }) {
               tbr.tbr.map((book) => (
                 <tr
                   key={book.id}
-                  style={{
-                    backgroundColor: darkMode ? "#333" : "#fafafa",
-                  }}
+                  style={{ backgroundColor: darkMode ? "#333" : "#fafafa" }}
                 >
-                  <td
-                    style={{
-                      padding: "8px",
-                      border: `1px solid ${darkMode ? "#444" : "#ccc"}`,
-                    }}
-                  >
+                  <td style={{ padding: "8px", border: "1px solid #ccc" }}>
                     {book.name}
                   </td>
-                  <td
-                    style={{
-                      padding: "8px",
-                      border: `1px solid ${darkMode ? "#444" : "#ccc"}`,
-                    }}
-                  >
+                  <td style={{ padding: "8px", border: "1px solid #ccc" }}>
                     <img src={book.bookCover} alt={book.name} width="50" />
                   </td>
-                  <td
-                    style={{
-                      padding: "8px",
-                      border: `1px solid ${darkMode ? "#444" : "#ccc"}`,
-                    }}
-                  >
+                  <td style={{ padding: "8px", border: "1px solid #ccc" }}>
                     {Array.isArray(book.author)
                       ? book.author.join(", ")
                       : book.author}
                   </td>
-                  <td
-                    style={{
-                      padding: "8px",
-                      border: `1px solid ${darkMode ? "#444" : "#ccc"}`,
-                    }}
-                  >
+                  <td style={{ padding: "8px", border: "1px solid #ccc" }}>
                     {book.publicationDate}
                   </td>
                 </tr>
@@ -196,7 +140,7 @@ export default function Profile({ darkMode }) {
                   style={{
                     textAlign: "center",
                     padding: "10px",
-                    border: `1px solid ${darkMode ? "#444" : "#ccc"}`,
+                    border: "1px solid #ccc",
                   }}
                 >
                   No books in TBR
@@ -205,26 +149,19 @@ export default function Profile({ darkMode }) {
             )}
           </tbody>
         </table>
+
         <Button
           variant="contained"
           component={Link}
-          sx={{
-            marginRight: 2,
-            backgroundColor: "#92B9BD",
-          }}
+          sx={{ marginRight: 2, backgroundColor: "#92B9BD" }}
           to="/SearchTBR"
         >
           Search Books
         </Button>
         <Button
-          onClick={(e) => onDelete(e)}
+          onClick={onDelete}
           variant="contained"
-          component={Link}
-          sx={{
-            marginRight: 2,
-            backgroundColor: "#92B9BD",
-          }}
-          to="/Profile"
+          sx={{ marginRight: 2, backgroundColor: "#92B9BD" }}
         >
           Delete TBR List
         </Button>

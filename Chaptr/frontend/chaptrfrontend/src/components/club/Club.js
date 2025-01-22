@@ -13,10 +13,10 @@ const Club = ({ darkMode }) => {
   const navigate = useNavigate();
 
   const clubId = sessionStorage.getItem("clubId");
-  const user = sessionStorage.getItem("user");
+  const storedUser = sessionStorage.getItem("user");
 
   console.log(`club id: ${clubId}`);
-  console.log(`user: ${user}`);
+  console.log(`user: ${storedUser}`);
 
   const getClub = async () => {
     try {
@@ -34,12 +34,12 @@ const Club = ({ darkMode }) => {
   const joinClub = async (e) => {
     e.preventDefault();
 
-    if (!user) {
+    if (!storedUser) {
       navigate("/Chaptr");
       return;
     }
 
-    const usersEmail = JSON.parse(user);
+    const usersEmail = JSON.parse(storedUser);
     const email = usersEmail.email;
 
     try {
