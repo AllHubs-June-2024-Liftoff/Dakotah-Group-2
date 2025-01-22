@@ -49,6 +49,8 @@ public class TBRController {
                 String tbrName = user.getName() + "'s TBR List";
                 newTBR.setName(tbrName);
                 tbrRepository.save(newTBR);
+                user.setTbr(newTBR);
+                userRepository.save(user);
 
                 return ResponseEntity.status(HttpStatus.CREATED).body(newTBR);
             }

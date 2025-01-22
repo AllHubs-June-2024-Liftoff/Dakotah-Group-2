@@ -16,7 +16,8 @@ public class TBR extends AbstractEntity {
     )
     private List<Book> tbr = new ArrayList<>();
 
-    @OneToOne(mappedBy = "tbr")
+    @OneToOne
+    @JoinColumn(name = "user_id")
     @JsonIgnore
     private User user;
 

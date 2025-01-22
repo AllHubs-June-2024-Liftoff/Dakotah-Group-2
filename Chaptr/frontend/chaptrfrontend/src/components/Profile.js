@@ -29,19 +29,22 @@ export default function Profile({ darkMode }) {
       navigate("/Chaptr");
     }
   }, [navigate]);
-
   const loadTBRLists = async (userEmail) => {
     try {
       const response = await axios.get(
         `http://localhost:8080/tbr/email/${userEmail}`
       );
-      setTbr(response.data);
+
+      if (response.data && response.data.tbr.length === 0) {
+        setTbr({ tbr: [] });
+      } else {
+        setTbr(response.data);
+      }
       sessionStorage.setItem("tbrList", JSON.stringify(response.data));
     } catch (error) {
       console.error("Error fetching TBR Lists:", error);
     }
   };
-
   const onDelete = async (e) => {
     e.preventDefault();
 

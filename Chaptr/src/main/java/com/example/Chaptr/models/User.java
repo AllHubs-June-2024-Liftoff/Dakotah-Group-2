@@ -45,7 +45,7 @@ public class User extends AbstractEntity {
     @JsonBackReference
     private Set<Club> clubs = new HashSet<>();
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "tbr_id")
     @JsonIgnore
     private TBR tbr;
