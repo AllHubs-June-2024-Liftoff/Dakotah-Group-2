@@ -77,7 +77,7 @@ export default function Login({ darkMode }) {
           align="left"
           sx={{
             marginBottom: 3,
-            color: darkMode ? "#AC3570" : "#7A43C7",
+            color: darkMode ? "#C54485" : "#7A43C7",
             fontWeight: 600,
             // commit before changing color scheme
           }}
@@ -106,10 +106,10 @@ export default function Login({ darkMode }) {
                   borderColor: darkMode ? "#444" : "#ccc",
                 },
                 "&:hover fieldset": {
-                  borderColor: darkMode ? "#AC3570" : "#7A43C7",
+                  borderColor: darkMode ? "#C54485" : "#7A43C7",
                 },
                 "&.Mui-focused fieldset": {
-                  borderColor: darkMode ? "#AC3570" : "#7A43C7",
+                  borderColor: darkMode ? "#C54485" : "#7A43C7",
                 },
               },
             }}
@@ -135,10 +135,10 @@ export default function Login({ darkMode }) {
                   borderColor: darkMode ? "#444" : "#ccc",
                 },
                 "&:hover fieldset": {
-                  borderColor: darkMode ? "#AC3570" : "#7A43C7",
+                  borderColor: darkMode ? "#C54485" : "#7A43C7",
                 },
                 "&.Mui-focused fieldset": {
-                  borderColor: darkMode ? "#AC3570" : "#7A43C7",
+                  borderColor: darkMode ? "#C54485" : "#7A43C7",
                 },
               },
             }}
@@ -151,7 +151,7 @@ export default function Login({ darkMode }) {
             color={darkMode ? "secondary" : "primary"}
             sx={{
               marginTop: "16px",
-              backgroundColor: darkMode ? "#AC3570" : "#7A43C7",
+              backgroundColor: darkMode ? "#C54485" : "#7A43C7",
             }}
           >
             Submit
@@ -163,7 +163,7 @@ export default function Login({ darkMode }) {
             color={darkMode ? "secondary" : "primary"}
             sx={{
               marginTop: "16px",
-              backgroundColor: darkMode ? "#AC3570" : "#7A43C7",
+              backgroundColor: darkMode ? "#C54485" : "#7A43C7",
             }}
             to="/Register"
           >
