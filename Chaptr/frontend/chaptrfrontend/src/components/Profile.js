@@ -163,6 +163,7 @@ export default function Profile({ darkMode }) {
         </Button>
         <Button
           onClick={onDelete}
+          onRefresh={loadTBRLists(user.email)}
           variant="contained"
           sx={{ marginRight: 2, backgroundColor: "#92B9BD" }}
         >
