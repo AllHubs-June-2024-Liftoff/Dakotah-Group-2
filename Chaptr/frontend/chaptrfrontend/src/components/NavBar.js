@@ -23,6 +23,9 @@ export default function NavBar({ darkMode, toggleDarkMode }) {
         <div
           style={{
             backgroundColor: darkMode ? colors.black : colors.whitesmoke,
+            width: "100%",
+            display: "flex",
+            justifyContent: "flex-end",
           }}
         >
           {/* Desktop Navigation Buttons */}
