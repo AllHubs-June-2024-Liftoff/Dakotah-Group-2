@@ -58,7 +58,8 @@
   display: none;
   position: absolute;
   top: 2rem;
-  width: 100%;
+  right: 0;
+  width: 8.5rem;
   z-index: 1000;
   flex-direction: column;
   text-align: center;
@@ -66,12 +67,6 @@
 
 .hamburger-menu.open {
   display: flex;
-}
-
-@media (min-width: 769px) {
-  .hamburger-menu {
-    display: none;
-  }
 }
 
 @media (max-width: 768px) {
