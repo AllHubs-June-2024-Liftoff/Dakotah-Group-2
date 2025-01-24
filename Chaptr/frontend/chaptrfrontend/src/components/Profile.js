@@ -4,7 +4,9 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export default function Profile({ darkMode }) {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(
+    JSON.parse(sessionStorage.getItem("user")) || {}
+  );
   const [tbr, setTbr] = useState({ tbr: [] });
   const navigate = useNavigate();
 
@@ -15,12 +17,7 @@ export default function Profile({ darkMode }) {
       try {
         const parsedUser = JSON.parse(storedUser);
         setUser(parsedUser);
-        const storedTbrList = sessionStorage.getItem("tbrList");
-        if (storedTbrList) {
-          setTbr(JSON.parse(storedTbrList));
-        } else {
-          loadTBRLists(parsedUser.email);
-        }
+        loadTBRLists(parsedUser.email);
       } catch (error) {
         console.error("Error parsing user data:", error);
         navigate("/Chaptr");
@@ -34,7 +31,6 @@ export default function Profile({ darkMode }) {
       const response = await axios.get(
         `http://localhost:8080/tbr/email/${userEmail}`
       );
-
       if (response.data && response.data.tbr.length === 0) {
         setTbr({ tbr: [] });
       } else {
@@ -56,10 +52,20 @@ export default function Profile({ darkMode }) {
     try {
       await axios.delete(`http://localhost:8080/tbr/${tbr.id}`);
       sessionStorage.removeItem("tbrList");
-      alert(`${user.firstName}TBR List deleted successfully!`);
+      alert(`${user.firstName} TBR List deleted successfully!`);
       setTbr({ tbr: [] });
     } catch (error) {
       console.error(`Error deleting ${user.firstName}'s TBR List:`, error);
+    }
+  };
+  const removeBook = async (bookId) => {
+    try {
+      await axios.delete(`http://localhost:8080/deleteBook/${bookId}`);
+      alert("Book removed successfully!");
+      loadTBRLists(user.email);
+    } catch (error) {
+      console.error("Error removing book from TBR list:", error);
+      alert("There was an error removing the book.");
     }
   };
 
@@ -86,7 +92,6 @@ export default function Profile({ darkMode }) {
           Upload Image
         </Button>
       </div>
-
       <div>
         <h1>{tbr.name || "My TBR List"}</h1>
 
@@ -111,6 +116,15 @@ export default function Profile({ darkMode }) {
               <th style={{ padding: "10px", border: "1px solid #ccc" }}>
                 Publication Date
               </th>
+              <th style={{ padding: "10px", border: "1px solid #ccc" }}>
+                <Button
+                  onClick={onDelete}
+                  variant="contained"
+                  sx={{ marginRight: 2, backgroundColor: "#92B9BD" }}
+                >
+                  Delete TBR List
+                </Button>
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -134,12 +148,21 @@ export default function Profile({ darkMode }) {
                   <td style={{ padding: "8px", border: "1px solid #ccc" }}>
                     {book.publicationDate}
                   </td>
+                  <td style={{ padding: "8px", border: "1px solid #ccc" }}>
+                    <Button
+                      onClick={() => removeBook(book.id)}
+                      variant="contained"
+                      sx={{ marginRight: 2, backgroundColor: "#92B9BD" }}
+                    >
+                      Remove {book.name}
+                    </Button>
+                  </td>
                 </tr>
               ))
             ) : (
               <tr>
                 <td
-                  colSpan="4"
+                  colSpan="5"
                   style={{
                     textAlign: "center",
                     padding: "10px",
@@ -152,7 +175,6 @@ export default function Profile({ darkMode }) {
             )}
           </tbody>
         </table>
-
         <Button
           variant="contained"
           component={Link}
@@ -160,14 +182,6 @@ export default function Profile({ darkMode }) {
           to="/SearchTBR"
         >
           Search Books
-        </Button>
-        <Button
-          onClick={onDelete}
-          onRefresh={loadTBRLists(user.email)}
-          variant="contained"
-          sx={{ marginRight: 2, backgroundColor: "#92B9BD" }}
-        >
-          Delete TBR List
         </Button>
       </div>
     </div>
