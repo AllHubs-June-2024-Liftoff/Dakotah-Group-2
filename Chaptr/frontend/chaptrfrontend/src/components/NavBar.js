@@ -112,7 +112,9 @@ export default function NavBar({ darkMode, toggleDarkMode }) {
               component={Link}
               to="/Chaptr"
               onClick={toggleMenu}
-              
+              sx={{
+                color: darkMode? colors.pink : colors.purple,
+              }}
             >
               Chaptr
             </Button>
@@ -122,7 +124,9 @@ export default function NavBar({ darkMode, toggleDarkMode }) {
               component={Link}
               to="/Profile"
               onClick={toggleMenu}
-              
+              sx={{
+                color: darkMode? colors.pink : colors.purple,
+              }}
             >
               Profile
             </Button>
@@ -132,7 +136,9 @@ export default function NavBar({ darkMode, toggleDarkMode }) {
               component={Link}
               to="/ClubsList"
               onClick={toggleMenu}
-              
+              sx={{
+                color: darkMode? colors.pink : colors.purple,
+              }}
             >
               Clubs
             </Button>
@@ -140,7 +146,9 @@ export default function NavBar({ darkMode, toggleDarkMode }) {
           <li>
             <Button
               onClick={toggleDarkMode}
-              
+              sx={{
+                color: darkMode? colors.pink : colors.purple,
+              }}
             >
               Dark Mode
             </Button>
@@ -148,7 +156,9 @@ export default function NavBar({ darkMode, toggleDarkMode }) {
           <li>
             <Button
               onClick={Logout}
-              
+              sx={{
+                color: darkMode? colors.pink : colors.purple,
+              }}
             >
               Logout
             </Button>
