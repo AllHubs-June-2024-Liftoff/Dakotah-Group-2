@@ -59,7 +59,7 @@ export default function Login({ darkMode }) {
   return (
     <div className="login"
       style={{
-        backgroundColor: `${darkMode ? colors.black : colors.offWhite} !important`,
+        backgroundColor: `${darkMode ? colors.black : colors.whitesmoke} !important`,
         color: darkMode ? colors.lightGrey : colors.blueGrey,
       }}
     >
