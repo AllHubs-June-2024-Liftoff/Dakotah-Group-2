@@ -42,6 +42,7 @@ export default function NavBar({ darkMode, toggleDarkMode }) {
             width: "100%",
             display: "flex",
             justifyContent: "flex-end",
+            padding: "1rem"
           }}
         >
           {/* Desktop Navigation Buttons */}
