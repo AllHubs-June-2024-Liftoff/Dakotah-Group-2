@@ -107,7 +107,8 @@ export default function NavBar({ darkMode, toggleDarkMode }) {
               component={Link}
               to="/Chaptr"
               onClick={toggleMenu}
-              sx={{ width: "100%", textAlign: "center" }}
+              sx={{ width: "100%", 
+                    textAlign: "center" }}
             >
               Chaptr
             </Button>
@@ -117,7 +118,8 @@ export default function NavBar({ darkMode, toggleDarkMode }) {
               component={Link}
               to="/Profile"
               onClick={toggleMenu}
-              sx={{ width: "100%", textAlign: "center" }}
+              sx={{ width: "100%", 
+                textAlign: "center" }}
             >
               Profile
             </Button>
@@ -127,7 +129,8 @@ export default function NavBar({ darkMode, toggleDarkMode }) {
               component={Link}
               to="/ClubsList"
               onClick={toggleMenu}
-              sx={{ width: "100%", textAlign: "center" }}
+              sx={{ width: "100%", 
+                textAlign: "center" }}
             >
               Clubs
             </Button>
@@ -135,7 +138,8 @@ export default function NavBar({ darkMode, toggleDarkMode }) {
           <li>
             <Button
               onClick={toggleDarkMode}
-              sx={{ width: "100%", textAlign: "center" }}
+              sx={{ width: "100%", 
+                textAlign: "center" }}
             >
               Dark Mode
             </Button>
@@ -143,7 +147,8 @@ export default function NavBar({ darkMode, toggleDarkMode }) {
           <li>
             <Button
               onClick={Logout}
-              sx={{ width: "100%", textAlign: "center" }}
+              sx={{ width: "100%", 
+                textAlign: "center" }}
             >
               Logout
             </Button>
