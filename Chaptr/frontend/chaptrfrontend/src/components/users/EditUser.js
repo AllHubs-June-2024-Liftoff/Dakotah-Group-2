@@ -1,55 +1,40 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import { TextField, Button, Paper, Typography } from "@mui/material";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 export default function EditUser({ darkMode }) {
-  const existingUser = JSON.parse(sessionStorage.getItem("user")) || {};
+  const storedUser = JSON.parse(sessionStorage.getItem("user")) || {};
   const navigate = useNavigate();
   const inputRef = useRef();
   const [user, setUser] = useState({
-    firstName: existingUser.firstName || "",
-    lastName: existingUser.lastName || "",
-    email: existingUser.email || "",
-    location: existingUser.location || "",
+    firstName: storedUser.firstName || "",
+    lastName: storedUser.lastName || "",
+    email: storedUser.email || "",
+    location: storedUser.location || "",
     pwHash: "",
     verifyPassword: "",
-    userImage: existingUser.userImage || "",
+    userImage: storedUser.userImage || "",
   });
-  const [imagePreview, setImagePreview] = useState(existingUser.userImage);
+  const [imagePreview, setImagePreview] = useState(storedUser.userImage);
   const { firstName, lastName, location, pwHash, verifyPassword } = user;
-
-  useEffect(() => {
-    const storedUser = JSON.parse(sessionStorage.getItem("user"));
-    if (storedUser) {
-      setUser((prev) => ({
-        ...prev,
-      }));
-    }
-  }, []);
-
   const selectImage = () => {
     inputRef.current.click();
   };
-
   const uploadImage = async (file) => {
     if (!file) return;
-
     const formData = new FormData();
     formData.append("file", file, file.name);
-    formData.append("email", existingUser.email);
+    formData.append("email", storedUser.email);
 
     try {
       const response = await axios.put("http://localhost:8080/image", formData);
       const updatedImageUrl = response.data.imageUrl || user.userImage;
-
       setUser((prev) => ({
         ...prev,
         userImage: updatedImageUrl,
       }));
-
       setImagePreview(URL.createObjectURL(file));
-
       const updatedUser = { ...user, userImage: updatedImageUrl };
       sessionStorage.setItem("user", JSON.stringify(updatedUser));
     } catch (error) {
@@ -57,11 +42,9 @@ export default function EditUser({ darkMode }) {
       alert("Failed to upload image.");
     }
   };
-
   const onInputChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
-
   const onSubmit = async (e) => {
     e.preventDefault();
 
@@ -125,22 +108,22 @@ export default function EditUser({ darkMode }) {
       return;
     }
 
-    if (!existingUser.email) {
+    if (!storedUser.email) {
       alert("Email is missing.");
       return;
     }
-
-    const updatedUser = { ...user, email: existingUser.email };
+    const updatedUser = { ...user, email: storedUser.email };
 
     try {
       await axios.put(
-        `http://localhost:8080/editUser/${existingUser.email}`,
+        `http://localhost:8080/editUser/${storedUser.email}`,
         updatedUser
       );
-
       sessionStorage.setItem("user", JSON.stringify(updatedUser));
       setUser(updatedUser);
-      navigate("/Profile");
+      setTimeout(() => {
+        navigate("/Profile");
+      }, 500);
     } catch (error) {
       console.error("Failed to update user information:", error);
       alert(
@@ -149,7 +132,6 @@ export default function EditUser({ darkMode }) {
       navigate("/Profile");
     }
   };
-
   const onCancel = () => {
     navigate("/Profile");
   };
@@ -165,8 +147,8 @@ export default function EditUser({ darkMode }) {
     >
       <div>
         <img
-          src={imagePreview || existingUser.userImage}
-          alt={existingUser.firstName}
+          src={imagePreview || storedUser.userImage}
+          alt={storedUser.firstName}
           style={{ width: "100px", height: "100px", borderRadius: "50%" }}
         />
         <div>

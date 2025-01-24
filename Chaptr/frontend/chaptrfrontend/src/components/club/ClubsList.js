@@ -6,57 +6,57 @@ import { colors } from "../../styles/ThemeColors";
 
 
 const ClubsList = ({ darkMode }) => {
-  const navigate = useNavigate();
-  const [clubs, setClubs] = useState([]);
+    const navigate = useNavigate();
+    const [clubs, setClubs] = useState([]);
 
-  useEffect(() => {
-    const storedUser = sessionStorage.getItem("user");
+    useEffect(() => {
+        const storedUser = sessionStorage.getItem("user");
 
-    if (storedUser) {
-      try {
-        getClubs();
-      } catch (error) {
-        console.error("Please login", error);
-        navigate("/Chaptr");
-      }
-    } else {
-      navigate("/Chaptr");
-    }
-  }, [navigate]);
-  const getClubs = async () => {
-    const response = await axios.get("http://localhost:8080/club");
-    setClubs(response.data);
-    sessionStorage.setItem("clubId", null);
-  };
+        if (storedUser) {
+            try {
+                getClubs();
+            } catch (error) {
+                console.error("Please login", error);
+                navigate("/Chaptr");
+            }
+        } else {
+            navigate("/Chaptr");
+        }
+    }, [navigate]);
+    const getClubs = async () => {
+        const response = await axios.get("http://localhost:8080/club");
+        setClubs(response.data);
+        sessionStorage.setItem("clubId", null);
+    };
 
-  const navToClub = () => {
-    navigate("/Club");
-  };
+    const navToClub = () => {
+        navigate("/Club");
+    };
 
-  console.log(version);
+    console.log(version);
 
-  return (
-    <>
-      <div>
-        <span>
-          <h2>Clubs</h2>
+    return (
+        <>
+            <div>
+                <span>
+                    <h2>Clubs</h2>
 
-          <Button
-            variant="contained"
-            color="primary"
-            style={{
-              marginRight: "5px",
-              marginBottom: "10px",
-              marginTop: "-10px",
-              alignItems: "right",
-              backgroundColor: colors.purple,
-            }}
-            onClick={() => navigate("/CreateClub")}
-          >
-            Create Club
-          </Button>
-        </span>
-      </div>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        style={{
+                            marginRight: "5px",
+                            marginBottom: "10px",
+                            marginTop: "-10px",
+                            alignItems: "right",
+                            backgroundColor: colors.purple,
+                        }}
+                        onClick={() => navigate("/CreateClub")}
+                    >
+                        Create Club
+                    </Button>
+                </span>
+            </div>
 
       <table
         style={{
