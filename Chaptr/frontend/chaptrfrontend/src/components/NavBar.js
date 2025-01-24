@@ -2,13 +2,29 @@ import React from "react";
 import Button from "@mui/material/Button";
 import { Link, useNavigate } from "react-router-dom";
 import { colors } from "../styles/ThemeColors";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function NavBar({ darkMode, toggleDarkMode }) {
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
 
   const toggleMenu = () => setMenuOpen((prev) => !prev);
+
+  useEffect (() => {
+    const handleResize = () => {
+      if (window.innerWidth > 768 && menuOpen) {
+        setMenuOpen(false);
+      }
+    };
+  
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+
+  }, [menuOpen]);
 
   const Logout = () => {
     sessionStorage.removeItem("user");
@@ -100,7 +116,7 @@ export default function NavBar({ darkMode, toggleDarkMode }) {
       </nav>
 
       {/* Hamburger Menu */}
-      <nav className={`hamburger-menu ${menuOpen ? "open" : ""}`}>
+      <nav className={`hamburger-menu ${menuOpen ? "open" : ""}`} >
         <ul style={{ 
                     listStyleType: "none", 
                     padding: "1rem",
