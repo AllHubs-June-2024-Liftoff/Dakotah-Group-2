@@ -1,6 +1,7 @@
 import React from "react";
 import Button from "@mui/material/Button";
 import { Link, useNavigate } from "react-router-dom";
+import { colors } from "../styles/ThemeColors";
 
 export default function NavBar({ darkMode, toggleDarkMode }) {
   const navigate = useNavigate();
@@ -17,7 +18,7 @@ export default function NavBar({ darkMode, toggleDarkMode }) {
       <nav>
         <div
           style={{
-            backgroundColor: darkMode ? "#121212" : "#f5f5f5",
+            backgroundColor: darkMode ? colors.black : colors.whitesmoke,
             padding: "10px",
           }}
         >
@@ -26,7 +27,7 @@ export default function NavBar({ darkMode, toggleDarkMode }) {
             component={Link}
             sx={{
               marginRight: 2,
-              backgroundColor: "#92B9BD",
+              backgroundColor: colors.blue,
             }}
             to="/Chaptr"
           >
@@ -38,7 +39,7 @@ export default function NavBar({ darkMode, toggleDarkMode }) {
             component={Link}
             sx={{
               marginRight: 2,
-              backgroundColor: "#92B9BD",
+              backgroundColor: colors.blue,
             }}
             to="/Profile"
           >
@@ -50,7 +51,7 @@ export default function NavBar({ darkMode, toggleDarkMode }) {
             component={Link}
             sx={{
               marginRight: 2,
-              backgroundColor: "#92B9BD",
+              backgroundColor: colors.blue,
             }}
             to="/ClubsList"
           >
@@ -61,7 +62,7 @@ export default function NavBar({ darkMode, toggleDarkMode }) {
             variant="contained"
             color={darkMode ? "secondary" : "primary"}
             onClick={toggleDarkMode}
-            sx={{ marginRight: 2, backgroundColor: "#92B9BD" }}
+            sx={{ marginRight: 2, backgroundColor: colors.blue }}
           >
             Dark Mode
           </Button>
@@ -71,7 +72,7 @@ export default function NavBar({ darkMode, toggleDarkMode }) {
             onClick={Logout}
             sx={{
               marginRight: 2,
-              backgroundColor: "#92B9BD",
+              backgroundColor: colors.blue,
             }}
           >
             Logout
