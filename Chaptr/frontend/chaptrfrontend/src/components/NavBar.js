@@ -92,23 +92,27 @@ export default function NavBar({ darkMode, toggleDarkMode }) {
             className={`hamburger-icon ${menuOpen ? "open" : ""}`}
             onClick={toggleMenu}
           >
-            <span></span>
-            <span></span>
-            <span></span>
+            <span style={{ backgroundColor: darkMode? colors.whitesmoke : colors.black }}></span>
+            <span style={{ backgroundColor: darkMode? colors.whitesmoke : colors.black }}></span>
+            <span style={{ backgroundColor: darkMode? colors.whitesmoke : colors.black }}></span>
           </div>
         </div>
       </nav>
 
       {/* Hamburger Menu */}
       <nav className={`hamburger-menu ${menuOpen ? "open" : ""}`}>
-        <ul style={{ listStyleType: "none", padding: 0 }}>
+        <ul style={{ 
+                    listStyleType: "none", 
+                    padding: "1rem",
+                    textAlign: "right",
+                    backgroundColor: darkMode ? colors.black : colors.whitesmoke,
+                    }}>
           <li>
             <Button
               component={Link}
               to="/Chaptr"
               onClick={toggleMenu}
-              sx={{ width: "100%", 
-                    textAlign: "center" }}
+              
             >
               Chaptr
             </Button>
@@ -118,8 +122,7 @@ export default function NavBar({ darkMode, toggleDarkMode }) {
               component={Link}
               to="/Profile"
               onClick={toggleMenu}
-              sx={{ width: "100%", 
-                textAlign: "center" }}
+              
             >
               Profile
             </Button>
@@ -129,8 +132,7 @@ export default function NavBar({ darkMode, toggleDarkMode }) {
               component={Link}
               to="/ClubsList"
               onClick={toggleMenu}
-              sx={{ width: "100%", 
-                textAlign: "center" }}
+              
             >
               Clubs
             </Button>
@@ -138,8 +140,7 @@ export default function NavBar({ darkMode, toggleDarkMode }) {
           <li>
             <Button
               onClick={toggleDarkMode}
-              sx={{ width: "100%", 
-                textAlign: "center" }}
+              
             >
               Dark Mode
             </Button>
@@ -147,8 +148,7 @@ export default function NavBar({ darkMode, toggleDarkMode }) {
           <li>
             <Button
               onClick={Logout}
-              sx={{ width: "100%", 
-                textAlign: "center" }}
+              
             >
               Logout
             </Button>
