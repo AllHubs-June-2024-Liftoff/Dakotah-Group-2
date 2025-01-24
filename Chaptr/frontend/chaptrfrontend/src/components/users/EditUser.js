@@ -121,7 +121,9 @@ export default function EditUser({ darkMode }) {
       );
       sessionStorage.setItem("user", JSON.stringify(updatedUser));
       setUser(updatedUser);
-      navigate("/Profile");
+      setTimeout(() => {
+        navigate("/Profile");
+      }, 500);
     } catch (error) {
       console.error("Failed to update user information:", error);
       alert(

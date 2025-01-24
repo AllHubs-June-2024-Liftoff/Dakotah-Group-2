@@ -1,6 +1,7 @@
 package com.example.Chaptr.models;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
@@ -22,7 +23,7 @@ public class Book extends AbstractEntity {
     @OneToMany(mappedBy = "bookOfTheMonth")
     private final List<Club> clubs = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "tbr")
+    @ManyToMany(mappedBy = "tbr", cascade = CascadeType.ALL)
     private final List<TBR> tbr = new ArrayList<>();
 
     @ManyToMany(mappedBy = "favoritesList")
