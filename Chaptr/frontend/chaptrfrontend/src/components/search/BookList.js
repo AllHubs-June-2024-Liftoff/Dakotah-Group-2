@@ -13,14 +13,16 @@ export default function BookList(props) {
         }
 
         return (
-          <BookCard
-            key={i}
-            image={bookImage}
-            title={book.volumeInfo.title}
-            author={book.volumeInfo.authors}
-            publishedDate={book.volumeInfo.publishedDate}
-            ISBN10={book.volumeInfo.title}
-          />
+          <div className="book-card">
+            <BookCard
+              key={i}
+              image={bookImage}
+              title={book.volumeInfo.title}
+              author={book.volumeInfo.authors}
+              publishedDate={book.volumeInfo.publishedDate}
+              ISBN10={book.volumeInfo.title}
+            />
+          </div>
         );
       })}
     </div>

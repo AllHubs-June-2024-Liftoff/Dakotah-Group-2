@@ -158,5 +158,45 @@
     align-items: flex-start;
     gap: 1rem;
   }
+}
 
+/* BOOKLIST CARDS */
+.list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  padding: 1rem;
+  justify-content: center; 
+}
+
+.book-card {
+  background: #f5f5f5;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px #ccc;
+  overflow: hidden;
+  padding: 2rem;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  width: 100%;
+  max-width: 350px;
+  justify-self: center;
+}
+
+.book-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+@media (max-width: 768px) {
+  .list {
+    grid-template-columns: repeat(2, 1fr);
+    justify-content: center;
+  }
+}
+
+@media (max-width: 520px) {
+  .list {
+    grid-template-columns: 1fr;
+    justify-self: center;
+  }
 }
