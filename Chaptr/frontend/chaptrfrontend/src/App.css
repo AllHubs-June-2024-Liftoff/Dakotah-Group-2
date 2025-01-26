@@ -199,3 +199,7 @@
     justify-self: center;
   }
 }
+
+.book-card img {
+  max-width: 10rem;
+}
