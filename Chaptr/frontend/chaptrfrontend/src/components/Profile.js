@@ -52,7 +52,7 @@ export default function Profile({ darkMode }) {
     try {
       await axios.delete(`http://localhost:8080/tbr/${tbr.id}`);
       sessionStorage.removeItem("tbrList");
-      alert(`${user.firstName} TBR List deleted successfully!`);
+      alert(`${user.firstName}'s TBR List deleted successfully!`);
       setTbr({ tbr: [] });
     } catch (error) {
       console.error(`Error deleting ${user.firstName}'s TBR List:`, error);
@@ -60,7 +60,9 @@ export default function Profile({ darkMode }) {
   };
   const removeBook = async (bookId) => {
     try {
-      await axios.delete(`http://localhost:8080/deleteBook/${bookId}`);
+      await axios.delete(
+        `http://localhost:8080/tbr/${user.email}/book/${bookId}`
+      );
       alert("Book removed successfully!");
       loadTBRLists(user.email);
     } catch (error) {
@@ -76,7 +78,6 @@ export default function Profile({ darkMode }) {
   return (
     <div>
       <p>{`${user.firstName} ${user.lastName}'s profile`}</p>
-
       <div>
         <img
           src={user.userImage || "path/to/default/image.jpg"}
