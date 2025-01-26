@@ -110,3 +110,23 @@
   justify-content: center;
   gap: 1rem;
 }
+
+.search-area {
+  display: flex;
+  justify-content: center;
+  
+}
+
+.search-area-input {
+  border: 2px solid #121212;
+  border-radius: 5px;
+  padding: 9px 15px;
+  background: #ccc;
+  margin-right: 1rem;
+  margin-left: 1rem;
+}
+
+.search-area-input:focus {
+  border-color: #73A4AB;
+
+}

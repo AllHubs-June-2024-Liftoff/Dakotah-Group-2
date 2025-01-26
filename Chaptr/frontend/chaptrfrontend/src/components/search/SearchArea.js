@@ -6,7 +6,11 @@ export default function SearchArea(props){
     return (
         <div className="search-area">
                 <form onSubmit={props.searchBook} action="">
-                <input onChange={props.handleSearch} type="text"/>
+                <input 
+                    className="search-area-input" 
+                    onChange={props.handleSearch} 
+                    type="text"
+                    />
                 <Button
                     variant="contained"
                     type="submit"
