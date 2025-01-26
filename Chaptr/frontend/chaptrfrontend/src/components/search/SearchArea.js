@@ -18,7 +18,7 @@ export default function SearchArea(props){
                     >
                     Search
                 </Button>
-                <select defaultValue="Sort" onChange={props.handleSort}>
+                <select className="select-dropdown" defaultValue="Sort" onChange={props.handleSort}>
                     <option disabled value="Sort">Sort</option>
                     <option value="Newest">Newest</option>
                     <option value="Oldest">Oldest</option>

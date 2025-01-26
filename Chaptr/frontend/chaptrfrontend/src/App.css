@@ -118,15 +118,27 @@
 }
 
 .search-area-input {
-  border: 2px solid #121212;
+  border: 2px solid #73A4AB;
   border-radius: 5px;
   padding: 9px 15px;
   background: #ccc;
   margin-right: 1rem;
   margin-left: 1rem;
+  color: #333;
 }
 
-.search-area-input:focus {
-  border-color: #73A4AB;
+.select-dropdown {
+  width: 10rem;
+  padding: .5rem 2rem;
+  font-size: 1rem;
+  color: #333;
+  border-radius: 5px;
+  background: #ccc;
+  border: 2px solid #73A4AB;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
 
+.select-dropdown option {
+  color: #333; 
+  border: 2px solid #73A4AB; 
 }
