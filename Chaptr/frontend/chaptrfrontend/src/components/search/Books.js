@@ -61,7 +61,6 @@ export default function Books() {
     return (
         <div className="books">
             <SearchArea handleSearch={handleSearch} searchBook={searchBook} handleSort={handleSort} />
-            <h3>Books</h3>
             <BookList books={books} />
         </div>
     );
