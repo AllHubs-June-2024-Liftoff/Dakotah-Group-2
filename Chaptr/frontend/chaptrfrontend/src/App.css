@@ -102,3 +102,11 @@
 .hamburger-icon.open span:last-child {
   transform: rotate(-45deg) translate(5px, -5px);
 }
+
+/* SearchTBR styling */
+.tbr-logo-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
