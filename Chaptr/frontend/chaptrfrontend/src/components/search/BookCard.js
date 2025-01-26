@@ -1,5 +1,7 @@
 import React from "react";
 import axios from "axios";
+import Button from "@mui/material/Button";
+import { colors } from "../../styles/ThemeColors";
 
 export default function BookCard(props) {
   const addToTBR = async () => {
@@ -74,7 +76,14 @@ export default function BookCard(props) {
             : props.publishedDate.substring(0, 4)}
         </p>
       </div>
-      <button onClick={addToTBR}>Add to TBR</button>
-    </div>
+      {/* <button >Add to TBR</button> */}
+      <Button
+          variant="contained"
+          onClick={addToTBR}
+          sx={{ marginRight: 2, backgroundColor: colors.blue }}
+          >
+          Add to TBR
+      </Button>
+</div>
   );
 }
