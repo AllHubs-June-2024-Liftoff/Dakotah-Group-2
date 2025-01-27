@@ -238,5 +238,19 @@
   margin-left: 2rem;
   margin-top: 2rem;
   gap: 1rem;
+}
 
+/* FAVORITES */
+
+.favorites-container {
+  display: flex;
+  align-items: center;
+  margin-left: 2rem;
+  margin-top: 2rem;
+  gap: 1rem;
+}
+
+.favorites-title-and-btn {
+  display: flex;
+  align-items: center;
 }
