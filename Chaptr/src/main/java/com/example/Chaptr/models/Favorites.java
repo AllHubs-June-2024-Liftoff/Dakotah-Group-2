@@ -41,7 +41,7 @@ public class Favorites extends AbstractEntity {
             }
         }
 
-        throw new IllegalStateException("Favorites list is full, cannot add more books.");
+        throw new IllegalStateException("Favorites list is full, please delete a book on your profile before adding more.");
     }
 
     public void removeFromFavoritesList(Book bookToRemove){
