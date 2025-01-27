@@ -98,26 +98,22 @@ export default function Profile({ darkMode }) {
         </div>
       </div>
       
-      //stuff i'm adding in
-      <div>
-        <table>
-          <thead>
-            <tr>
-              <th>Book Image 1</th>
-              <th>Book Image 2</th>
-              <th>Book Image 3</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Remove Btn 1</td>
-              <td>Remove Btn 2</td>
-              <td>Remove Btn 3</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-//end
+      <div className="favorites-container">
+        <div className="favorites-title-and-btn">
+          <h3>Favorite Books</h3>
+
+          <Button
+            variant="contained"
+            sx={{ marginRight: 2, backgroundColor: colors.blue }}
+          >Add Book</Button>
+        </div>
+
+        <div className="favorites-books">
+        {/* Katie put whatever you want here */}
+
+        {/* Katie stop here */}
+        </div>
+      </div> 
 
       <div>
         <div className="TBR-text-and-search-btn">
