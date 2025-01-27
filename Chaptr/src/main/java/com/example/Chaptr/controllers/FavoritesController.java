@@ -8,6 +8,7 @@ import com.example.Chaptr.models.Favorites;
 import com.example.Chaptr.models.User;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpOutputMessage;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -60,7 +61,7 @@ public class FavoritesController {
     } //end of getmapping getUserFavorites
 
     @Transactional //lets create a new favorites list if user does not have one
-    @PostMapping("/newFavorites/email/{email")
+    @PostMapping("/newFavorites/email/{email}")
     public ResponseEntity<?> newFavorites(@PathVariable String email, @RequestParam Integer bookId) {
         Optional<User> existingUser = userRepository.findByEmail(email);
 
@@ -93,5 +94,34 @@ public class FavoritesController {
         }
     } //end of Post Mapping to create a new Favorites list
 
+    @Transactional
+    @DeleteMapping("/favorites/{email}/book/{bookId}")
+    public ResponseEntity<?> removeBookFromFavorites(@PathVariable("email") String email, @PathVariable("BookId") Integer bookId) {
+        Optional<User> userOptional = userRepository.findByEmail(email);
+        // if the User does not exist, give an error
+        if(!userOptional.isPresent()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User with email " + email + " not found.");
+        }
+        //Otherwise go get the user
+        User user = userOptional.get();
+        Optional<Favorites> favoritesOptional = favoritesRepository.findByUser(user);
+        //look for the favorites list. If not found, error
+        if (!favoritesOptional.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Favorites list for user not found.");
+        }
+        //if it exists, lets look for the book
+        Favorites userFavorites = favoritesOptional.get();
+        Optional<Book> bookOptional = bookRepository.findById((bookId));
+        //if it doesn't exist, give an error
+        if (!bookOptional.isPresent()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Book not found.");
+        }
+        //if it does, lets remove it
+        Book bookToRemove = bookOptional.get();
+        userFavorites.removeFromFavoritesList(bookToRemove);
+        favoritesRepository.save(userFavorites);
+        bookRepository.delete(bookToRemove);
+        return ResponseEntity.ok("Book removed successfully.");
+    }
 
 } //end of favorite controller
