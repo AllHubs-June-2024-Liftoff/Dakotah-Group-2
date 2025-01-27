@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { TextField, Button, Paper, Typography } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { colors } from "../../styles/ThemeColors";
+
 
 export default function Login({ darkMode }) {
   const [email, setEmail] = useState("");
@@ -39,7 +41,6 @@ export default function Login({ darkMode }) {
         email: email,
         pwHash: password,
       });
-
       const user = response.data;
 
       if (user && user.id) {
@@ -52,40 +53,39 @@ export default function Login({ darkMode }) {
       console.error("Login error:", error);
       alert("Login failed. Please check your credentials.");
     }
-
     console.log("Logging in with:", email);
   };
 
   return (
-    <div
+    <div className="login"
       style={{
-        backgroundColor: darkMode ? "#121212" : "#ffffff",
-        color: darkMode ? "#e0e0e0" : "#333",
-        height: "50vh",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        padding: "12rem",
+        backgroundColor: `${darkMode ? colors.black : colors.whitesmoke} !important`,
+        color: darkMode ? colors.lightGrey : colors.blueGrey,
       }}
     >
       <Paper
         elevation={3}
         sx={{
-          padding: "20px",
+          padding: "4rem",
           borderRadius: "8px",
-          width: "400px",
-          backgroundColor: darkMode ? "#121212" : "#ffffff",
+          width: "90%",
+          maxWidth: "400px",
+          minWidth: "325px",
+          margin: "0 auto",
+          backgroundColor: darkMode ? colors.black : colors.white,
         }}
       >
         <Typography
-          variant="h4"
-          align="center"
+          variant="h3"
+          align="left"
           sx={{
             marginBottom: 3,
-            color: darkMode ? "#ff1493" : "#9b4dff",
+            color: darkMode ? colors.pink : colors.purple,
+            fontWeight: 600,
+            // commit before changing color scheme
           }}
         >
-          Login
+          Sign in
         </Typography>
 
         <form onSubmit={handleSubmit}>
@@ -99,20 +99,20 @@ export default function Login({ darkMode }) {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             sx={{
-              backgroundColor: darkMode ? "#333" : "#ffffff",
-              color: darkMode ? "#e0e0e0" : "#333",
+              backgroundColor: darkMode ? colors.blueGrey : colors.white,
+              color: darkMode ? colors.lightGrey : colors.blueGrey,
               "& .MuiInputLabel-root": {
-                color: darkMode ? "#e0e0e0" : "#333",
+                color: darkMode ? colors.lightGrey : colors.blueGrey,
               },
               "& .MuiOutlinedInput-root": {
                 "& fieldset": {
-                  borderColor: darkMode ? "#444" : "#ccc",
+                  borderColor: darkMode ? colors.darkGrey : colors.silverGrey,
                 },
                 "&:hover fieldset": {
-                  borderColor: darkMode ? "#ff1493" : "#9b4dff",
+                  borderColor: darkMode ? colors.pink : colors.purple,
                 },
                 "&.Mui-focused fieldset": {
-                  borderColor: darkMode ? "#ff1493" : "#9b4dff",
+                  borderColor: darkMode ? colors.pink : colors.purple,
                 },
               },
             }}
@@ -128,20 +128,20 @@ export default function Login({ darkMode }) {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             sx={{
-              backgroundColor: darkMode ? "#333" : "#ffffff",
-              color: darkMode ? "#e0e0e0" : "#333",
+              backgroundColor: darkMode ? colors.blueGrey : colors.white,
+              color: darkMode ? colors.lightGrey : colors.blueGrey,
               "& .MuiInputLabel-root": {
-                color: darkMode ? "#e0e0e0" : "#333",
+                color: darkMode ? colors.lightGrey : colors.blueGrey,
               },
               "& .MuiOutlinedInput-root": {
                 "& fieldset": {
-                  borderColor: darkMode ? "#444" : "#ccc",
+                  borderColor: darkMode ? colors.darkGrey : colors.silverGrey,
                 },
                 "&:hover fieldset": {
-                  borderColor: darkMode ? "#ff1493" : "#9b4dff",
+                  borderColor: darkMode ? colors.pink : colors.purple,
                 },
                 "&.Mui-focused fieldset": {
-                  borderColor: darkMode ? "#ff1493" : "#9b4dff",
+                  borderColor: darkMode ? colors.pink : colors.purple,
                 },
               },
             }}
@@ -154,7 +154,7 @@ export default function Login({ darkMode }) {
             color={darkMode ? "secondary" : "primary"}
             sx={{
               marginTop: "16px",
-              backgroundColor: darkMode ? "#ff1493" : "#9b4dff",
+              backgroundColor: darkMode ? colors.pink : colors.purple,
             }}
           >
             Submit
@@ -166,7 +166,7 @@ export default function Login({ darkMode }) {
             color={darkMode ? "secondary" : "primary"}
             sx={{
               marginTop: "16px",
-              backgroundColor: darkMode ? "#ff1493" : "#9b4dff",
+              backgroundColor: darkMode ? colors.pink : colors.purple,
             }}
             to="/Register"
           >

@@ -2,73 +2,75 @@ import React, { useState, useEffect, version } from "react";
 import axios from "axios";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { colors } from "../../styles/ThemeColors";
+
 
 const ClubsList = ({ darkMode }) => {
-  const navigate = useNavigate();
-  const [clubs, setClubs] = useState([]);
+    const navigate = useNavigate();
+    const [clubs, setClubs] = useState([]);
 
-  useEffect(() => {
-    const storedUser = sessionStorage.getItem("user");
+    useEffect(() => {
+        const storedUser = sessionStorage.getItem("user");
 
-    if (storedUser) {
-      try {
-        getClubs();
-      } catch (error) {
-        console.error("Please login", error);
-        navigate("/Chaptr");
-      }
-    } else {
-      navigate("/Chaptr");
-    }
-  }, [navigate]);
-  const getClubs = async () => {
-    const response = await axios.get("http://localhost:8080/club");
-    setClubs(response.data);
-    sessionStorage.setItem("clubId", null);
-  };
+        if (storedUser) {
+            try {
+                getClubs();
+            } catch (error) {
+                console.error("Please login", error);
+                navigate("/Chaptr");
+            }
+        } else {
+            navigate("/Chaptr");
+        }
+    }, [navigate]);
+    const getClubs = async () => {
+        const response = await axios.get("http://localhost:8080/club");
+        setClubs(response.data);
+        sessionStorage.setItem("clubId", null);
+    };
 
-  const navToClub = () => {
-    navigate("/Club");
-  };
+    const navToClub = () => {
+        navigate("/Club");
+    };
 
-  console.log(version);
+    console.log(version);
 
-  return (
-    <>
-      <div>
-        <span>
-          <h2>Clubs</h2>
+    return (
+        <>
+            <div>
+                <span>
+                    <h2>Clubs</h2>
 
-          <Button
-            variant="contained"
-            color="primary"
-            style={{
-              marginRight: "5px",
-              marginBottom: "10px",
-              marginTop: "-10px",
-              alignItems: "right",
-              backgroundColor: "#9b4dff",
-            }}
-            onClick={() => navigate("/CreateClub")}
-          >
-            Create Club
-          </Button>
-        </span>
-      </div>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        style={{
+                            marginRight: "5px",
+                            marginBottom: "10px",
+                            marginTop: "-10px",
+                            alignItems: "right",
+                            backgroundColor: colors.purple,
+                        }}
+                        onClick={() => navigate("/CreateClub")}
+                    >
+                        Create Club
+                    </Button>
+                </span>
+            </div>
 
       <table
         style={{
           width: "100%",
           borderCollapse: "collapse",
-          color: darkMode ? "#e0e0e0" : "#333",
+          color: darkMode ? colors.lightGrey : colors.blueGrey,
         }}
       >
         <thead>
-          <tr style={{ backgroundColor: darkMode ? "#121212" : "#f5f5f5" }}>
+          <tr style={{ backgroundColor: darkMode ? colors.black : colors.whitesmoke }}>
             <th
               style={{
                 padding: "10px",
-                border: `1px solid ${darkMode ? "#444" : "#ccc"}`,
+                border: `1px solid ${darkMode ? colors.darkGrey : colors.silverGrey}`,
               }}
             >
               Name
@@ -76,7 +78,7 @@ const ClubsList = ({ darkMode }) => {
             <th
               style={{
                 padding: "10px",
-                border: `1px solid ${darkMode ? "#444" : "#ccc"}`,
+                border: `1px solid ${darkMode ? colors.darkGrey : colors.silverGrey}`,
               }}
             >
               Book
@@ -84,7 +86,7 @@ const ClubsList = ({ darkMode }) => {
             <th
               style={{
                 padding: "10px",
-                border: `1px solid ${darkMode ? "#444" : "#ccc"}`,
+                border: `1px solid ${darkMode ? colors.darkGrey : colors.silverGrey}`,
               }}
             >
               Description
@@ -92,7 +94,7 @@ const ClubsList = ({ darkMode }) => {
             <th
               style={{
                 padding: "10px",
-                border: `1px solid ${darkMode ? "#444" : "#ccc"}`,
+                border: `1px solid ${darkMode ? colors.darkGrey : colors.silverGrey}`,
               }}
             >
               Options
@@ -103,13 +105,13 @@ const ClubsList = ({ darkMode }) => {
           <tr
             key={club.id}
             style={{
-              backgroundColor: darkMode ? "#333" : "#fafafa",
+              backgroundColor: darkMode ? colors.blueGrey : colors.whitersmoke,
             }}
           >
             <td
               style={{
                 padding: "8px",
-                border: `1px solid ${darkMode ? "#444" : "#ccc"}`,
+                border: `1px solid ${darkMode ? colors.darkGrey : colors.silverGrey}`,
               }}
             >
               {club.name}
@@ -117,7 +119,7 @@ const ClubsList = ({ darkMode }) => {
             <td
               style={{
                 padding: "8px",
-                border: `1px solid ${darkMode ? "#444" : "#ccc"}`,
+                border: `1px solid ${darkMode ? colors.darkGrey : colors.silverGrey}`,
               }}
             >
               {club.bookOfTheMonth}
@@ -125,7 +127,7 @@ const ClubsList = ({ darkMode }) => {
             <td
               style={{
                 padding: "8px",
-                border: `1px solid ${darkMode ? "#444" : "#ccc"}`,
+                border: `1px solid ${darkMode ? colors.darkGrey : colors.silverGrey}`,
                 width: "500px",
                 wordWrap: "break-word",
               }}
@@ -137,13 +139,13 @@ const ClubsList = ({ darkMode }) => {
             <td
               style={{
                 padding: "8px",
-                border: `1px solid ${darkMode ? "#444" : "#ccc"}`,
+                border: `1px solid ${darkMode ? colors.darkGrey : colors.silverGrey}`,
               }}
             >
               <Button
                 variant="contained"
                 color="primary"
-                style={{ marginRight: "5px", backgroundColor: "#9b4dff" }}
+                style={{ marginRight: "5px", backgroundColor: colors.purple }}
                 onClick={() => {
                   sessionStorage.setItem("clubId", club.id);
                   navToClub();

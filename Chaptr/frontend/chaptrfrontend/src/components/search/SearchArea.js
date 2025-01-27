@@ -1,13 +1,24 @@
 import React from "react";
+import Button from "@mui/material/Button";
+import { colors } from "../../styles/ThemeColors";
 
 export default function SearchArea(props){
     return (
         <div className="search-area">
-            <h2>Search Area</h2>
-            <form onSubmit={props.searchBook} action="">
-                <input onChange={props.handleSearch} type="text"/>
-                <button type="submit">Search</button>
-                <select defaultValue="Sort" onChange={props.handleSort}>
+                <form onSubmit={props.searchBook} action="">
+                <input 
+                    className="search-area-input" 
+                    onChange={props.handleSearch} 
+                    type="text"
+                    />
+                <Button
+                    variant="contained"
+                    type="submit"
+                    sx={{ marginRight: 2, backgroundColor: colors.blue }}
+                    >
+                    Search
+                </Button>
+                <select className="select-dropdown" defaultValue="Sort" onChange={props.handleSort}>
                     <option disabled value="Sort">Sort</option>
                     <option value="Newest">Newest</option>
                     <option value="Oldest">Oldest</option>

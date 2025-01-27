@@ -1,6 +1,7 @@
 package com.example.Chaptr.models;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
@@ -19,13 +20,13 @@ public class Book extends AbstractEntity {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private String publicationDate;
 
-    @OneToMany(mappedBy = "bookOfTheMonth")
+    @OneToMany(mappedBy = "bookOfTheMonth" , cascade = CascadeType.ALL)
     private final List<Club> clubs = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "tbr")
+    @ManyToMany(mappedBy = "tbr", cascade = CascadeType.ALL)
     private final List<TBR> tbr = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "favoritesList")
+    @ManyToMany(mappedBy = "favoritesList", cascade = CascadeType.ALL)
     private final List<Favorites> favoritesList = new ArrayList<>();
 
     public Book() {

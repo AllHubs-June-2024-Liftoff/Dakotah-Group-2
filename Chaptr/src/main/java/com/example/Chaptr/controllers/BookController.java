@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin("http://localhost:3000")
 public class BookController {
 
     @Autowired
@@ -40,16 +39,6 @@ public class BookController {
             return ResponseEntity.ok(updatedBook);
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
-    }
-
-    @DeleteMapping("/deleteBook/{id}")
-    public ResponseEntity<Void> deleteBook(@PathVariable int id) {
-        if (bookRepository.existsById(id)) {
-            bookRepository.deleteById(id);
-            return ResponseEntity.noContent().build();
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
 }
