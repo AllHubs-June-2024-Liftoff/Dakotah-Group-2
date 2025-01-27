@@ -203,3 +203,31 @@
 .book-card img {
   max-width: 10rem;
 }
+
+/* PROFILE */
+.user-profile-display {
+  display: flex;
+  align-items: flex-start;
+  text-align: left;
+  gap: 1rem;
+  margin-left: 2rem;
+  margin-top: 2rem;
+}
+
+.text-button-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.upload-img-btn {
+  max-width: 10rem;
+  min-width: 10rem;
+}
+
+.user-profile-display img {
+  width: 8rem;
+  height: 8rem;
+  border-radius: 50%;
+  object-fit: contain;
+}

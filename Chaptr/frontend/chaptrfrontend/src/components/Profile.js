@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { colors } from "../styles/ThemeColors";
 
 export default function Profile({ darkMode }) {
   const [user, setUser] = useState(
@@ -77,22 +78,29 @@ export default function Profile({ darkMode }) {
 
   return (
     <div>
-      <p>{`${user.firstName} ${user.lastName}'s profile`}</p>
-      <div>
-        <img
-          src={user.userImage || "path/to/default/image.jpg"}
-          alt={user.firstName}
-          style={{ width: "100px", height: "100px", borderRadius: "50%" }}
-        />
-        <Button
-          variant="contained"
-          component={Link}
-          sx={{ marginRight: 2, backgroundColor: "#92B9BD" }}
-          to="/EditUser"
-        >
-          Upload Image
-        </Button>
+
+      <div className="user-profile-display">    
+                   
+          <img
+            src={user.userImage || "path/to/default/image.jpg"}
+            alt={user.firstName}
+          />
+
+          <div className="text-button-container">
+            <h1>{`${user.firstName} ${user.lastName}`}</h1>          
+              <Button
+                className="upload-img-btn"
+                variant="contained"
+                component={Link}
+                sx={{ marginRight: 2, backgroundColor: colors.blue }}
+                to="/EditUser"
+                >
+                Upload Image
+              </Button>
+          </div>
+
       </div>
+
       <div>
         <h1>{tbr.name || "My TBR List"}</h1>
 
