@@ -3,9 +3,9 @@ import axios from "axios";
 
 export default function BookCard(props) {
   const addToTBR = async () => {
-    const existingUser = JSON.parse(sessionStorage.getItem("user"));
+    const storedUser = JSON.parse(sessionStorage.getItem("user"));
 
-    if (!existingUser) {
+    if (!storedUser) {
       alert("User is not logged in.");
       return;
     }
@@ -29,7 +29,7 @@ export default function BookCard(props) {
       console.log("Book added:", newBookResponse.data);
       const userBook = newBookResponse.data;
       const tbrResponse = await axios.get(
-        `http://localhost:8080/tbr/email/${existingUser.email}`
+        `http://localhost:8080/tbr/email/${storedUser.email}`
       );
 
       if (
@@ -37,21 +37,21 @@ export default function BookCard(props) {
         !tbrResponse.data ||
         !tbrResponse.data.id
       ) {
-        console.log(`Creating TBR List for: ${existingUser.name}`);
+        console.log(`Creating TBR List for: ${storedUser.name}`);
         const newTBRResponse = await axios.post(
-          `http://localhost:8080/newTbr/email/${existingUser.email}`,
+          `http://localhost:8080/newTbr/email/${storedUser.email}`,
           { bookId: userBook.id }
         );
         console.log("New TBR created:", newTBRResponse.data);
         alert("Book added to TBR list");
       } else {
         const addToTBRResponse = await axios.put(
-          `http://localhost:8080/tbr/${existingUser.email}`,
+          `http://localhost:8080/tbr/${storedUser.email}`,
           userBook
         );
 
         if (addToTBRResponse.status === 200) {
-          alert(`${userBook.name} added to ${existingUser.name}'s TBR list`);
+          alert(`${userBook.name} added to ${storedUser.name}'s TBR list`);
         }
       }
     } catch (error) {

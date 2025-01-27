@@ -1,5 +1,4 @@
 package com.example.Chaptr.controllers;
-
 import com.example.Chaptr.data.BookRepository;
 import com.example.Chaptr.data.TBRRepository;
 import com.example.Chaptr.data.UserRepository;
@@ -11,12 +10,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin("http://localhost:3000")
 public class TBRController {
 
     @Autowired
@@ -39,7 +36,6 @@ public class TBRController {
 
         if (userOptional.isPresent()) {
             User user = userOptional.get();
-
             Optional<TBR> existingTBR = tbrRepository.findByUser(user);
 
             if (existingTBR.isPresent()) {
@@ -50,6 +46,8 @@ public class TBRController {
                 String tbrName = user.getName() + "'s TBR List";
                 newTBR.setName(tbrName);
                 tbrRepository.save(newTBR);
+                user.setTbr(newTBR);
+                userRepository.save(user);
 
                 return ResponseEntity.status(HttpStatus.CREATED).body(newTBR);
             }
@@ -65,8 +63,8 @@ public class TBRController {
 
         if (existingUser.isPresent()) {
             User user = existingUser.get();
-
             Optional<TBR> existingTBR = tbrRepository.findByUser(user);
+
             if (existingTBR.isPresent()) {
                 return ResponseEntity.status(HttpStatus.CONFLICT)
                         .body("User already has a TBR list.");
@@ -75,8 +73,8 @@ public class TBRController {
             userTBR.setUser(user);
             String tbrName = user.getName() + "'s TBR List";
             userTBR.setName(tbrName);
-
             Optional<Book> existingBook = bookRepository.findById(bookId);
+
             if (existingBook.isPresent()) {
                 Book book = existingBook.get();
                 userTBR.addToTBR(book);
@@ -104,10 +102,9 @@ public class TBRController {
                     .body("User with email " + email + " does not exist.");
         }
         User user = userOptional.get();
-
         Optional<TBR> existingTBROptional = tbrRepository.findByUser(user);
-
         TBR existingTBR;
+
         if (existingTBROptional.isPresent()) {
             existingTBR = existingTBROptional.get();
         } else {
@@ -115,7 +112,6 @@ public class TBRController {
             existingTBR.setName(user.getName() + "'s TBR List");
             existingTBR.setUser(user);
         }
-
         Optional<Book> existingBookOptional = bookRepository.findById(newBook.getId());
 
         if (!existingBookOptional.isPresent()) {
@@ -135,10 +131,10 @@ public class TBRController {
         return ResponseEntity.ok(existingTBR);
     }
 
+    @Transactional
     @DeleteMapping("/tbr/{id}")
     public ResponseEntity<?> deleteUserTBR(@PathVariable("id") Integer id) {
         Optional<TBR> tbrOptional = tbrRepository.findById(id);
-
         if (tbrOptional.isPresent()) {
             TBR tbr = tbrOptional.get();
             User user = tbr.getUser();
@@ -153,5 +149,35 @@ public class TBRController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body("TBR not found.");
         }
+    }
+
+    @Transactional
+    @DeleteMapping("/tbr/{email}/book/{bookId}")
+    public ResponseEntity<?> removeBookFromTBR(@PathVariable("email") String email, @PathVariable("bookId") Integer bookId) {
+        Optional<User> userOptional = userRepository.findByEmail(email);
+
+        if (!userOptional.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("User with email " + email + " not found.");
+        }
+        User user = userOptional.get();
+        Optional<TBR> tbrOptional = tbrRepository.findByUser(user);
+
+        if (!tbrOptional.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("TBR list for user not found.");
+        }
+        TBR userTBR = tbrOptional.get();
+        Optional<Book> bookOptional = bookRepository.findById(bookId);
+
+        if (!bookOptional.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Book not found.");
+        }
+        Book bookToRemove = bookOptional.get();
+        userTBR.removeFromTBR(bookToRemove);
+        tbrRepository.save(userTBR);
+        bookRepository.delete(bookToRemove);
+        return ResponseEntity.ok("Book removed successfully.");
     }
 }

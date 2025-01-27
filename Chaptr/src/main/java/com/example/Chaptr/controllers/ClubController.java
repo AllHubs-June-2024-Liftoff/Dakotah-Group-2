@@ -17,7 +17,6 @@ import java.util.Optional;
 import java.util.Set;
 
 @RestController
-@CrossOrigin("http://localhost:3000")
 @RequestMapping("club")
 public class ClubController {
 
@@ -84,13 +83,14 @@ public class ClubController {
 
     @PostMapping("{clubId}/book")
 
-    public void updateBOTM(@PathVariable int clubId, Book newBook){
+    public void updateBOTM(@PathVariable int clubId, @RequestBody Book newBook){
         Optional<Club> optClub = clubRepository.findById(clubId);
         Club club = null;
 
         if (optClub.isPresent()){
             club = optClub.get();
             club.setBookOfTheMonth(newBook);
+            bookRepository.save(newBook);
         }
     }
 
@@ -105,19 +105,4 @@ public class ClubController {
             clubRepository.save(club);
         }
     }
-
-//    @PostMapping("{clubId}/description")
-//    public ResponseEntity<String> updateDescription(@PathVariable Integer clubId, @RequestBody ClubDto dto){
-//        Optional<Club> optClub = clubRepository.findById(clubId);
-//        Club club = null;
-//
-//        if (optClub.isPresent()){
-//            club = optClub.get();
-//            dto.setClubMessage();
-//            club.setClubMessage(dto.getClubMessage());
-//            clubRepository.save(club);
-//        }
-//
-//        return  ResponseEntity.ok("Received String: " + dto.getClubMessage());
-//    }
 }
