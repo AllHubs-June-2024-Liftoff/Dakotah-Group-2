@@ -97,6 +97,27 @@ export default function Profile({ darkMode }) {
           Upload Image
         </Button>
       </div>
+      
+      //stuff i'm adding in
+      <div>
+        <table>
+          <thead>
+            <tr>
+              <th>Book Image 1</th>
+              <th>Book Image 2</th>
+              <th>Book Image 3</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Remove Btn 1</td>
+              <td>Remove Btn 2</td>
+              <td>Remove Btn 3</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+//end
 
       <div>
         <h1>{tbr.name || "My TBR List"}</h1>
