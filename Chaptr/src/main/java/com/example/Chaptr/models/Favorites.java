@@ -44,8 +44,12 @@ public class Favorites extends AbstractEntity {
         throw new IllegalStateException("Favorites list is full, cannot add more books.");
     }
 
-    public void removeFromFavoritesList(Integer i){ //will require front end to have buttons for each position of favorites book
-        favoritesList[i] = null;
+    public void removeFromFavoritesList(Book bookToRemove){
+        for (int i = 0; i < favoritesList.length; i++) {
+            if (favoritesList[i] == bookToRemove){
+                favoritesList[i] = null;
+            }
+        }
     }
 
     public void clearFavoritesList(){
