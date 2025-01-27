@@ -4,14 +4,14 @@ import com.example.Chaptr.data.TBRRepository; //not needed
 import com.example.Chaptr.data.UserRepository; //in Fav
 import com.example.Chaptr.models.Book;
 import com.example.Chaptr.models.TBR;
-import com.example.Chaptr.models.User;
+import com.example.Chaptr.models.User; //in Fav
 import org.springframework.beans.factory.annotation.Autowired; //in Fav
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus; //in Favs line 52 here and below
+import org.springframework.http.ResponseEntity; //in Fav
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.*; //getMapping, RestController
+import org.springframework.web.bind.annotation.*; //getMapping, RestController, PathVariable
 import java.util.List; //in Fav
-import java.util.Optional;
+import java.util.Optional; //in Fav
 
 @RestController
 public class TBRController {
