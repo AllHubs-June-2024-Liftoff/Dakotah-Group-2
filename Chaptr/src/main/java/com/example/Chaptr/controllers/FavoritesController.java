@@ -118,6 +118,7 @@ public class FavoritesController {
         }
         //if it does, lets remove it
         Book bookToRemove = bookOptional.get();
+
         userFavorites.removeFromFavoritesList(bookToRemove);
         favoritesRepository.save(userFavorites);
         bookRepository.delete(bookToRemove);
