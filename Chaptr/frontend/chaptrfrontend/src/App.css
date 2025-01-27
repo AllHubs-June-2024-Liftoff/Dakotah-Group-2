@@ -231,3 +231,12 @@
   border-radius: 50%;
   object-fit: contain;
 }
+
+.TBR-text-and-search-btn {
+  display: flex;
+  align-items: center;
+  margin-left: 2rem;
+  margin-top: 2rem;
+  gap: 1rem;
+
+}

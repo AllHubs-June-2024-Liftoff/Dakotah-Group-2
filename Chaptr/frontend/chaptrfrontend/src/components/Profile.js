@@ -80,29 +80,36 @@ export default function Profile({ darkMode }) {
     <div>
 
       <div className="user-profile-display">    
-                   
-          <img
-            src={user.userImage || "path/to/default/image.jpg"}
-            alt={user.firstName}
-          />
-
-          <div className="text-button-container">
-            <h1>{`${user.firstName} ${user.lastName}`}</h1>          
-              <Button
-                className="upload-img-btn"
-                variant="contained"
-                component={Link}
-                sx={{ marginRight: 2, backgroundColor: colors.blue }}
-                to="/EditUser"
-                >
-                Upload Image
-              </Button>
-          </div>
-
+        <img
+          src={user.userImage || "path/to/default/image.jpg"}
+          alt={user.firstName}
+        />
+        <div className="text-button-container">
+          <h1>{`${user.firstName} ${user.lastName}`}</h1>          
+          <Button
+            className="upload-img-btn"
+            variant="contained"
+            component={Link}
+            sx={{ marginRight: 2, backgroundColor: colors.blue }}
+            to="/EditUser"
+            >
+            Upload Image
+          </Button>
+        </div>
       </div>
 
       <div>
-        <h1>{tbr.name || "My TBR List"}</h1>
+        <div className="TBR-text-and-search-btn">
+          <h2>{tbr.name || "My TBR List"}</h2>
+          <Button
+            variant="contained"
+            component={Link}
+            sx={{ marginRight: 2, backgroundColor: colors.blue }}
+            to="/SearchTBR"
+          >
+            Search Books
+          </Button>
+        </div>
 
         <table
           style={{
@@ -184,14 +191,7 @@ export default function Profile({ darkMode }) {
             )}
           </tbody>
         </table>
-        <Button
-          variant="contained"
-          component={Link}
-          sx={{ marginRight: 2, backgroundColor: "#92B9BD" }}
-          to="/SearchTBR"
-        >
-          Search Books
-        </Button>
+        
       </div>
     </div>
   );
