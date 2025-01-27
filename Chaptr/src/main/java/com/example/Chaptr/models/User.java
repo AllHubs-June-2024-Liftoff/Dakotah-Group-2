@@ -51,9 +51,9 @@ public class User extends AbstractEntity {
     private TBR tbr;
 
     @OneToOne
-    @JoinColumn(name = "favoritesList_id")
+    @JoinColumn(name = "favorites_id")
     @JsonIgnore
-    private Favorites favoritesList;
+    private Favorites favorites;
 
     private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
@@ -142,6 +142,14 @@ public class User extends AbstractEntity {
 
     public void setTbr(TBR tbr) {
         this.tbr = tbr;
+    }
+
+    public Favorites getFavorites() {
+        return favorites;
+    }
+
+    public void setFavorites(Favorites favorites) {
+        this.favorites = favorites;
     }
 
     public Set<Club> getClubs() {
