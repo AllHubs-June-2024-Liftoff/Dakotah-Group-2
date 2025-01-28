@@ -76,7 +76,6 @@ export default function BookCard(props) {
             : props.publishedDate.substring(0, 4)}
         </p>
       </div>
-      {/* <button >Add to TBR</button> */}
       <Button
           variant="contained"
           onClick={addToTBR}

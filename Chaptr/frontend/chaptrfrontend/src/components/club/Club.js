@@ -80,7 +80,8 @@ const Club = ({ darkMode }) => {
         </div>
       </div>
         
-        <div className="set-desc" >
+      <div className="set-desc" >
+        
           {showDescription ? (
             <Description
               clubId={club.id}
@@ -107,9 +108,20 @@ const Club = ({ darkMode }) => {
               Cancel
             </Button>
           )}
-        </div>
 
-      <div>
+          <div>
+          <Button
+            variant="contained"
+            color="primary"
+            style={{ margin: "10px 0", backgroundColor: "#9b4dff" }}
+            onClick={joinClub}
+          >
+            Join Club
+          </Button>
+        </div>
+      </div>
+
+      <div className="book-card">
         {club.bookOfTheMonth != null ? (
           <div className="card-container">
             <img src={club.bookOfTheMonth.bookCover} alt="book cover" />
@@ -145,16 +157,7 @@ const Club = ({ darkMode }) => {
 
       
 
-      <div>
-        <Button
-          variant="contained"
-          color="primary"
-          style={{ margin: "10px 0", backgroundColor: "#9b4dff" }}
-          onClick={joinClub}
-        >
-          Join Club
-        </Button>
-      </div>
+      
 
       <div>
         <table
