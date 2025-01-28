@@ -39,7 +39,7 @@ export default function NavBar({ darkMode, toggleDarkMode }) {
         <div
           style={{
             backgroundColor: darkMode ? colors.black : colors.whitesmoke,
-            width: "100%",
+            width: "100vw",
             display: "flex",
             justifyContent: "flex-end",
             padding: "1rem"

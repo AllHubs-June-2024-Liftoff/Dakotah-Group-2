@@ -51,18 +51,18 @@ const ClubsList = ({ darkMode }) => {
                 
             </div>
 
+            <div className="table-container">
             <table
                 style={{
-                    width: "100%",
                     borderCollapse: "collapse",
                     color: darkMode ? colors.lightGrey : colors.blueGrey,
                 }}
-            >
+                >
                 <thead>
                     <tr style={{ backgroundColor: darkMode ? colors.black : colors.whitesmoke }}>
                         <th
                             style={{
-                                padding: "10px",
+                                padding: "1rem",
                                 border: `1px solid ${darkMode ? colors.darkGrey : colors.silverGrey}`,
                             }}
                         >
@@ -70,7 +70,7 @@ const ClubsList = ({ darkMode }) => {
                         </th>
                         <th
                             style={{
-                                padding: "10px",
+                                padding: "1rem",
                                 border: `1px solid ${darkMode ? colors.darkGrey : colors.silverGrey}`,
                             }}
                         >
@@ -78,7 +78,7 @@ const ClubsList = ({ darkMode }) => {
                         </th>
                         <th
                             style={{
-                                padding: "10px",
+                                padding: "1rem",
                                 border: `1px solid ${darkMode ? colors.darkGrey : colors.silverGrey}`,
                             }}
                         >
@@ -86,7 +86,7 @@ const ClubsList = ({ darkMode }) => {
                         </th>
                         <th
                             style={{
-                                padding: "10px",
+                                padding: "1rem",
                                 border: `1px solid ${darkMode ? colors.darkGrey : colors.silverGrey}`,
                             }}
                         >
@@ -103,7 +103,7 @@ const ClubsList = ({ darkMode }) => {
                     >
                         <td
                             style={{
-                                padding: "8px",
+                                padding: ".5rem",
                                 border: `1px solid ${darkMode ? colors.darkGrey : colors.silverGrey}`,
                             }}
                         >
@@ -111,7 +111,7 @@ const ClubsList = ({ darkMode }) => {
                         </td>
                         <td
                             style={{
-                                padding: "8px",
+                                padding: "0.5rem",
                                 border: `1px solid ${darkMode ? colors.darkGrey : colors.silverGrey}`,
                             }}
                         >
@@ -119,9 +119,8 @@ const ClubsList = ({ darkMode }) => {
                         </td>
                         <td
                             style={{
-                                padding: "8px",
+                                padding: "0.5rem",
                                 border: `1px solid ${darkMode ? colors.darkGrey : colors.silverGrey}`,
-                                width: "500px",
                                 wordWrap: "break-word",
                             }}
                         >
@@ -129,14 +128,14 @@ const ClubsList = ({ darkMode }) => {
                         </td>
                         <td
                             style={{
-                                padding: "8px",
+                                padding: "0.5rem",
                                 border: `1px solid ${darkMode ? colors.darkGrey : colors.silverGrey}`,
                             }}
                         >
                             <Button
                                 variant="contained"
                                 color="primary"
-                                style={{ marginRight: "5px", backgroundColor: darkMode? colors.pink : colors.purple }}
+                                style={{ marginRight: "0.5rem", backgroundColor: darkMode? colors.pink : colors.purple }}
                                 onClick={() => {
                                     sessionStorage.setItem("clubId", club.id);
                                     navToClub();
@@ -148,7 +147,9 @@ const ClubsList = ({ darkMode }) => {
                     </tr>
                 ))}
             </table>
-            <div></div>
+            </div>
+            <div>
+            </div>
         </>
     );
 };

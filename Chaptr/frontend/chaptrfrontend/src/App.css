@@ -273,10 +273,21 @@ display: flex;
 justify-content: left;
 align-items: center;
 padding: 2rem;
+overflow-x: auto;
 }
 
 table {
   width: 90%;
+}
+
+@media (max-width: 400px) {
+  table {
+    width: 100%;
+  }
+
+  .table-container {
+   padding: 0;
+  }
 }
 
 /* EDIT USER */
