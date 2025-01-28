@@ -212,7 +212,7 @@ export default function Profile({ darkMode }) {
                               <Button
                                 onClick={onDelete}
                                 variant="contained"
-                                sx={{ marginRight: 2, backgroundColor: "#92B9BD" }}
+                                sx={{ marginRight: 2, backgroundColor: colors.blue }}
                               >
                                 Delete TBR List
                               </Button>
@@ -259,16 +259,16 @@ export default function Profile({ darkMode }) {
                       padding: "8px",
                       border: `1px solid ${darkMode ? "#444" : "#ccc"}`,
                     }}
-                  >
-                    {book.publicationDate}
+                    >
+                    {book.publicationDate ? book.publicationDate.split("-")[0] : "N/A"}
                   </td>
                    <td style={{ padding: "8px", border: "1px solid #ccc" }}>
                                       <Button
                                         onClick={() => removeBook(book.id)}
                                         variant="contained"
-                                        sx={{ marginRight: 2, backgroundColor: "#92B9BD" }}
+                                        sx={{ marginRight: 2, backgroundColor: colors.blue }}
                                       >
-                                        Remove {book.name}
+                                        Remove Book
                                       </Button>
                                     </td>
                 </tr>
