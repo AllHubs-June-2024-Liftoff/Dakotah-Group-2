@@ -90,7 +90,7 @@ export default function BookCard(props) {
       console.log("Book added:", newBookResponse.data);
       const userBook = newBookResponse.data;
       const tbrResponse = await axios.get(
-        `http://localhost:8080/tbr/email/${storedUser.email}`
+        `http://localhost:8080/getTBR/email/${storedUser.email}`
       );
 
       if (
@@ -100,14 +100,14 @@ export default function BookCard(props) {
       ) {
         console.log(`Creating TBR List for: ${storedUser.name}`);
         const newTBRResponse = await axios.post(
-          `http://localhost:8080/newTbr/email/${storedUser.email}`,
+          `http://localhost:8080/createTBR/email/${storedUser.email}`,
           { bookId: userBook.id }
         );
         console.log("New TBR created:", newTBRResponse.data);
         alert("Book added to TBR list");
       } else {
         const addToTBRResponse = await axios.put(
-          `http://localhost:8080/tbr/${storedUser.email}`,
+          `http://localhost:8080/updateTBR/${storedUser.email}`,
           userBook
         );
 

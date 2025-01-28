@@ -30,7 +30,7 @@ export default function Profile({ darkMode }) {
    const loadTBRLists = async (userEmail) => {
      try {
        const response = await axios.get(
-         `http://localhost:8080/tbr/email/${userEmail}`
+         `http://localhost:8080/getTBR/email/${userEmail}`
        );
        if (response.data && response.data.tbr.length === 0) {
          setTbr({ tbr: [] });
@@ -51,7 +51,7 @@ export default function Profile({ darkMode }) {
      }
 
      try {
-       await axios.delete(`http://localhost:8080/tbr/${tbr.id}`);
+       await axios.delete(`http://localhost:8080/deleteTBR/${tbr.id}`);
        sessionStorage.removeItem("tbrList");
        alert(`${user.firstName}'s TBR List deleted successfully!`);
        setTbr({ tbr: [] });
@@ -62,7 +62,7 @@ export default function Profile({ darkMode }) {
    const removeBook = async (bookId) => {
      try {
        await axios.delete(
-         `http://localhost:8080/tbr/${user.email}/book/${bookId}`
+         `http://localhost:8080/deleteBook/${user.email}/book/${bookId}`
        );
        alert("Book removed successfully!");
        loadTBRLists(user.email);
