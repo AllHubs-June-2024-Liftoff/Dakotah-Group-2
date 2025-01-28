@@ -4,7 +4,6 @@ import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { colors } from "../../styles/ThemeColors";
 
-
 const ClubsList = ({ darkMode }) => {
     const navigate = useNavigate();
     const [clubs, setClubs] = useState([]);
@@ -58,108 +57,106 @@ const ClubsList = ({ darkMode }) => {
                 </span>
             </div>
 
-      <table
-        style={{
-          width: "100%",
-          borderCollapse: "collapse",
-          color: darkMode ? colors.lightGrey : colors.blueGrey,
-        }}
-      >
-        <thead>
-          <tr style={{ backgroundColor: darkMode ? colors.black : colors.whitesmoke }}>
-            <th
-              style={{
-                padding: "10px",
-                border: `1px solid ${darkMode ? colors.darkGrey : colors.silverGrey}`,
-              }}
-            >
-              Name
-            </th>
-            <th
-              style={{
-                padding: "10px",
-                border: `1px solid ${darkMode ? colors.darkGrey : colors.silverGrey}`,
-              }}
-            >
-              Book
-            </th>
-            <th
-              style={{
-                padding: "10px",
-                border: `1px solid ${darkMode ? colors.darkGrey : colors.silverGrey}`,
-              }}
-            >
-              Description
-            </th>
-            <th
-              style={{
-                padding: "10px",
-                border: `1px solid ${darkMode ? colors.darkGrey : colors.silverGrey}`,
-              }}
-            >
-              Options
-            </th>
-          </tr>
-        </thead>
-        {clubs.map((club) => (
-          <tr
-            key={club.id}
-            style={{
-              backgroundColor: darkMode ? colors.blueGrey : colors.whitersmoke,
-            }}
-          >
-            <td
-              style={{
-                padding: "8px",
-                border: `1px solid ${darkMode ? colors.darkGrey : colors.silverGrey}`,
-              }}
-            >
-              {club.name}
-            </td>
-            <td
-              style={{
-                padding: "8px",
-                border: `1px solid ${darkMode ? colors.darkGrey : colors.silverGrey}`,
-              }}
-            >
-              {club.bookOfTheMonth}
-            </td>
-            <td
-              style={{
-                padding: "8px",
-                border: `1px solid ${darkMode ? colors.darkGrey : colors.silverGrey}`,
-                width: "500px",
-                wordWrap: "break-word",
-              }}
-            >
-              {club.clubMessage.length > 200
-                ? club.clubMessage.substr(0, 200) + ". . ."
-                : club.clubMessage}
-            </td>
-            <td
-              style={{
-                padding: "8px",
-                border: `1px solid ${darkMode ? colors.darkGrey : colors.silverGrey}`,
-              }}
-            >
-              <Button
-                variant="contained"
-                color="primary"
-                style={{ marginRight: "5px", backgroundColor: colors.purple }}
-                onClick={() => {
-                  sessionStorage.setItem("clubId", club.id);
-                  navToClub();
+            <table
+                style={{
+                    width: "100%",
+                    borderCollapse: "collapse",
+                    color: darkMode ? colors.lightGrey : colors.blueGrey,
                 }}
-              >
-                View
-              </Button>
-            </td>
-          </tr>
-        ))}
-      </table>
-      <div></div>
-    </>
-  );
+            >
+                <thead>
+                    <tr style={{ backgroundColor: darkMode ? colors.black : colors.whitesmoke }}>
+                        <th
+                            style={{
+                                padding: "10px",
+                                border: `1px solid ${darkMode ? colors.darkGrey : colors.silverGrey}`,
+                            }}
+                        >
+                            Name
+                        </th>
+                        <th
+                            style={{
+                                padding: "10px",
+                                border: `1px solid ${darkMode ? colors.darkGrey : colors.silverGrey}`,
+                            }}
+                        >
+                            Book
+                        </th>
+                        <th
+                            style={{
+                                padding: "10px",
+                                border: `1px solid ${darkMode ? colors.darkGrey : colors.silverGrey}`,
+                            }}
+                        >
+                            Description
+                        </th>
+                        <th
+                            style={{
+                                padding: "10px",
+                                border: `1px solid ${darkMode ? colors.darkGrey : colors.silverGrey}`,
+                            }}
+                        >
+                            Options
+                        </th>
+                    </tr>
+                </thead>
+                {clubs.map((club) => (
+                    <tr
+                        key={club.id}
+                        style={{
+                            backgroundColor: darkMode ? colors.blueGrey : colors.whitersmoke,
+                        }}
+                    >
+                        <td
+                            style={{
+                                padding: "8px",
+                                border: `1px solid ${darkMode ? colors.darkGrey : colors.silverGrey}`,
+                            }}
+                        >
+                            {club.name}
+                        </td>
+                        <td
+                            style={{
+                                padding: "8px",
+                                border: `1px solid ${darkMode ? colors.darkGrey : colors.silverGrey}`,
+                            }}
+                        >
+                            <p>{club.bookOfTheMonth != null ? club.bookOfTheMonth.name : <p>No book</p>}</p>
+                        </td>
+                        <td
+                            style={{
+                                padding: "8px",
+                                border: `1px solid ${darkMode ? colors.darkGrey : colors.silverGrey}`,
+                                width: "500px",
+                                wordWrap: "break-word",
+                            }}
+                        >
+                            {club.clubMessage.length > 200 ? club.clubMessage.substr(0, 200) + ". . ." : club.clubMessage}
+                        </td>
+                        <td
+                            style={{
+                                padding: "8px",
+                                border: `1px solid ${darkMode ? colors.darkGrey : colors.silverGrey}`,
+                            }}
+                        >
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                style={{ marginRight: "5px", backgroundColor: colors.purple }}
+                                onClick={() => {
+                                    sessionStorage.setItem("clubId", club.id);
+                                    navToClub();
+                                }}
+                            >
+                                View
+                            </Button>
+                        </td>
+                    </tr>
+                ))}
+            </table>
+            <div></div>
+        </>
+    );
 };
 
 export default ClubsList;
