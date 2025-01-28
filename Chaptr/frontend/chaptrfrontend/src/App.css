@@ -102,3 +102,155 @@
 .hamburger-icon.open span:last-child {
   transform: rotate(-45deg) translate(5px, -5px);
 }
+
+/* SearchTBR styling */
+.tbr-logo-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.search-area {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.search-area button {
+  margin: 0;
+}
+.search-area form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.search-area-input {
+  border: 2px solid #73A4AB;
+  border-radius: 5px;
+  padding: 9px 15px;
+  background: #ccc;
+  color: #333;
+  flex: 1;
+  min-width: 9rem;
+  max-width: 12rem;
+}
+
+.select-dropdown {
+  flex: 1;
+  min-width: 9rem;
+  max-width: 12rem;
+  padding: .5rem 2rem;
+  font-size: .8rem;
+  color: #333;
+  border-radius: 5px;
+  background: #ccc;
+  border: 2px solid #73A4AB;
+}
+
+@media (max-widh: 520px) {
+  .search-area form {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+}
+
+/* BOOKLIST CARDS */
+.list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  padding: 1rem;
+  justify-content: center; 
+}
+
+.book-card {
+  border-radius: 8px;
+  box-shadow: 0 4px 8px #444;
+  overflow: hidden;
+  padding: 2rem;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  width: 100%;
+  max-width: 350px;
+  justify-self: center;
+}
+
+.book-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+@media (max-width: 768px) {
+  .list {
+    grid-template-columns: repeat(2, 1fr);
+    justify-content: center;
+  }
+}
+
+@media (max-width: 520px) {
+  .list {
+    grid-template-columns: 1fr;
+    justify-self: center;
+  }
+}
+
+.book-card img {
+  max-width: 10rem;
+}
+
+/* PROFILE */
+.user-profile-display {
+  display: flex;
+  align-items: flex-start;
+  text-align: left;
+  gap: 1rem;
+  margin-left: 2rem;
+  margin-top: 2rem;
+}
+
+.text-button-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.upload-img-btn {
+  max-width: 10rem;
+  min-width: 10rem;
+}
+
+.user-profile-display img {
+  width: 8rem;
+  height: 8rem;
+  border-radius: 50%;
+  object-fit: contain;
+}
+
+.TBR-text-and-search-btn {
+  display: flex;
+  align-items: center;
+  margin-left: 2rem;
+  margin-top: 2rem;
+  gap: 1rem;
+}
+
+/* FAVORITES */
+
+.favorites-container {
+  display: flex;
+  align-items: center;
+  margin-left: 2rem;
+  margin-top: 2rem;
+  gap: 1rem;
+}
+
+.favorites-title-and-btn {
+  display: flex;
+  align-items: center;
+}

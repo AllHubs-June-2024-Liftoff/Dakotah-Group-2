@@ -41,19 +41,4 @@ public class BookController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
-
-    @DeleteMapping("/deleteBook/{id}")
-    public ResponseEntity<Void> deleteBook(@PathVariable int id) {
-        try {
-            if (bookRepository.existsById(id)) {
-                bookRepository.deleteById(id);
-                return ResponseEntity.noContent().build();
-            } else {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-    }
 }
