@@ -1,7 +1,5 @@
-import zIndex from "@mui/material/styles/zIndex";
 import axios from "axios";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 const Description = ({ clubId, onRefresh, hideDescription }) => {
     const [newDescription, setNewDescription] = useState("");

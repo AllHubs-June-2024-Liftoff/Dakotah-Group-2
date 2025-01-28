@@ -3,7 +3,6 @@ import axios from "axios";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import Description from "./Description";
-import zIndex from "@mui/material/styles/zIndex";
 import { colors } from "../../styles/ThemeColors";
 
 const Club = ({ darkMode }) => {
@@ -81,7 +80,7 @@ const Club = ({ darkMode }) => {
         </div>
       </div>
         
-        <div className="set-desc" style={{ zIndex: 1 }}>
+        <div className="set-desc" >
           {showDescription ? (
             <Description
               clubId={club.id}
