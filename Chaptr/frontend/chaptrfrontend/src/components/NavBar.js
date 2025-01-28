@@ -44,7 +44,7 @@ export default function NavBar({ darkMode, toggleDarkMode }) {
             justifyContent: "flex-end",
             padding: "1rem"
           }}
-        >
+          >
           {/* Desktop Navigation Buttons */}
           <div className="nav-links">
             <Button

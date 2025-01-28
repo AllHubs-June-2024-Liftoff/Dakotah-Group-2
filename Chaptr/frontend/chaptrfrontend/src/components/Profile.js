@@ -167,6 +167,7 @@ export default function Profile({ darkMode }) {
           </Button>
         </div>
 
+        <div className="table-container">
         <table
           style={{
             width: "100%",
@@ -289,6 +290,7 @@ export default function Profile({ darkMode }) {
             )}
           </tbody>
         </table>
+        </div>
         
       </div>
     </div>
