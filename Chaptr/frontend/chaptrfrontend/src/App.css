@@ -241,7 +241,6 @@
 }
 
 /* FAVORITES */
-
 .favorites-container {
   display: flex;
   flex-direction: column;
@@ -268,4 +267,10 @@
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;  
+}
+
+/* TABLE */
+table {
+  margin: 0 2rem 2rem 2rem;
+  max-width: 90%;
 }
