@@ -121,56 +121,58 @@ const Club = ({ darkMode }) => {
         </div>
       </div>
 
-      <div className="book-card">
-        {club.bookOfTheMonth != null ? (
-          <div className="card-container">
-            <img src={club.bookOfTheMonth.bookCover} alt="book cover" />
-            <div className="desc">
-              <h2>{club.bookOfTheMonth.name}</h2>
-              <h3>
-                {Array.isArray(club.bookOfTheMonth.author)
-                  ? club.bookOfTheMonth.author.join(", ")
-                  : club.bookOfTheMonth.author}
-              </h3>
-              <p>
-                {club.bookOfTheMonth.publicationDate === "0000"
-                  ? "Not available"
-                  : club.bookOfTheMonth.publicationDate.substring(0, 4)}
-              </p>
+      <div className="book-card-members-container">
+        
+          <div className="book-card club-book-card">
+            {club.bookOfTheMonth != null ? (
+              <div className="card-container">
+                <img src={club.bookOfTheMonth.bookCover} alt="book cover" />
+                <div className="desc">
+                  <h2>{club.bookOfTheMonth.name}</h2>
+                  <h3>
+                    {Array.isArray(club.bookOfTheMonth.author)
+                      ? club.bookOfTheMonth.author.join(", ")
+                      : club.bookOfTheMonth.author}
+                  </h3>
+                  <p>
+                    {club.bookOfTheMonth.publicationDate === "0000"
+                      ? "Not available"
+                      : club.bookOfTheMonth.publicationDate.substring(0, 4)}
+                  </p>
+                </div>
+              </div>
+            ) : (
+              <p>No book set!</p>
+            )}
+
+            <div>
+              <Button
+                variant="contained"
+                color="primary"
+                style={{ margin: "10px 0", backgroundColor: "#9b4dff" }}
+                onClick={navToSearch}
+              >
+                Change Book
+              </Button>
             </div>
           </div>
-        ) : (
-          <p>No book set!</p>
-        )}
 
-        <div>
-          <Button
-            variant="contained"
-            color="primary"
-            style={{ margin: "10px 0", backgroundColor: "#9b4dff" }}
-            onClick={navToSearch}
-          >
-            Change Book
-          </Button>
-        </div>
+          <div className="members-container">
+            <h1>Club Members</h1>
+
+            {members.length > 0 ? (
+              members.map((member) => (
+                <Button
+                  key={member.id}
+                  onClick={() => navigate(`/ProfileOwner/${member.id}`)}
+                  variant="contained"
+                  style={{ backgroundColor: colors.purple }}
+                  >{member.name}</Button>                 
+                  ))
+                ) : ( <p>No Members!</p> )}
+          </div>
+        
       </div>
-
-      <div className="members-container">
-        <h1>Club Members</h1>
-
-        {members.length > 0 ? (
-          members.map((member) => (
-            <Button
-              key={member.id}
-              onClick={() => navigate(`/ProfileOwner/${member.id}`)}
-              variant="contained"
-              style={{ backgroundColor: colors.purple }}
-              >{member.name}</Button>                 
-              ))
-            ) : ( <p>No Members!</p> )}
-      </div>
-
-      
 
     </div>
   );
