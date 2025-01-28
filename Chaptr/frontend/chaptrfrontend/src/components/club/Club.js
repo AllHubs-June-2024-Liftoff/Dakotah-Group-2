@@ -4,6 +4,7 @@ import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import Description from "./Description";
 import zIndex from "@mui/material/styles/zIndex";
+import { colors } from "../../styles/ThemeColors";
 
 const Club = ({ darkMode }) => {
   const [club, setClub] = useState({});
@@ -73,6 +74,42 @@ const Club = ({ darkMode }) => {
   return (
     <div>
       <h2>{club.name || "Club name not available"}</h2>
+      
+      <div className="club-message-container">
+        <div className="club-message">
+          <p>{club.clubMessage || "No description added!"}</p>
+        </div>
+      </div>
+        
+        <div className="set-desc" style={{ zIndex: 1 }}>
+          {showDescription ? (
+            <Description
+              clubId={club.id}
+              onRefresh={handleRefresh}
+              hideDescription={setShowDescription}
+            />
+          ) : (
+            ""
+          )}
+          {!showDescription ? (
+            <Button
+              variant="contained"
+              sx={{ marginRight: 2, backgroundColor: colors.blue }}
+              onClick={() => setShowDescription(true)}
+            >
+              Edit Description
+            </Button>
+          ) : (
+            <Button
+              variant="contained"
+              sx={{ marginRight: 2, backgroundColor: colors.pink }}
+              onClick={() => setShowDescription(false)}
+            >
+              Cancel
+            </Button>
+          )}
+        </div>
+
       <div>
         {club.bookOfTheMonth != null ? (
           <div className="card-container">
@@ -106,39 +143,9 @@ const Club = ({ darkMode }) => {
           </Button>
         </div>
       </div>
-      <div>
-        <p>{club.clubMessage || "No description added!"}</p>
-        <div style={{ zIndex: 1 }}>
-          {showDescription ? (
-            <Description
-              clubId={club.id}
-              onRefresh={handleRefresh}
-              hideDescription={setShowDescription}
-            />
-          ) : (
-            ""
-          )}
-          {!showDescription ? (
-            <Button
-              variant="contained"
-              color="primary"
-              style={{ margin: "10px 0", backgroundColor: "#9b4dff" }}
-              onClick={() => setShowDescription(true)}
-            >
-              Edit Description
-            </Button>
-          ) : (
-            <Button
-              variant="contained"
-              color="primary"
-              style={{ margin: "10px 0", backgroundColor: "#FF0000" }}
-              onClick={() => setShowDescription(false)}
-            >
-              Cancel
-            </Button>
-          )}
-        </div>
-      </div>
+
+      
+
       <div>
         <Button
           variant="contained"
