@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { TextField, Button, Paper, Typography } from "@mui/material";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { colors } from "../../styles/ThemeColors";
 
 export default function Register({ darkMode }) {
   const navigate = useNavigate();
@@ -117,7 +118,11 @@ export default function Register({ darkMode }) {
   };
 
   return (
+
+    <div className="register-user-container">
+      
     <Paper
+      className="register-user-paper"
       sx={{
         padding: 4,
         marginTop: "80px",
@@ -125,16 +130,9 @@ export default function Register({ darkMode }) {
         color: darkMode ? "#fff" : "#000",
       }}
     >
-      <Typography
-        variant="h4"
-        align="center"
-        sx={{
-          marginBottom: 3,
-          color: darkMode ? "#40e0d0" : "#9b4dff",
-        }}
-      >
-        Register User
-      </Typography>
+      
+        <h1>Register User</h1>
+     
       <form onSubmit={(e) => onSubmit(e)}>
         <TextField
           label="First Name"
@@ -196,21 +194,20 @@ export default function Register({ darkMode }) {
           <Button
             variant="contained"
             type="submit"
-            color="primary"
-            sx={{ width: "48%" }}
+            sx={{ backgroundColor: darkMode?  colors.pink : colors.purple}}
           >
             Submit
           </Button>
           <Button
             onClick={() => onCancel()}
-            variant="outlined"
-            color="secondary"
-            sx={{ width: "48%" }}
+            variant="contained"
+            sx={{ backgroundColor: darkMode?  colors.purple : colors.pink}}
           >
             Cancel
           </Button>
         </div>
       </form>
     </Paper>
+    </div>
   );
 }

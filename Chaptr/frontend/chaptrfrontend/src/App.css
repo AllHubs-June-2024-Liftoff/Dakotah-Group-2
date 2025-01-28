@@ -281,6 +281,7 @@ table {
   justify-content: center;
   align-items: center;
 }
+
 .edit-user-paper {
   padding: 3rem;
   width: 80%;
@@ -296,6 +297,26 @@ table {
 }
 
 .edit-user-container form button{
+  width: 20rem;
+  max-width: 40rem;
+  margin: 0.5rem;
+}
+
+/* REGISTER */
+.register-user-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 3rem;
+}
+
+.register-user-paper {
+  padding: 3rem;
+  width: 80%;
+  margin-top: 2rem;
+}
+
+.register-user-container form button{
   width: 20rem;
   max-width: 40rem;
   margin: 0.5rem;
