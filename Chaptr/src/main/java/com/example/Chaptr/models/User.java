@@ -144,6 +144,14 @@ public class User extends AbstractEntity {
         this.tbr = tbr;
     }
 
+    public Favorites getFavoritesList() {
+        return favoritesList;
+    }
+
+    public void setFavoritesList(Favorites favoritesList) {
+        this.favoritesList = favoritesList;
+    }
+
     public Set<Club> getClubs() {
         return clubs;
     }
