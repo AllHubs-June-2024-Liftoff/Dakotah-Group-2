@@ -344,3 +344,7 @@ table {
   justify-content: center;
   gap: 1rem;
 }
+
+.create-club-container {
+  margin-top: 2rem;
+}

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { TextField, Button } from "@mui/material";
+import { colors } from "../../styles/ThemeColors";
 
 const CreateClub = () => {
   const navigate = useNavigate();
@@ -37,6 +38,7 @@ const CreateClub = () => {
   };
 
   return (
+    <div className="create-club-container">
     <form onSubmit={handleSubmit}>
       {/* <div>
                 <label>Name</label>
@@ -76,8 +78,8 @@ const CreateClub = () => {
           <Button
             variant="contained"
             type="submit"
-            color="primary"
-            sx={{ width: "50%" }}
+            
+            sx={{ width: "50%", backgroundColor: colors.purple }}
           >
             Submit
           </Button>
@@ -85,15 +87,16 @@ const CreateClub = () => {
         <div>
           <Button
             onClick={() => onCancel()}
-            variant="outlined"
-            color="secondary"
-            sx={{ width: "50%" }}
+            variant="contained"
+            
+            sx={{ width: "50%", backgroundColor: colors.pink }}
           >
             Cancel
           </Button>
         </div>
       </div>
     </form>
+    </div>
   );
 };
 
