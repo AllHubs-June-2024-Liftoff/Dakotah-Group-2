@@ -3,7 +3,6 @@
 }
 
 /* CHAPTR.JS LANDING PAGE */
-
 .chaptr-container {
   display: flex;
 }
@@ -31,7 +30,6 @@
 }
 
 /* Mobile view stacked layout */
-
 @media (max-width: 768px) {
   .chaptr-container {
     flex-direction: column;
@@ -241,10 +239,10 @@
 }
 
 /* FAVORITES */
-
 .favorites-container {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
   margin-left: 2rem;
   margin-top: 2rem;
   gap: 1rem;
@@ -253,4 +251,85 @@
 .favorites-title-and-btn {
   display: flex;
   align-items: center;
+  gap: 1rem;
+}
+
+.favorites-books {
+  display: flex;
+  gap: 1rem;
+  width: 10rem;
+}
+
+.img-btn-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;  
+}
+
+/* TABLE */
+.table-container {
+display: flex;
+justify-content: left;
+align-items: center;
+padding: 2rem;
+}
+
+table {
+  width: 90%;
+}
+
+/* EDIT USER */
+.edit-user-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.edit-user-paper {
+  padding: 3rem;
+  width: 80%;
+  margin-top: 2rem;
+}
+
+.edit-user-profile-display {
+  justify-content: center;
+}
+
+.edit-user-profile-display button {
+  max-width: 10rem;
+}
+
+.edit-user-container form button{
+  width: 20rem;
+  max-width: 40rem;
+  margin: 0.5rem;
+}
+
+/* REGISTER */
+.register-user-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 3rem;
+}
+
+.register-user-paper {
+  padding: 3rem;
+  width: 80%;
+  margin-top: 2rem;
+}
+
+.register-user-container form button{
+  width: 20rem;
+  max-width: 40rem;
+  margin: 0.5rem;
+}
+
+/* CLUB */
+.club-title-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
 }
