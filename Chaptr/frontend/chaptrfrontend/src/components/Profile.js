@@ -104,7 +104,9 @@ export default function Profile({ darkMode }) {
 
           <Button
             variant="contained"
+            component={Link}
             sx={{ marginRight: 2, backgroundColor: colors.blue }}
+            to="/SearchTBR"
           >Add Book</Button> 
         </div>
 
