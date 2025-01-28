@@ -95,6 +95,48 @@ public class FavoritesController {
     } //end of Post Mapping to create a new Favorites list
 
     @Transactional
+    @PutMapping("/favorites/{email}")
+    public ResponseEntity<?> updateUserFavorites(@RequestBody Book newBook, @PathVariable String email) {
+        Optional<User> userOptional = userRepository.findByEmail(email);
+
+        if (!userOptional.isPresent()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User with email " + email + " does not exist.");
+        }
+
+        User user = userOptional.get();
+        Optional<Favorites> existingFavoritesOptional = favoritesRepository.findByUser(user);
+        Favorites existingFavorites;
+
+        if (existingFavoritesOptional.isPresent()) {
+            existingFavorites = existingFavoritesOptional.get();
+        } else {
+            existingFavorites = new Favorites();
+            existingFavorites.setName(user.getName() + "'s Favorites List");
+            existingFavorites.setUser(user);
+        }
+        Optional<Book> existingBookOptional = bookRepository.findById(newBook.getId());
+
+        if (!existingBookOptional.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Book with ID " + newBook.getId() + " not found.");
+        }
+        Book existingBook = existingBookOptional.get();
+
+        for (int i = 0; i < 3; i++ ) {
+            if (existingFavorites.getFavoritesList()[i] == existingBook) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Book '" + existingBook.getName() + "' is already in your Favorites List.");
+            }
+        }
+
+        existingFavorites.addToFavoritesList(existingBook);
+        favoritesRepository.save(existingFavorites);
+        user.setFavoritesList(existingFavorites);
+        userRepository.save(user);
+
+        return ResponseEntity.ok(existingFavorites);
+    }; //end of putMapping
+
+    @Transactional
     @DeleteMapping("/favorites/{email}/book/{bookId}")
     public ResponseEntity<?> removeBookFromFavorites(@PathVariable("email") String email, @PathVariable("BookId") Integer bookId) {
         Optional<User> userOptional = userRepository.findByEmail(email);
