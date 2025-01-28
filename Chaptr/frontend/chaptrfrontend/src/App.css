@@ -274,3 +274,29 @@ table {
   margin: 0 2rem 2rem 2rem;
   max-width: 90%;
 }
+
+/* EDIT USER */
+.edit-user-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.edit-user-paper {
+  padding: 3rem;
+  width: 80%;
+  margin-top: 2rem;
+}
+
+.edit-user-profile-display {
+  justify-content: center;
+}
+
+.edit-user-profile-display button {
+  max-width: 10rem;
+}
+
+.edit-user-container form button{
+  width: 20rem;
+  max-width: 40rem;
+  margin: 0.5rem;
+}

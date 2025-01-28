@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import { TextField, Button, Paper, Typography } from "@mui/material";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { colors } from "../../styles/ThemeColors";
 
 export default function EditUser({ darkMode }) {
   const storedUser = JSON.parse(sessionStorage.getItem("user")) || {};
@@ -137,34 +138,30 @@ export default function EditUser({ darkMode }) {
   };
 
   return (
-    <Paper
-      sx={{
-        padding: 4,
-        marginTop: "80px",
-        backgroundColor: darkMode ? "#333" : "#fff",
-        color: darkMode ? "#fff" : "#000",
-      }}
-    >
-      <div>
+    <div>
+
+    <div className="user-profile-display edit-user-profile-display">      
         <img
           src={imagePreview || storedUser.userImage}
           alt={storedUser.firstName}
-          style={{ width: "100px", height: "100px", borderRadius: "50%" }}
-        />
-        <div>
-          <button onClick={selectImage}>Change Image</button>
-        </div>
+          />
+        <div className="text-button-container">
+          <h1>{`Edit ${user.firstName + " " + user.lastName}'s Profile`}</h1>
+          <Button
+          onClick={selectImage}
+          variant="contained"
+          sx={{backgroundColor: colors.blue}}>Change Image</Button>        
+        </div> 
       </div>
-      <Typography
-        variant="h4"
-        align="center"
-        sx={{
-          marginBottom: 3,
-          color: darkMode ? "#40e0d0" : "#9b4dff",
-        }}
-      >
-        <h1>{`Edit ${user.firstName + " " + user.lastName}'s Profile`}</h1>
-      </Typography>
+
+    <div className="edit-user-container">
+    <Paper
+      className="edit-user-paper"
+      sx={{
+        backgroundColor: darkMode ? "#333" : "#fff",
+        color: darkMode ? "#fff" : "#000",
+      }}
+    >  
       <form>
         <input
           type="file"
@@ -227,21 +224,21 @@ export default function EditUser({ darkMode }) {
           <Button
             variant="contained"
             type="submit"
-            color="primary"
-            sx={{ width: "48%" }}
+            sx={{ backgroundColor: darkMode?  colors.pink : colors.purple}}
           >
             Submit
           </Button>
           <Button
             onClick={onCancel}
-            variant="outlined"
-            color="secondary"
-            sx={{ width: "48%" }}
+            variant="contained"            
+            sx={{ backgroundColor: darkMode?  colors.purple : colors.pink}}
           >
             Cancel
           </Button>
         </div>
       </form>
     </Paper>
+    </div>
+    </div>
   );
 }
