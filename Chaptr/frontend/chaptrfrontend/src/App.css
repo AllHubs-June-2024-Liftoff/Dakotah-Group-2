@@ -244,7 +244,8 @@
 
 .favorites-container {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
   margin-left: 2rem;
   margin-top: 2rem;
   gap: 1rem;
@@ -253,4 +254,18 @@
 .favorites-title-and-btn {
   display: flex;
   align-items: center;
+  gap: 1rem;
+}
+
+.favorites-books {
+  display: flex;
+  gap: 1rem;
+  width: 10rem;
+}
+
+.img-btn-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;  
 }
