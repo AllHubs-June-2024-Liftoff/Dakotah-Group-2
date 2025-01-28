@@ -167,4 +167,25 @@ public class FavoritesController {
         return ResponseEntity.ok("Book removed successfully.");
     }
 
+    @Transactional
+    @DeleteMapping("/tbr/{id}")
+    public ResponseEntity<?> deleteUserFavorites(@PathVariable("id") Integer id) {
+        Optional<Favorites> favoritesOptional = favoritesRepository.findById(id);
+        //Let's see if the favorites list exists
+        if (favoritesOptional.isPresent()) {
+            Favorites favorites = favoritesOptional.get();
+            User user = favorites.getUser();
+            //above grabs the user and favorites list, below sets the favorites list to null if the user exists
+            if (user !=null) {
+                user.setFavoritesList(null);
+                userRepository.save(user);
+            }
+            //deletes the favorites list from the repo
+            favoritesRepository.deleteById(id);
+            return ResponseEntity.noContent().build();
+        } else { //could not find it, sorry!
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Favorites List not found.");
+        }
+    }
+
 } //end of favorite controller
