@@ -57,12 +57,12 @@ export default function BookCard(props) {
       }
     } //end of if/else
     } catch (error) {
-      console.error("Error adding book to TBR:", error);
+      console.error("Error adding book to Favorites:", error);
       alert("An error occurred while adding the book.");
     }//end of try/catch
   };
 
-  
+
   const addToTBR = async () => {
     const storedUser = JSON.parse(sessionStorage.getItem("user"));
 
