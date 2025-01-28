@@ -1,5 +1,7 @@
+import { Button } from "@mui/material";
 import axios from "axios";
 import React, { useState } from "react";
+import { colors } from "../../styles/ThemeColors";
 
 const Description = ({ clubId, onRefresh, hideDescription }) => {
     const [newDescription, setNewDescription] = useState("");
@@ -19,12 +21,21 @@ const Description = ({ clubId, onRefresh, hideDescription }) => {
 
     return (
         <form onSubmit={submitDescription}>
+            <div className="edit-desc-container">
             <div>
-                <label>Update Description</label>
+                <label>Update Description</label> <br />
                 <input type="text" name="newDescription" value={newDescription} onChange={handleInput} />
             </div>
 
-            <button type="submit">Submit</button>
+            <Button
+            variant="contained"
+            type="submit"
+            sx={{ backgroundColor: colors.blue}}
+            >
+            Submit</Button>
+
+            </div>
+            
         </form>
     );
 };

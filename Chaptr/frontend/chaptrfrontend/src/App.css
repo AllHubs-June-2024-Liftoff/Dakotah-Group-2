@@ -411,3 +411,7 @@ table {
     flex-direction: column;
   } 
 }
+
+.edit-desc-container {
+  display: flex;
+}
