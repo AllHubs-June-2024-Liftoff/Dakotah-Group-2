@@ -41,17 +41,21 @@ public class Favorites extends AbstractEntity {
             }
         }
 
-        throw new IllegalStateException("Favorites list is full, cannot add more books.");
+        throw new IllegalStateException("Favorites list is full, please delete a book on your profile before adding more.");
     }
 
-    public void removeFromFavoritesList(Integer i){ //will require front end to have buttons for each position of favorites book
-        favoritesList[i] = null;
+    public void removeFromFavoritesList(Book bookToRemove){
+        for (int i = 0; i < favoritesList.length; i++) {
+            if (favoritesList[i] == bookToRemove){
+                favoritesList[i] = null;
+            }
+        }
     }
 
     public void clearFavoritesList(){
-       for (Book book : favoritesList){
-           book = null;
-       }
+        for (Book book : favoritesList){
+            book = null;
+        }
     }
 
     public Book[] getFavoritesList() {
