@@ -3,7 +3,6 @@
 }
 
 /* CHAPTR.JS LANDING PAGE */
-
 .chaptr-container {
   display: flex;
 }
@@ -31,7 +30,6 @@
 }
 
 /* Mobile view stacked layout */
-
 @media (max-width: 768px) {
   .chaptr-container {
     flex-direction: column;
@@ -320,4 +318,12 @@ table {
   width: 20rem;
   max-width: 40rem;
   margin: 0.5rem;
+}
+
+/* CLUB */
+.club-title-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
 }

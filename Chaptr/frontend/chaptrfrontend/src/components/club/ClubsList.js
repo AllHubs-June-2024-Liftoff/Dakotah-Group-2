@@ -36,25 +36,19 @@ const ClubsList = ({ darkMode }) => {
 
     return (
         <>
-            <div>
-                <span>
+            <div className="club-title-btn">
+                              
                     <h2>Clubs</h2>
 
                     <Button
                         variant="contained"
                         color="primary"
-                        style={{
-                            marginRight: "5px",
-                            marginBottom: "10px",
-                            marginTop: "-10px",
-                            alignItems: "right",
-                            backgroundColor: colors.purple,
-                        }}
+                        style={{ backgroundColor: darkMode? colors.pink : colors.purple }}
                         onClick={() => navigate("/CreateClub")}
                     >
                         Create Club
                     </Button>
-                </span>
+                
             </div>
 
             <table
@@ -142,7 +136,7 @@ const ClubsList = ({ darkMode }) => {
                             <Button
                                 variant="contained"
                                 color="primary"
-                                style={{ marginRight: "5px", backgroundColor: colors.purple }}
+                                style={{ marginRight: "5px", backgroundColor: darkMode? colors.pink : colors.purple }}
                                 onClick={() => {
                                     sessionStorage.setItem("clubId", club.id);
                                     navToClub();
