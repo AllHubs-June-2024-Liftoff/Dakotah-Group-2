@@ -28,13 +28,13 @@ export default function BookCard(props) {
           "http://localhost:8080/addBook",
            bookData
       );
-      console.log("Bok added:", newBookResponse.data);
+      console.log("Book added:", newBookResponse.data);
       const userBook = newBookResponse.data;
       const favoritesResponse = await axios.get(
           `http://localhost:8080/favorites/email/${storedUser.email}`
       );
 
-      
+
       if (favoritesResponse.status === 404 ||
         !favoritesResponse.data ||
         !favoritesResponse.data.id
@@ -51,7 +51,7 @@ export default function BookCard(props) {
           `http://localhost:8080/favorites/${storedUser.email}`,
           userBook
       );
-      
+
       if (addToFavoritesResponse.status === 200) {
           alert(`${userBook.name} added to ${storedUser.name}'s Favorites List`);
       }
