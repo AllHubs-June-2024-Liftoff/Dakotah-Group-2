@@ -70,7 +70,13 @@ const Club = ({ darkMode }) => {
     <div>
       <h2>{club.name || "Club name not available"}</h2>
       <div>
-        <p>{club.bookOfTheMonth || "No book set yet!"}</p>
+        <p>
+          {club.bookOfTheMonth != null ? (
+            club.bookOfTheMonth.name
+          ) : (
+            <p>No book</p>
+          )}
+        </p>
       </div>
       <div>
         <p>{club.clubMessage || "No description added!"}</p>

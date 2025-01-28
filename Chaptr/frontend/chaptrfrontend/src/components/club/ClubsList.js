@@ -120,7 +120,13 @@ const ClubsList = ({ darkMode }) => {
                 border: `1px solid ${darkMode ? "#444" : "#ccc"}`,
               }}
             >
-              {club.bookOfTheMonth}
+              <p>
+                {club.bookOfTheMonth != null ? (
+                  club.bookOfTheMonth.name
+                ) : (
+                  <p>No book</p>
+                )}
+              </p>
             </td>
             <td
               style={{
