@@ -268,9 +268,15 @@
 }
 
 /* TABLE */
+.table-container {
+display: flex;
+justify-content: left;
+align-items: center;
+padding: 2rem;
+}
+
 table {
-  margin: 0 2rem 2rem 2rem;
-  max-width: 90%;
+  width: 90%;
 }
 
 /* EDIT USER */

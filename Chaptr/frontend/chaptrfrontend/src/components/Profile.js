@@ -123,7 +123,7 @@ export default function Profile({ darkMode }) {
           >Remove</Button>
           </div>
           
-          <div ClassName="img-btn-container">
+          <div className="img-btn-container">
             <img
             src="https://i.imgur.com/sUX0gcy.png"
             alt="Placeholder"
@@ -136,7 +136,7 @@ export default function Profile({ darkMode }) {
           >Remove</Button>
           </div>
 
-          <div ClassName="img-btn-container">
+          <div className="img-btn-container">
             <img
             src="https://i.imgur.com/sUX0gcy.png"
             alt="Placeholder"
