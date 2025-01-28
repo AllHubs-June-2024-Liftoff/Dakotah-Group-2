@@ -4,7 +4,7 @@ import Button from "@mui/material/Button";
 import { colors } from "../../styles/ThemeColors";
 
 export default function BookCard(props) {
-  const addToFavorites = asyn () => {
+  const addToFavorites = async () =>{
     const storedUser = JSON.parse(sessionStorage.getItem("user"));
 
     if (!storedUser) {
@@ -24,30 +24,45 @@ export default function BookCard(props) {
     console.log("Sending book data:", bookData);
 
     try {
-        const newBookResponse = await axios.post("http://localhost:8080/addBook", bookData);
-        console.log("Bok added:", newBookResponse.data);
-        
-        const userBook = newBookResponse.data;
-        const favoritesResponse = await axios.get(`http://localhost:8080/favorites/email/${storedUser.email}`);
+      const newBookResponse = await axios.post(
+          "http://localhost:8080/addBook",
+           bookData
+      );
+      console.log("Bok added:", newBookResponse.data);
+      const userBook = newBookResponse.data;
+      const favoritesResponse = await axios.get(
+          `http://localhost:8080/favorites/email/${storedUser.email}`
+      );
 
-        if (favoritesResponse.status === 404 || !favoritesResponse.data || !favoritesResponse.data.id) {
-            console.log(`Creating new Favorites List for: ${storedUser.name}`);
-            const newFavoritesResponse = await axios.post(`http://localhost:8080/newFavorites/email/${storedUser.email}`, {bookId: userBook.id});
-            console.log("New Favorites List created:", newFavoritesResponse.data);
-            alert("Book added to Favorites List");
-        } else {
-            const addToFavoritesResponse = await axios.put(`http://localhost:8080/favorites/${storedUser.email}`,userBook);
-            
-            if (addToFavoritesResponse.status === 200) {
-                alert(`${userBook.name} added to ${storedUser.name}'s Favorites List`);
-            }
-        }
-    } catch (error) {
-        console.error("Error adding book to TBR:", error);
-        alert("An error occurred while adding the book.");
+      
+      if (favoritesResponse.status === 404 ||
+        !favoritesResponse.data ||
+        !favoritesResponse.data.id
+    ) {
+        console.log(`Creating new Favorites List for: ${storedUser.name}`);
+        const newFavoritesResponse = await axios.post(
+            `http://localhost:8080/newFavorites/email/${storedUser.email}`,
+            {bookId: userBook.id}
+        );
+        console.log("New Favorites List created:", newFavoritesResponse.data);
+        alert("Book added to Favorites List");
+    } else {
+      const addToFavoritesResponse = await axios.put(
+          `http://localhost:8080/favorites/${storedUser.email}`,
+          userBook
+      );
+      
+      if (addToFavoritesResponse.status === 200) {
+          alert(`${userBook.name} added to ${storedUser.name}'s Favorites List`);
       }
-    };
+    } //end of if/else
+    } catch (error) {
+      console.error("Error adding book to TBR:", error);
+      alert("An error occurred while adding the book.");
+    }//end of try/catch
+  };
 
+  
   const addToTBR = async () => {
     const storedUser = JSON.parse(sessionStorage.getItem("user"));
 
