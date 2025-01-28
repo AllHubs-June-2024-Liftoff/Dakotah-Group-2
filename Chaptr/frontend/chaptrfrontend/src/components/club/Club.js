@@ -81,7 +81,7 @@ const Club = ({ darkMode }) => {
       </div>
         
       <div className="set-desc" >
-        
+
           {showDescription ? (
             <Description
               clubId={club.id}
@@ -155,74 +155,23 @@ const Club = ({ darkMode }) => {
         </div>
       </div>
 
-      
+      <div className="members-container">
+        <h1>Club Members</h1>
 
-      
-
-      <div>
-        <table
-          style={{
-            width: "25%",
-            borderCollapse: "collapse",
-            color: darkMode ? "#e0e0e0" : "#333",
-            float: "right",
-          }}
-        >
-          <thead>
-            <tr style={{ backgroundColor: darkMode ? "#121212" : "#f5f5f5" }}>
-              <th
-                style={{
-                  padding: "10px",
-                  border: `1px solid ${darkMode ? "#444" : "#ccc"}`,
-                }}
-              >
-                Members
-              </th>
-              <th
-                style={{
-                  padding: "10px",
-                  border: `1px solid ${darkMode ? "#444" : "#ccc"}`,
-                }}
-              >
-                View Profile
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {members.length > 0 ? (
-              members.map((member) => (
-                <tr
-                  key={member.id}
-                  style={{ backgroundColor: darkMode ? "#333" : "#fafafa" }}
-                >
-                  <td>{member.name}</td>
-                  <td>
-                    <Button
-                      onClick={() => navigate(`/ProfileOwner/${member.id}`)}
-                      variant="contained"
-                      color="primary"
-                      style={{ backgroundColor: "#9b4dff" }}
-                    >
-                      {member.firstName}'s profile
-                    </Button>
-                  </td>
-                </tr>
+        {members.length > 0 ? (
+          members.map((member) => (
+            <Button
+              key={member.id}
+              onClick={() => navigate(`/ProfileOwner/${member.id}`)}
+              variant="contained"
+              style={{ backgroundColor: colors.purple }}
+              >{member.name}</Button>                 
               ))
-            ) : (
-              <tr style={{ backgroundColor: darkMode ? "#333" : "#fafafa" }}>
-                <td
-                  style={{
-                    padding: "8px",
-                    border: `1px solid ${darkMode ? "#444" : "#ccc"}`,
-                  }}
-                >
-                  No Members!
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+            ) : ( <p>No Members!</p> )}
       </div>
+
+      
+
     </div>
   );
 };
