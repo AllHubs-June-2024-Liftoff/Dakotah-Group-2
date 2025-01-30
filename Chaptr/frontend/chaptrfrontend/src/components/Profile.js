@@ -120,6 +120,7 @@ export default function Profile({ darkMode }) {
             />
 
           <Button
+          onClick={() => removeBookFavorites(favorites[0].id)}
           variant="contained"
           sx={{ backgroundColor: colors.blue }}
           >Remove</Button>
@@ -133,6 +134,7 @@ export default function Profile({ darkMode }) {
             />
 
           <Button
+          onClick={() => removeBookFavorites(favorites[1].id)}
           variant="contained"
           sx={{ backgroundColor: colors.blue }}
           >Remove</Button>
@@ -146,6 +148,7 @@ export default function Profile({ darkMode }) {
             />
 
           <Button
+          onClick={() => removeBookFavorites(favorites[2].id)}
           variant="contained"
           sx={{ backgroundColor: colors.blue }}
           >Remove</Button>
