@@ -113,7 +113,7 @@ const Club = ({ darkMode }) => {
           <Button
             variant="contained"
             color="primary"
-            style={{ margin: "10px 0", backgroundColor: "#9b4dff" }}
+            style={{ margin: "10px 0", backgroundColor: colors.purple }}
             onClick={joinClub}
           >
             Join Club
@@ -149,7 +149,7 @@ const Club = ({ darkMode }) => {
               <Button
                 variant="contained"
                 color="primary"
-                style={{ margin: "10px 0", backgroundColor: "#9b4dff" }}
+                style={{ margin: "10px 0", backgroundColor: colors.purple }}
                 onClick={navToSearch}
               >
                 Change Book
