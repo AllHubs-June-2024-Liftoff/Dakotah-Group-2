@@ -31,7 +31,7 @@ export default function BookCard(props) {
                 <h3>{Array.isArray(props.author) ? props.author.join(", ") : props.author}</h3>
                 <p>{props.publishedDate === "0000" ? "Not available" : props.publishedDate.substring(0, 4)}</p>
             </div>
-            <button onClick={setClubBook}>Add to TBR</button>
+            <button onClick={setClubBook}>Set Book</button>
         </div>
     );
 }
