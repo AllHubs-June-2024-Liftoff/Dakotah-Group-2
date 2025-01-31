@@ -150,7 +150,7 @@
   border: 2px solid #73A4AB;
 }
 
-@media (max-widh: 520px) {
+@media (max-width: 520px) {
   .search-area form {
     flex-direction: column;
     align-items: flex-start;
@@ -212,9 +212,14 @@
 
 .profile-clubs {
   outline: 1.5px solid #333; 
+  border-radius: 8px;
   padding: 5rem 2rem 5rem 2rem;
-  /* height: 20rem;
-  width: 20rem; */
+}
+
+.club-button {
+  display: flex;
+  padding: 0.5rem;
+  justify-content: center;
 }
 
 /* PROFILE */
@@ -296,6 +301,16 @@ justify-content: space-between;
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;  
+}
+
+@media (max-width: 990px) {
+  .profile-wrapper {
+    flex-direction: column;
+  }
+
+  .profile-clubs-container {
+    margin-left: 2rem;
+  }
 }
 
 /* TABLE */

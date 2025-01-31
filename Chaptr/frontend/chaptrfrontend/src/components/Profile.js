@@ -148,32 +148,34 @@ export default function Profile({ darkMode }) {
                         <h1>My Clubs</h1>
                         {userClubs.length > 0 ? (
                             userClubs.map((club) => (
-                                <div>
+                                <div className="club-button">
                                     <Button
                                         key={club.id}
                                         onClick={() => clubButton(club.id)}
                                         variant="contained"
-                                        style={{ backgroundColor: colors.purple }}
+                                        style={{ backgroundColor: darkMode? colors.pink : colors.purple }}
                                     >
                                         {club.name}
                                     </Button>
                                 </div>
                             ))
                         ) : (
-                            <p>Not a member of any clubs yet!</p>
+                            <div>
+                              <p>Not a member of any clubs yet!</p>
+                              <Button
+                                variant="contained"
+                                component={Link}
+                                sx={{
+                                    marginRight: 2,
+                                    backgroundColor: colors.purple,
+                                }}
+                                to="/ClubsList"
+                                >
+                                Go to Clubs
+                            </Button>
+                            </div>
                         )}
-
-                        <Button
-                            variant="contained"
-                            component={Link}
-                            sx={{
-                                marginRight: 2,
-                                backgroundColor: colors.purple,
-                            }}
-                            to="/ClubsList"
-                        >
-                            Go to Clubs
-                        </Button>
+                        
                     </div>
                 </div>
             </div>
