@@ -303,6 +303,16 @@ justify-content: space-between;
   gap: 0.5rem;  
 }
 
+@media (max-width: 990px) {
+  .profile-wrapper {
+    flex-direction: column;
+  }
+
+  .profile-clubs-container {
+    margin-left: 2rem;
+  }
+}
+
 /* TABLE */
 .table-container {
 display: flex;
