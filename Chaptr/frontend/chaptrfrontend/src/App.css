@@ -216,6 +216,12 @@
   padding: 5rem 2rem 5rem 2rem;
 }
 
+.club-button {
+  display: flex;
+  padding: 0.5rem;
+  justify-content: center;
+}
+
 /* PROFILE */
 .profile-wrapper {
 display: flex;
