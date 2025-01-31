@@ -1,6 +1,7 @@
 package com.example.Chaptr.controllers;
 
 import com.example.Chaptr.data.UserRepository;
+import com.example.Chaptr.models.Club;
 import com.example.Chaptr.models.User;
 import com.example.Chaptr.services.ImageService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -16,8 +17,10 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import static com.example.Chaptr.services.imageDirectory.IMAGE_DIRECTORY;
 import static org.springframework.http.MediaType.IMAGE_JPEG_VALUE;
@@ -140,5 +143,18 @@ public class UserController {
     @GetMapping(path = "/image/{filename}", produces = { IMAGE_PNG_VALUE, IMAGE_JPEG_VALUE })
     public byte[] getImage(@PathVariable("filename") String filename) throws IOException {
         return Files.readAllBytes(Paths.get(IMAGE_DIRECTORY + filename));
+    }
+    
+    @GetMapping("/clubs/{userId}")
+    public Set<Club> getUserClubs(@PathVariable Integer userId){
+        Optional<User> user = userRepository.findById(userId);
+        Set<Club> clubs = Set.of();
+        
+        if (user.isPresent()){
+            User currentUser = user.get();
+            clubs = currentUser.getClubs();
+        }
+        
+        return clubs;
     }
 }
