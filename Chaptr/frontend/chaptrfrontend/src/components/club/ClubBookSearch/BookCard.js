@@ -5,25 +5,30 @@ import { colors } from "../../../styles/ThemeColors";
 import { Button } from "@mui/material";
 
 export default function BookCard(props) {
-    const navigate = useNavigate();
-    const setClubBook = async () => {
-        const clubId = sessionStorage.getItem("clubId");
+  const navigate = useNavigate();
+  const setClubBook = async () => {
+    const clubId = sessionStorage.getItem("clubId");
 
-        const formattedAuthor = Array.isArray(props.author) ? props.author : [props.author];
-        const bookData = {
-            id: props.id,
-            name: props.title,
-            author: formattedAuthor,
-            bookCover: props.image,
-            publicationDate: props.publishedDate,
-        };
-        console.log("Sending book data:", bookData);
-
-        const newBookResponse = await axios.post(`http://localhost:8080/club/${clubId}/book`, bookData);
-        console.log("Book added:", newBookResponse.data);
-
-        navigate("/Club");
+    const formattedAuthor = Array.isArray(props.author)
+      ? props.author
+      : [props.author];
+    const bookData = {
+      id: props.id,
+      name: props.title,
+      author: formattedAuthor,
+      bookCover: props.image,
+      publicationDate: props.publishedDate,
     };
+    console.log("Sending book data:", bookData);
+
+    const newBookResponse = await axios.post(
+      `http://localhost:8080/club/${clubId}/book`,
+      bookData
+    );
+    console.log("Book added:", newBookResponse.data);
+
+    navigate("/Club");
+  };
 
     return (
         <div className="card-container">

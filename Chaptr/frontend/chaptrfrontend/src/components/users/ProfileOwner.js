@@ -2,13 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import Button from "@mui/material/Button";
-import { colors } from "../../styles/ThemeColors";
+import { colors } from "../components/styles/ThemeColors";
 
 export default function ProfileOwner({ darkMode }) {
-    const [owner, setOwner] = useState(null);
-    const [tbr, setTbr] = useState({ tbr: [] });
-    const [userClubs, setUserClubs] = useState([]);
-    const { id } = useParams();
+  const [owner, setOwner] = useState(null);
+  const [tbr, setTbr] = useState({ tbr: [] });
+  const [favorites, setFavorites] = useState([]);
+  const [userClubs, setUserClubs] = useState([]);
+  const { id } = useParams();
 
     const navigate = useNavigate();
 
@@ -27,6 +28,7 @@ export default function ProfileOwner({ darkMode }) {
                     getUserClubs();
                     if (response.data.email) {
                         loadTBRLists(response.data.email);
+                        loadFavoritesLists(response.data.email);
                     }
                 } catch (error) {
                     console.error("Error fetching owner data:", error);
@@ -37,18 +39,37 @@ export default function ProfileOwner({ darkMode }) {
         }
     }, [id]);
 
-    const loadTBRLists = async (userEmail) => {
-        try {
-            const response = await axios.get(`http://localhost:8080/tbr/email/${userEmail}`);
-            setTbr(response.data);
-        } catch (error) {
-            console.error("Error fetching TBR Lists:", error);
-        }
-    };
-
-    if (!owner) {
-        return <div>Loading owner data...</div>;
+  const loadTBRLists = async (userEmail) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8080/getTBR/email/${userEmail}`
+      );
+      setTbr(response.data);
+    } catch (error) {
+      console.error("Error fetching TBR Lists:", error);
     }
+  };
+
+  const loadFavoritesLists = async (userEmail) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8080/favorites/email/${userEmail}`
+      );
+      console.log("Favorites Response:", response.data);
+      if (response.data && response.data.favoritesList.length === 0) {
+        setFavorites([]);
+      } else {
+        setFavorites(response.data.favoritesList);
+      }
+      sessionStorage.setItem("favoritesList", JSON.stringify(response.data));
+    } catch (error) {
+      console.error("Error fetching Favorites Lists:", error);
+    }
+  };
+
+  if (!owner) {
+    return <div>Loading owner data...</div>;
+  }
 
     const clubButton = async (clubId) => {
         sessionStorage.setItem("clubId", clubId);
@@ -65,6 +86,24 @@ export default function ProfileOwner({ darkMode }) {
                 />
                 <h1>{`${owner.firstName + " " + owner.lastName}`}</h1>
             </div>
+
+            <div className="favorites-books">
+                    <h2>My Favorites List</h2>
+                    {favorites.length > 0 ? (
+                      favorites.map((book) => (
+                        <div className="img-btn-container" key={book.id}>
+                          <img
+                            src={book.bookCover}
+                            alt={book.name}
+                            style={{ width: "8rem", height: "auto" }}
+                          />
+                        </div>
+                      ))
+                    ) : (
+                      <p>No favorite books found.</p>
+                    )}
+                  </div>
+
             <div className="profile-owner-clubs-container">
                 <div className="profile-clubs">
                     <h1>My Clubs</h1>
