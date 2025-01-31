@@ -1,10 +1,10 @@
 import React from "react";
 import axios from "axios";
 import Button from "@mui/material/Button";
-import { colors } from "../../styles/ThemeColors";
+//import { colors } from "../../styles/ThemeColors";
 
 export default function BookCard(props) {
-  const addToFavorites = async () =>{
+  const addToFavorites = async () => {
     const storedUser = JSON.parse(sessionStorage.getItem("user"));
 
     if (!storedUser) {
@@ -25,43 +25,44 @@ export default function BookCard(props) {
 
     try {
       const newBookResponse = await axios.post(
-          "http://localhost:8080/addBook",
-           bookData
+        "http://localhost:8080/addBook",
+        bookData
       );
       console.log("Book added:", newBookResponse.data);
       const userBook = newBookResponse.data;
       const favoritesResponse = await axios.get(
-          `http://localhost:8080/favorites/email/${storedUser.email}`
+        `http://localhost:8080/favorites/email/${storedUser.email}`
       );
 
-
-      if (favoritesResponse.status === 404 ||
+      if (
+        favoritesResponse.status === 404 ||
         !favoritesResponse.data ||
         !favoritesResponse.data.id
-    ) {
+      ) {
         console.log(`Creating new Favorites List for: ${storedUser.name}`);
         const newFavoritesResponse = await axios.post(
-            `http://localhost:8080/newFavorites/email/${storedUser.email}`,
-            {bookId: userBook.id}
+          `http://localhost:8080/newFavorites/email/${storedUser.email}`,
+          { bookId: userBook.id }
         );
         console.log("New Favorites List created:", newFavoritesResponse.data);
         alert("Book added to Favorites List");
-    } else {
-      const addToFavoritesResponse = await axios.put(
+      } else {
+        const addToFavoritesResponse = await axios.put(
           `http://localhost:8080/favorites/${storedUser.email}`,
           userBook
-      );
+        );
 
-      if (addToFavoritesResponse.status === 200) {
-          alert(`${userBook.name} added to ${storedUser.name}'s Favorites List`);
-      }
-    } //end of if/else
+        if (addToFavoritesResponse.status === 200) {
+          alert(
+            `${userBook.name} added to ${storedUser.name}'s Favorites List`
+          );
+        }
+      } //end of if/else
     } catch (error) {
       console.error("Error adding book to Favorites:", error);
       alert("An error occurred while adding the book.");
-    }//end of try/catch
+    } //end of try/catch
   };
-
 
   const addToTBR = async () => {
     const storedUser = JSON.parse(sessionStorage.getItem("user"));
@@ -135,20 +136,16 @@ export default function BookCard(props) {
             : props.publishedDate.substring(0, 4)}
         </p>
       </div>
-      <Button
-          variant="contained"
-          onClick={addToTBR}
-          sx={{ marginRight: 2, backgroundColor: colors.blue }}
-          >
-          Add to TBR
+      <Button variant="contained" onClick={addToTBR} sx={{ marginRight: 2 }}>
+        Add to TBR
       </Button>
       <Button
-          variant="contained"
-          onClick={addToFavorites}
-          sx={{ marginRight: 2, backgroundColor: colors.blue }}
-          >
-          Add to Favorites
+        variant="contained"
+        onClick={addToFavorites}
+        sx={{ marginRight: 2 }}
+      >
+        Add to Favorites
       </Button>
-</div>
+    </div>
   );
 }

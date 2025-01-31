@@ -50,7 +50,7 @@ public class User extends AbstractEntity {
     @JsonIgnore
     private TBR tbr;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "favoritesList_id")
     @JsonIgnore
     private Favorites favoritesList;

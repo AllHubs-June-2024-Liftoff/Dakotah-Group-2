@@ -8,7 +8,6 @@ import com.example.Chaptr.models.Favorites;
 import com.example.Chaptr.models.User;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpOutputMessage;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -60,46 +59,47 @@ public class FavoritesController {
         }
     } //end of getmapping getUserFavorites
 
-    @Transactional //lets create a new favorites list if user does not have one
+    @Transactional
     @PostMapping("/newFavorites/email/{email}")
     public ResponseEntity<?> newFavorites(@PathVariable String email, @RequestParam Integer bookId) {
         Optional<User> existingUser = userRepository.findByEmail(email);
 
-        if (existingUser.isPresent()) { //if the user exists, does their favorites list?
+        if (existingUser.isPresent()) {
             User user = existingUser.get();
             Optional<Favorites> existingFavorites = favoritesRepository.findByUser(user);
 
-            if(existingFavorites.isPresent()) { //they exist and a favorites list does
+            if (existingFavorites.isPresent()) {
                 return ResponseEntity.status(HttpStatus.CONFLICT).body("User already has a Favorites List");
-            } // if not, we are creating a new Favorites object
+            }
+
             Favorites userFavorites = new Favorites();
-            userFavorites.setUser(user); //add the favorites to the user
+            userFavorites.setUser(user);
             String favoritesName = user.getName() + "'s Favorites List";
-            userFavorites.setName(favoritesName); //give it a name
-            //Lets see about adding books
+            userFavorites.setName(favoritesName);
+
             Optional<Book> existingBook = bookRepository.findById(bookId);
 
-            if (existingBook.isPresent()) { //if the book exists, add it. save it to Favorites repo, the list, and the user
+            if (existingBook.isPresent()) {
                 Book book = existingBook.get();
-                userFavorites.addToFavoritesList(book); //LIST because everything else is LIST
+                userFavorites.addToFavoritesList(book);
                 favoritesRepository.save(userFavorites);
                 user.setFavoritesList(userFavorites);
                 userRepository.save(user);
                 return ResponseEntity.ok(userFavorites);
-            } else { //if the book is not in the repository, give an error message
+            } else {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Book not found.");
             }
-        } else { //if the user is not present, let them know!
+        } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User with this email does not exist.");
         }
-    } //end of Post Mapping to create a new Favorites list
+    }
 
     @Transactional
     @PutMapping("/favorites/{email}")
     public ResponseEntity<?> updateUserFavorites(@RequestBody Book newBook, @PathVariable String email) {
         Optional<User> userOptional = userRepository.findByEmail(email);
 
-        if (!userOptional.isPresent()){
+        if (!userOptional.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User with email " + email + " does not exist.");
         }
 
@@ -114,18 +114,18 @@ public class FavoritesController {
             existingFavorites.setName(user.getName() + "'s Favorites List");
             existingFavorites.setUser(user);
         }
+
         Optional<Book> existingBookOptional = bookRepository.findById(newBook.getId());
 
         if (!existingBookOptional.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body("Book with ID " + newBook.getId() + " not found.");
         }
+
         Book existingBook = existingBookOptional.get();
 
-        for (int i = 0; i < 3; i++ ) {
-            if (existingFavorites.getFavoritesList()[i] == existingBook) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Book '" + existingBook.getName() + "' is already in your Favorites List.");
-            }
+        if (existingFavorites.getFavoritesList().contains(existingBook)) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Book '" + existingBook.getName() + "' is already in your Favorites List.");
         }
 
         existingFavorites.addToFavoritesList(existingBook);
@@ -134,7 +134,7 @@ public class FavoritesController {
         userRepository.save(user);
 
         return ResponseEntity.ok(existingFavorites);
-    }; //end of putMapping
+    }
 
     @Transactional
     @DeleteMapping("/favorites/{email}/book/{bookId}")
@@ -168,7 +168,7 @@ public class FavoritesController {
     }
 
     @Transactional
-    @DeleteMapping("/tbr/{id}")
+    @DeleteMapping("/deleteFavorites/{id}")
     public ResponseEntity<?> deleteUserFavorites(@PathVariable("id") Integer id) {
         Optional<Favorites> favoritesOptional = favoritesRepository.findById(id);
         //Let's see if the favorites list exists
