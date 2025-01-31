@@ -222,6 +222,12 @@
   justify-content: center;
 }
 
+.profile-owner-clubs-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 3rem;
+}
+
 /* PROFILE */
 .profile-wrapper {
 display: flex;

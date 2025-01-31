@@ -65,12 +65,12 @@ export default function ProfileOwner({ darkMode }) {
                 />
                 <h1>{`${owner.firstName + " " + owner.lastName}`}</h1>
             </div>
-            <div className="profile-clubs-container">
+            <div className="profile-owner-clubs-container">
                 <div className="profile-clubs">
                     <h1>My Clubs</h1>
                     {userClubs.length > 0 ? (
                         userClubs.map((club) => (
-                            <div>
+                            <div className="club-button">
                                 <Button
                                     key={club.id}
                                     onClick={() => clubButton(club.id)}
@@ -84,18 +84,6 @@ export default function ProfileOwner({ darkMode }) {
                     ) : (
                         <p>Not a member of any clubs yet!</p>
                     )}
-
-                    <Button
-                        variant="contained"
-                        component={Link}
-                        sx={{
-                            marginRight: 2,
-                            backgroundColor: colors.purple,
-                        }}
-                        to="/ClubsList"
-                    >
-                        Go to Clubs
-                    </Button>
                 </div>
             </div>
             <div>
