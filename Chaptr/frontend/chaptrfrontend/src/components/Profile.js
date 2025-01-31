@@ -250,7 +250,8 @@ export default function Profile({ darkMode }) {
 
                           </div>
                       </div>
-                  </div>
+                  
+                  
 
       <div>
         <div className="TBR-text-and-search-btn">

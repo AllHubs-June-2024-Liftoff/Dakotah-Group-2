@@ -59,7 +59,7 @@ export default function BookCard(props) {
         }
       }
     } catch (error) {
-      console.error("Error adding book to Favorites:", error);
+      console.error("Error adding book to Favorites:", error.response.data);
       alert("An error occurred while adding the book.");
     }
   };

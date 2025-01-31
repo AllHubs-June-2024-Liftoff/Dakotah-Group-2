@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import Button from "@mui/material/Button";
-import { colors } from "../components/styles/ThemeColors";
+import { colors } from "../../styles/ThemeColors";
 
 export default function ProfileOwner({ darkMode }) {
   const [owner, setOwner] = useState(null);
