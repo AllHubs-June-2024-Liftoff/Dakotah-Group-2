@@ -138,7 +138,7 @@ export default function Profile({ darkMode }) {
     }
 
   const getUserClubs = async () => {
-          const response = await axios.get(`http://localhost:8080/clubs/${user.id}`);
+          const response = await axios.get(`http://localhost:8080/clubs/${user.id}`); 
           setUserClubs(response.data);
       };
 

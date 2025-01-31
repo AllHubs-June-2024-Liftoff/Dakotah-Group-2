@@ -9,6 +9,7 @@ export default function EditUser({ darkMode }) {
   const navigate = useNavigate();
   const inputRef = useRef();
   const [user, setUser] = useState({
+    id: storedUser.id,
     firstName: storedUser.firstName || "",
     lastName: storedUser.lastName || "",
     email: storedUser.email || "",
