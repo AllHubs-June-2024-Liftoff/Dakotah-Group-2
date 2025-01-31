@@ -4,7 +4,6 @@ import BookCard from "./BookCard";
 export default function BookList(props) {
   return (
     <div className="list">
-      <h2>Book List</h2>
       {props.books.map((book, i) => {
         let bookImage = "";
         if (book.volumeInfo.imageLinks == null) {
@@ -14,6 +13,7 @@ export default function BookList(props) {
         }
 
         return (
+          <div className="book-card">
           <BookCard
             key={i}
             image={bookImage}
@@ -22,6 +22,7 @@ export default function BookList(props) {
             publishedDate={book.volumeInfo.publishedDate}
             ISBN10={book.volumeInfo.title}
           />
+        </div>
         );
       })}
     </div>
