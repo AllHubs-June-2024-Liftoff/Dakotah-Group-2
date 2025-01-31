@@ -153,7 +153,7 @@ export default function Profile({ darkMode }) {
                                         key={club.id}
                                         onClick={() => clubButton(club.id)}
                                         variant="contained"
-                                        style={{ backgroundColor: colors.purple }}
+                                        style={{ backgroundColor: darkMode? colors.pink : colors.purple }}
                                     >
                                         {club.name}
                                     </Button>
