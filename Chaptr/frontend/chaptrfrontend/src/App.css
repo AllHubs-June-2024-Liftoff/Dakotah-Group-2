@@ -212,9 +212,8 @@
 
 .profile-clubs {
   outline: 1.5px solid #333; 
+  border-radius: 8px;
   padding: 5rem 2rem 5rem 2rem;
-  /* height: 20rem;
-  width: 20rem; */
 }
 
 /* PROFILE */
