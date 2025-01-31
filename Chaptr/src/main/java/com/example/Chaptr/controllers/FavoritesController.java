@@ -165,10 +165,10 @@ public class FavoritesController {
             User user = favorites.getUser();
 
             if (user != null) {
-                user.setFavoritesList(null); // Remove the reference from the user
+                user.setFavoritesList(null);
                 userRepository.save(user);
             }
-            favoritesRepository.deleteById(id); // Delete the favorites list
+            favoritesRepository.deleteById(id);
             return ResponseEntity.noContent().build();
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Favorites List not found.");
