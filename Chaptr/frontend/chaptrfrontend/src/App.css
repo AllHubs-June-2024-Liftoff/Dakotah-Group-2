@@ -203,6 +203,10 @@
 }
 
 /* PROFILE */
+.left-text {
+  text-align: left;
+  margin-left: 2rem;
+}
 .user-profile-display {
   display: flex;
   align-items: flex-start;

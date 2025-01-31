@@ -42,17 +42,20 @@ export default function ProfileOwner({ darkMode }) {
 
   return (
     <div>
-      <p>{`${owner.firstName + " " + owner.lastName}'s profile`}</p>
-      <div>
+      <div className="user-profile-display edit-user-profile-display"> 
         <img
-          src={owner.userImage || "path/to/default/image.jpg"}
-          alt={owner.firstName}
-          style={{ width: "100px", height: "100px", borderRadius: "50%" }}
-        />
+            src={owner.userImage || "path/to/default/image.jpg"}
+            alt={owner.firstName}
+            style={{ width: "100px", height: "100px", borderRadius: "50%" }}
+          />
+        <h1>{`${owner.firstName + " " + owner.lastName}`}</h1>
       </div>
       <div>
-        <h1>{tbr.name || "My TBR List"}</h1>
+        <div className="left-text">
+          <h2>{tbr.name || "My TBR List"}</h2>
+        </div>
 
+        <div className="table-container">
         <table
           style={{
             width: "100%",
@@ -157,6 +160,7 @@ export default function ProfileOwner({ darkMode }) {
             )}
           </tbody>
         </table>
+      </div>
       </div>
     </div>
   );
