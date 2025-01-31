@@ -137,7 +137,7 @@ public class FavoritesController {
     }
 
     @Transactional
-    @DeleteMapping("/favorites/{email}/book/{bookId}")
+    @DeleteMapping("/deleteBookFromFavorites/{email}/book/{bookId}")
     public ResponseEntity<?> removeBookFromFavorites(@PathVariable("email") String email, @PathVariable("BookId") Integer bookId) {
         Optional<User> userOptional = userRepository.findByEmail(email);
         // if the User does not exist, give an error
