@@ -205,24 +205,28 @@
 /* PROFILE CLUBS CONTAINER */
 .profile-clubs-container {
   display: flex;
-
+  flex: 1;
+  align-items: flex-start;
+  margin-top: 5rem;
 }
 
 .profile-clubs {
   outline: 1.5px solid #333; 
-  height: 20rem;
-  width: 20rem;
+  padding: 5rem 2rem 5rem 2rem;
+  /* height: 20rem;
+  width: 20rem; */
 }
 
 /* PROFILE */
 .profile-wrapper {
 display: flex;
-justify-content: space-around;
+justify-content: space-between;
 }
 
 .profile-left-container {
   display: flex;
   flex-direction: column;
+  flex: 1;
 }
 
 .left-text {
