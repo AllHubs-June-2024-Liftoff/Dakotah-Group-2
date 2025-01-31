@@ -128,11 +128,11 @@ public class FavoritesController {
     }
 
     @Transactional
-    @DeleteMapping("/deleteBookFromFavorites/{email}/book/{bookId}")
-    public ResponseEntity<?> removeBookFromFavorites(@PathVariable("email") String email, @PathVariable("BookId") Integer bookId) {
+    @DeleteMapping("/deleteBookFromFavorites/{email}/{bookId}")
+    public ResponseEntity<?> removeBookFromFavorites(@PathVariable("email") String email, @PathVariable("bookId") Integer bookId) {
         Optional<User> userOptional = userRepository.findByEmail(email);
 
-        if(!userOptional.isPresent()){
+        if (!userOptional.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User with email " + email + " not found.");
         }
         User user = userOptional.get();
@@ -143,9 +143,9 @@ public class FavoritesController {
         }
 
         Favorites userFavorites = favoritesOptional.get();
-        Optional<Book> bookOptional = bookRepository.findById((bookId));
+        Optional<Book> bookOptional = bookRepository.findById(bookId);
 
-        if (!bookOptional.isPresent()){
+        if (!bookOptional.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Book not found.");
         }
         Book bookToRemove = bookOptional.get();
@@ -164,15 +164,14 @@ public class FavoritesController {
             Favorites favorites = favoritesOptional.get();
             User user = favorites.getUser();
 
-            if (user !=null) {
-                user.setFavoritesList(null);
+            if (user != null) {
+                user.setFavoritesList(null); // Remove the reference from the user
                 userRepository.save(user);
             }
-            favoritesRepository.deleteById(id);
+            favoritesRepository.deleteById(id); // Delete the favorites list
             return ResponseEntity.noContent().build();
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Favorites List not found.");
         }
     }
-
 }

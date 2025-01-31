@@ -132,7 +132,7 @@ public class TBRController {
     }
 
     @Transactional
-    @DeleteMapping("/tbr/{id}")
+    @DeleteMapping("/deleteTBR/{id}")
     public ResponseEntity<?> deleteUserTBR(@PathVariable("id") Integer id) {
         Optional<TBR> tbrOptional = tbrRepository.findById(id);
         if (tbrOptional.isPresent()) {
@@ -152,7 +152,7 @@ public class TBRController {
     }
 
     @Transactional
-    @DeleteMapping("/tbr/{email}/book/{bookId}")
+    @DeleteMapping("/deleteBook/{email}/{bookId}")
     public ResponseEntity<?> removeBookFromTBR(@PathVariable("email") String email, @PathVariable("bookId") Integer bookId) {
         Optional<User> userOptional = userRepository.findByEmail(email);
 

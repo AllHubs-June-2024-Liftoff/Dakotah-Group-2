@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-//import { colors } from "../styles/ThemeColors";
+import { colors } from "../components/styles/ThemeColors";
 
 export default function Profile({ darkMode }) {
   const [user, setUser] = useState(
@@ -60,7 +60,7 @@ export default function Profile({ darkMode }) {
       console.error("Error fetching TBR Lists:", error);
     }
   };
-  const onDelete = async (e) => {
+  const deleteTBR = async (e) => {
     e.preventDefault();
 
     if (!tbr.tbr.length) {
@@ -77,15 +77,56 @@ export default function Profile({ darkMode }) {
       console.error(`Error deleting ${user.firstName}'s TBR List:`, error);
     }
   };
-  const removeBook = async (bookId) => {
+  const removeBookTBR = async (bookId) => {
     try {
       await axios.delete(
-        `http://localhost:8080/deleteBook/${user.email}/book/${bookId}`
+        `http://localhost:8080/deleteBook/${user.email}/${bookId}`
       );
       alert("Book removed successfully!");
       loadTBRLists(user.email);
     } catch (error) {
       console.error("Error removing book from TBR list:", error);
+      alert("There was an error removing the book.");
+    }
+  };
+  const deleteFavorites = async (e) => {
+    e.preventDefault();
+
+    if (!favorites.length) {
+      alert(`${user.firstName}'s Favorites List is empty!`);
+      return;
+    }
+    const storedFavorites = JSON.parse(sessionStorage.getItem("favoritesList"));
+
+    if (!storedFavorites || !storedFavorites.id) {
+      console.error("Favorites list ID is missing");
+      return;
+    }
+    const favoritesListId = storedFavorites.id;
+
+    try {
+      await axios.delete(
+        `http://localhost:8080/deleteFavorites/${favoritesListId}`
+      );
+      sessionStorage.removeItem("favoritesList");
+      alert(`${user.firstName}'s Favorites List deleted successfully!`);
+      setFavorites([]);
+    } catch (error) {
+      console.error(
+        `Error deleting ${user.firstName}'s Favorites List:`,
+        error
+      );
+    }
+  };
+  const removeBookFavorites = async (bookId) => {
+    try {
+      await axios.delete(
+        `http://localhost:8080/deleteBookFromFavorites/${user.email}/${bookId}`
+      );
+      alert("Book removed successfully!");
+      loadFavoritesLists(user.email);
+    } catch (error) {
+      console.error("Error removing book from Favorites list:", error);
       alert("There was an error removing the book.");
     }
   };
@@ -114,7 +155,6 @@ export default function Profile({ darkMode }) {
           </Button>
         </div>
       </div>
-
       <div className="favorites-container">
         <div className="favorites-title-and-btn">
           <h3>Favorite Books</h3>
@@ -128,9 +168,17 @@ export default function Profile({ darkMode }) {
             Add Book
           </Button>
         </div>
-
         <div className="favorites-books">
-          <h2>My Favorites List</h2>
+          <h2>
+            My Favorites List{" "}
+            <Button
+              onClick={deleteFavorites}
+              variant="contained"
+              sx={{ marginRight: 2 }}
+            >
+              Delete Favorites List
+            </Button>
+          </h2>
           {favorites.length > 0 ? (
             favorites.map((book) => (
               <div className="img-btn-container" key={book.id}>
@@ -139,7 +187,12 @@ export default function Profile({ darkMode }) {
                   alt={book.name}
                   style={{ width: "8rem", height: "auto" }}
                 />
-                <Button onClick={() => {}} variant="contained">
+                <Button
+                  onClick={() => {
+                    removeBookFavorites(book.id);
+                  }}
+                  variant="contained"
+                >
                   Remove
                 </Button>
               </div>
@@ -161,7 +214,6 @@ export default function Profile({ darkMode }) {
             Search Books
           </Button>
         </div>
-
         <div className="table-container">
           <table
             style={{
@@ -206,7 +258,7 @@ export default function Profile({ darkMode }) {
                 </th>
                 <th style={{ padding: "10px", border: "1px solid #ccc" }}>
                   <Button
-                    onClick={onDelete}
+                    onClick={deleteTBR}
                     variant="contained"
                     sx={{ marginRight: 2 }}
                   >
@@ -262,7 +314,7 @@ export default function Profile({ darkMode }) {
                     </td>
                     <td style={{ padding: "8px", border: "1px solid #ccc" }}>
                       <Button
-                        onClick={() => removeBook(book.id)}
+                        onClick={() => removeBookTBR(book.id)}
                         variant="contained"
                         sx={{ marginRight: 2 }}
                       >
