@@ -79,80 +79,102 @@ export default function Profile({ darkMode }) {
   return (
     <div>
 
-      <div className="user-profile-display">    
-        <img
-          src={user.userImage || "path/to/default/image.jpg"}
-          alt={user.firstName}
-        />
-        <div className="text-button-container">
-          <h1>{`${user.firstName} ${user.lastName}`}</h1>          
-          <Button
-            className="upload-img-btn"
-            variant="contained"
-            component={Link}
-            sx={{ marginRight: 2, backgroundColor: colors.blue }}
-            to="/EditUser"
-            >
-            Upload Image
-          </Button>
+      <div className="profile-wrapper">
+        <div className="profile-left-container">
+          <div className="user-profile-display">    
+            <img
+              src={user.userImage || "path/to/default/image.jpg"}
+              alt={user.firstName}
+            />
+            <div className="text-button-container">
+              <h1>{`${user.firstName} ${user.lastName}`}</h1>          
+              <Button
+                className="upload-img-btn"
+                variant="contained"
+                component={Link}
+                sx={{ marginRight: 2, backgroundColor: colors.blue }}
+                to="/EditUser"
+                >
+                Upload Image
+              </Button>
+            </div>
+          </div>
+          
+          <div className="favorites-container">
+            <div className="favorites-title-and-btn">
+              <h3>Favorite Books</h3>
+
+              <Button
+                variant="contained"
+                sx={{ marginRight: 2, backgroundColor: colors.blue }}
+              >Add Book</Button> 
+            </div>
+
+            <div className="favorites-books">
+              {/* Katie put whatever you want here */}
+              <div className="img-btn-container">
+                <img
+                src="https://i.imgur.com/sUX0gcy.png"
+                alt="Placeholder"
+                style={{ width: "8rem", height: "auto" }}
+                />
+              
+              <Button
+              variant="contained"
+              sx={{ backgroundColor: colors.blue }}
+              >Remove</Button>
+              </div>
+              
+              <div className="img-btn-container">
+                <img
+                src="https://i.imgur.com/sUX0gcy.png"
+                alt="Placeholder"
+                style={{ width: "8rem", height: "auto" }}
+                />
+              
+              <Button
+              variant="contained"
+              sx={{ backgroundColor: colors.blue }}
+              >Remove</Button>
+              </div>
+
+              <div className="img-btn-container">
+                <img
+                src="https://i.imgur.com/sUX0gcy.png"
+                alt="Placeholder"
+                style={{ width: "8rem", height: "auto" }}
+                />
+              
+              <Button
+              variant="contained"
+              sx={{ backgroundColor: colors.blue }}
+              >Remove</Button>
+              </div>
+              
+              
+            {/* Katie stop here */}
+            </div>
+          </div> 
+        </div>
+
+        <div className="profile-clubs-container">
+          <div className="profile-clubs">
+            <h1>My Clubs</h1>
+            <p>Not a member of any clubs yet!</p>
+            <Button
+                  variant="contained"
+                  component={Link}
+                  sx={{
+                    marginRight: 2,
+                    backgroundColor: colors.purple,
+                  }}
+                  to="/ClubsList"
+                >
+                  Go to Clubs
+                </Button>
+          </div>
         </div>
       </div>
-      
-      <div className="favorites-container">
-        <div className="favorites-title-and-btn">
-          <h3>Favorite Books</h3>
-
-          <Button
-            variant="contained"
-            sx={{ marginRight: 2, backgroundColor: colors.blue }}
-          >Add Book</Button> 
-        </div>
-
-        <div className="favorites-books">
-          {/* Katie put whatever you want here */}
-           <div className="img-btn-container">
-            <img
-            src="https://i.imgur.com/sUX0gcy.png"
-            alt="Placeholder"
-            style={{ width: "8rem", height: "auto" }}
-            />
-          
-          <Button
-          variant="contained"
-          sx={{ backgroundColor: colors.blue }}
-          >Remove</Button>
-          </div>
-          
-          <div className="img-btn-container">
-            <img
-            src="https://i.imgur.com/sUX0gcy.png"
-            alt="Placeholder"
-            style={{ width: "8rem", height: "auto" }}
-            />
-          
-          <Button
-          variant="contained"
-          sx={{ backgroundColor: colors.blue }}
-          >Remove</Button>
-          </div>
-
-          <div className="img-btn-container">
-            <img
-            src="https://i.imgur.com/sUX0gcy.png"
-            alt="Placeholder"
-            style={{ width: "8rem", height: "auto" }}
-            />
-          
-          <Button
-          variant="contained"
-          sx={{ backgroundColor: colors.blue }}
-          >Remove</Button>
-          </div>
-          
-          
-        {/* Katie stop here */}
-        </div>
-      </div> 
 
       <div>
         <div className="TBR-text-and-search-btn">

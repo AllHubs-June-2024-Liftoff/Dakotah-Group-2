@@ -202,14 +202,36 @@
   max-width: 10rem;
 }
 
+/* PROFILE CLUBS CONTAINER */
+.profile-clubs-container {
+  display: flex;
+
+}
+
+.profile-clubs {
+  outline: 1.5px solid #333; 
+  height: 20rem;
+  width: 20rem;
+}
+
 /* PROFILE */
+.profile-wrapper {
+display: flex;
+justify-content: space-around;
+}
+
+.profile-left-container {
+  display: flex;
+  flex-direction: column;
+}
+
 .left-text {
   text-align: left;
   margin-left: 2rem;
 }
+
 .user-profile-display {
   display: flex;
-  align-items: flex-start;
   text-align: left;
   gap: 1rem;
   margin-left: 2rem;
@@ -241,6 +263,7 @@
   margin-top: 2rem;
   gap: 1rem;
 }
+
 
 /* FAVORITES */
 .favorites-container {
