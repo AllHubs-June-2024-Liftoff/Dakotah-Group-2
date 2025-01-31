@@ -30,7 +30,7 @@ public class TBRController {
         return (List<TBR>) tbrRepository.findAll();
     }
 
-    @GetMapping("/tbr/email/{email}")
+    @GetMapping("/getTBR/email/{email}")
     public ResponseEntity<?> getUserTBR(@PathVariable String email) {
         Optional<User> userOptional = userRepository.findByEmail(email);
 
@@ -93,7 +93,7 @@ public class TBRController {
     }
 
     @Transactional
-    @PutMapping("/tbr/{email}")
+    @PutMapping("/updateTBR/{email}")
     public ResponseEntity<?> updateUserTBR(@RequestBody Book newBook, @PathVariable String email) {
         Optional<User> userOptional = userRepository.findByEmail(email);
 

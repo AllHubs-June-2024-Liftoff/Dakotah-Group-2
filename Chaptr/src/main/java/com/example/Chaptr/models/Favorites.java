@@ -2,63 +2,59 @@ package com.example.Chaptr.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Favorites extends AbstractEntity {
 
-    @ManyToMany(cascade = CascadeType.MERGE)
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "user_favoritesList_books",
             joinColumns = @JoinColumn(name = "favoritesList_id"),
             inverseJoinColumns = @JoinColumn(name = "book_id")
     )
-    private Book[] favoritesList = new Book[3];
+    private List<Book> favoritesList = new ArrayList<>();
 
-    @OneToOne(mappedBy = "favoritesList")
+    @OneToOne
+    @JoinColumn(name = "user_id")
     @JsonIgnore
     private User user;
 
-    public Favorites(User user, Book[] favoritesList){
+    private String name;
+
+    public Favorites(User user, List<Book> favoritesList, String name) {
         super();
         this.user = user;
-        this.favoritesList = favoritesList != null ? favoritesList : new Book[3]; //ternary operator to create a new Book[3]/favoritesList if one does not exist.
+        this.name = name;
+        this.favoritesList = favoritesList != null ? favoritesList : new ArrayList<>();
     }
 
-    public Favorites(){}
+    public Favorites() {}
 
     public void addToFavoritesList(Book bookToAdd) {
-
-        for (int i = 0; i < favoritesList.length; i++) {
-            if (favoritesList[i] != null && favoritesList[i].equals(bookToAdd)) {
-                return;
-            }
+        if (bookToAdd == null) return;
+        if (favoritesList.contains(bookToAdd)) {
+            return;
         }
+        favoritesList.add(bookToAdd);
+    }
 
-        for (int i = 0; i < favoritesList.length; i++) {
-            if (favoritesList[i] == null) {
-                favoritesList[i] = bookToAdd;
-                return;
-            }
+    public void removeFromFavoritesList(Book bookToRemove) {
+        if (bookToRemove != null) {
+            favoritesList.remove(bookToRemove);
         }
-
-        throw new IllegalStateException("Favorites list is full, cannot add more books.");
     }
 
-    public void removeFromFavoritesList(Integer i){ //will require front end to have buttons for each position of favorites book
-        favoritesList[i] = null;
+    public void clearFavoritesList() {
+        favoritesList.clear();
     }
 
-    public void clearFavoritesList(){
-       for (Book book : favoritesList){
-           book = null;
-       }
-    }
-
-    public Book[] getFavoritesList() {
+    public List<Book> getFavoritesList() {
         return favoritesList;
     }
 
-    public void setFavoritesList(Book[] favoritesList) {
+    public void setFavoritesList(List<Book> favoritesList) {
         this.favoritesList = favoritesList;
     }
 
@@ -68,5 +64,13 @@ public class Favorites extends AbstractEntity {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

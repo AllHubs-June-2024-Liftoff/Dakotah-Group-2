@@ -1,7 +1,69 @@
 import React from "react";
 import axios from "axios";
+import Button from "@mui/material/Button";
+//import { colors } from "../../styles/ThemeColors";
 
 export default function BookCard(props) {
+  const addToFavorites = async () => {
+    const storedUser = JSON.parse(sessionStorage.getItem("user"));
+
+    if (!storedUser) {
+      alert("User is not logged in.");
+      return;
+    }
+    const formattedAuthor = Array.isArray(props.author)
+      ? props.author
+      : [props.author];
+    const bookData = {
+      id: props.id,
+      name: props.title,
+      author: formattedAuthor,
+      bookCover: props.image,
+      publicationDate: props.publishedDate,
+    };
+    console.log("Sending book data:", bookData);
+
+    try {
+      const newBookResponse = await axios.post(
+        "http://localhost:8080/addBook",
+        bookData
+      );
+      console.log("Book added:", newBookResponse.data);
+      const userBook = newBookResponse.data;
+      const favoritesResponse = await axios.get(
+        `http://localhost:8080/favorites/email/${storedUser.email}`
+      );
+
+      if (
+        favoritesResponse.status === 404 ||
+        !favoritesResponse.data ||
+        !favoritesResponse.data.id
+      ) {
+        console.log(`Creating new Favorites List for: ${storedUser.name}`);
+        const newFavoritesResponse = await axios.post(
+          `http://localhost:8080/newFavorites/email/${storedUser.email}`,
+          { bookId: userBook.id }
+        );
+        console.log("New Favorites List created:", newFavoritesResponse.data);
+        alert("Book added to Favorites List");
+      } else {
+        const addToFavoritesResponse = await axios.put(
+          `http://localhost:8080/favorites/${storedUser.email}`,
+          userBook
+        );
+
+        if (addToFavoritesResponse.status === 200) {
+          alert(
+            `${userBook.name} added to ${storedUser.name}'s Favorites List`
+          );
+        }
+      }
+    } catch (error) {
+      console.error("Error adding book to Favorites:", error);
+      alert("An error occurred while adding the book.");
+    }
+  };
+
   const addToTBR = async () => {
     const storedUser = JSON.parse(sessionStorage.getItem("user"));
 
@@ -29,7 +91,7 @@ export default function BookCard(props) {
       console.log("Book added:", newBookResponse.data);
       const userBook = newBookResponse.data;
       const tbrResponse = await axios.get(
-        `http://localhost:8080/tbr/email/${storedUser.email}`
+        `http://localhost:8080/getTBR/email/${storedUser.email}`
       );
 
       if (
@@ -39,14 +101,14 @@ export default function BookCard(props) {
       ) {
         console.log(`Creating TBR List for: ${storedUser.name}`);
         const newTBRResponse = await axios.post(
-          `http://localhost:8080/newTbr/email/${storedUser.email}`,
+          `http://localhost:8080/createTBR/email/${storedUser.email}`,
           { bookId: userBook.id }
         );
         console.log("New TBR created:", newTBRResponse.data);
         alert("Book added to TBR list");
       } else {
         const addToTBRResponse = await axios.put(
-          `http://localhost:8080/tbr/${storedUser.email}`,
+          `http://localhost:8080/updateTBR/${storedUser.email}`,
           userBook
         );
 
@@ -74,7 +136,16 @@ export default function BookCard(props) {
             : props.publishedDate.substring(0, 4)}
         </p>
       </div>
-      <button onClick={addToTBR}>Add to TBR</button>
+      <Button variant="contained" onClick={addToTBR} sx={{ marginRight: 2 }}>
+        Add to TBR
+      </Button>
+      <Button
+        variant="contained"
+        onClick={addToFavorites}
+        sx={{ marginRight: 2 }}
+      >
+        Add to Favorites
+      </Button>
     </div>
   );
 }

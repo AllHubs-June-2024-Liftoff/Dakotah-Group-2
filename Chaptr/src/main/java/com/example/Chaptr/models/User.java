@@ -50,7 +50,7 @@ public class User extends AbstractEntity {
     @JsonIgnore
     private TBR tbr;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "favoritesList_id")
     @JsonIgnore
     private Favorites favoritesList;
@@ -150,5 +150,13 @@ public class User extends AbstractEntity {
 
     public void setClubs(Set<Club> clubs) {
         this.clubs = clubs;
+    }
+
+    public Favorites getFavoritesList() {
+        return favoritesList;
+    }
+
+    public void setFavoritesList(Favorites favoritesList) {
+        this.favoritesList = favoritesList;
     }
 }

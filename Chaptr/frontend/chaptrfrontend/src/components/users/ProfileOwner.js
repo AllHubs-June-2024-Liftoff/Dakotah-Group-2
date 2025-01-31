@@ -5,6 +5,7 @@ import axios from "axios";
 export default function ProfileOwner({ darkMode }) {
   const [owner, setOwner] = useState(null);
   const [tbr, setTbr] = useState({ tbr: [] });
+  const [favorites, setFavorites] = useState([]);
   const { id } = useParams();
 
   useEffect(() => {
@@ -15,6 +16,7 @@ export default function ProfileOwner({ darkMode }) {
           setOwner(response.data);
           if (response.data.email) {
             loadTBRLists(response.data.email);
+            loadFavoritesLists(response.data.email);
           }
         } catch (error) {
           console.error("Error fetching owner data:", error);
@@ -28,11 +30,28 @@ export default function ProfileOwner({ darkMode }) {
   const loadTBRLists = async (userEmail) => {
     try {
       const response = await axios.get(
-        `http://localhost:8080/tbr/email/${userEmail}`
+        `http://localhost:8080/getTBR/email/${userEmail}`
       );
       setTbr(response.data);
     } catch (error) {
       console.error("Error fetching TBR Lists:", error);
+    }
+  };
+
+  const loadFavoritesLists = async (userEmail) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8080/favorites/email/${userEmail}`
+      );
+      console.log("Favorites Response:", response.data);
+      if (response.data && response.data.favoritesList.length === 0) {
+        setFavorites([]);
+      } else {
+        setFavorites(response.data.favoritesList);
+      }
+      sessionStorage.setItem("favoritesList", JSON.stringify(response.data));
+    } catch (error) {
+      console.error("Error fetching Favorites Lists:", error);
     }
   };
 
@@ -49,6 +68,22 @@ export default function ProfileOwner({ darkMode }) {
           alt={owner.firstName}
           style={{ width: "100px", height: "100px", borderRadius: "50%" }}
         />
+      </div>
+      <div className="favorites-books">
+        <h2>My Favorites List</h2>
+        {favorites.length > 0 ? (
+          favorites.map((book) => (
+            <div className="img-btn-container" key={book.id}>
+              <img
+                src={book.bookCover}
+                alt={book.name}
+                style={{ width: "8rem", height: "auto" }}
+              />
+            </div>
+          ))
+        ) : (
+          <p>No favorite books found.</p>
+        )}
       </div>
       <div>
         <h1>{tbr.name || "My TBR List"}</h1>

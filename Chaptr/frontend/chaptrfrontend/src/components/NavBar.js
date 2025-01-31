@@ -9,6 +9,7 @@ export default function NavBar({ darkMode, toggleDarkMode }) {
     sessionStorage.removeItem("user");
     sessionStorage.removeItem("tbrList");
     sessionStorage.removeItem("clubId");
+    sessionStorage.removeItem("favoritesList");
     navigate("/Chaptr");
   };
 
