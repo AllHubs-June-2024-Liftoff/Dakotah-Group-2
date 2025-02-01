@@ -25,12 +25,12 @@ public class TBRController {
     @Autowired
     BookRepository bookRepository;
 
-    @GetMapping("/tbrs")
+    @GetMapping("/getAllTBRLists")
     public List<TBR> getAllTBRs() {
         return (List<TBR>) tbrRepository.findAll();
     }
 
-    @GetMapping("/getTBR/email/{email}")
+    @GetMapping("/getUserTBRList/{email}")
     public ResponseEntity<?> getUserTBR(@PathVariable String email) {
         Optional<User> userOptional = userRepository.findByEmail(email);
 
@@ -57,7 +57,7 @@ public class TBRController {
     }
 
     @Transactional
-    @PostMapping("/newTbr/email/{email}")
+    @PostMapping("/createTBRList/{email}")
     public ResponseEntity<?> newTBR(@PathVariable String email, @RequestParam Integer bookId) {
         Optional<User> existingUser = userRepository.findByEmail(email);
 
@@ -93,7 +93,7 @@ public class TBRController {
     }
 
     @Transactional
-    @PutMapping("/updateTBR/{email}")
+    @PutMapping("/updateTBRList/{email}")
     public ResponseEntity<?> updateUserTBR(@RequestBody Book newBook, @PathVariable String email) {
         Optional<User> userOptional = userRepository.findByEmail(email);
 
@@ -132,7 +132,7 @@ public class TBRController {
     }
 
     @Transactional
-    @DeleteMapping("/deleteTBR/{id}")
+    @DeleteMapping("/deleteTBRList/{id}")
     public ResponseEntity<?> deleteUserTBR(@PathVariable("id") Integer id) {
         Optional<TBR> tbrOptional = tbrRepository.findById(id);
         if (tbrOptional.isPresent()) {
@@ -152,7 +152,7 @@ public class TBRController {
     }
 
     @Transactional
-    @DeleteMapping("/deleteBook/{email}/{bookId}")
+    @DeleteMapping("/deleteBookFromTBRList/{email}/{bookId}")
     public ResponseEntity<?> removeBookFromTBR(@PathVariable("email") String email, @PathVariable("bookId") Integer bookId) {
         Optional<User> userOptional = userRepository.findByEmail(email);
 

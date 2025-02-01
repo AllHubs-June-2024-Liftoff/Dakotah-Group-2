@@ -25,12 +25,12 @@ public class FavoritesController {
     @Autowired
     FavoritesRepository favoritesRepository;
 
-    @GetMapping("/favorites")
+    @GetMapping("/getAllFavoritesLists")
     public List<Favorites> getAllFavorites(){
         return (List<Favorites>) favoritesRepository.findAll();
     }
 
-    @GetMapping("/favorites/email/{email}")
+    @GetMapping("/getUserFavoritesList/{email}")
     public ResponseEntity<?> getUserFavorites(@PathVariable String email){
         Optional<User> userOptional = userRepository.findByEmail(email);
 
@@ -57,7 +57,7 @@ public class FavoritesController {
     }
 
     @Transactional
-    @PostMapping("/newFavorites/email/{email}")
+    @PostMapping("/createFavoritesList/{email}")
     public ResponseEntity<?> newFavorites(@PathVariable String email, @RequestParam Integer bookId) {
         Optional<User> existingUser = userRepository.findByEmail(email);
 
@@ -90,7 +90,7 @@ public class FavoritesController {
     }
 
     @Transactional
-    @PutMapping("/favorites/{email}")
+    @PutMapping("/updateFavoritesList/{email}")
     public ResponseEntity<?> updateUserFavorites(@RequestBody Book newBook, @PathVariable String email) {
         Optional<User> userOptional = userRepository.findByEmail(email);
 
@@ -128,7 +128,7 @@ public class FavoritesController {
     }
 
     @Transactional
-    @DeleteMapping("/deleteBookFromFavorites/{email}/{bookId}")
+    @DeleteMapping("/deleteBookFromFavoritesList/{email}/{bookId}")
     public ResponseEntity<?> removeBookFromFavorites(@PathVariable("email") String email, @PathVariable("bookId") Integer bookId) {
         Optional<User> userOptional = userRepository.findByEmail(email);
 
@@ -156,7 +156,7 @@ public class FavoritesController {
     }
 
     @Transactional
-    @DeleteMapping("/deleteFavorites/{id}")
+    @DeleteMapping("/deleteFavoritesList/{id}")
     public ResponseEntity<?> deleteUserFavorites(@PathVariable("id") Integer id) {
         Optional<Favorites> favoritesOptional = favoritesRepository.findById(id);
 

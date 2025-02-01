@@ -135,7 +135,7 @@ public class UserController {
         }
     }
 
-    @PutMapping("/image")
+    @PutMapping("/uploadImage")
     public ResponseEntity<String> uploadImage(@RequestParam("email") String email, @RequestParam("file")MultipartFile file) {
         return ResponseEntity.ok().body(imageService.uploadImage(email, file));
     }

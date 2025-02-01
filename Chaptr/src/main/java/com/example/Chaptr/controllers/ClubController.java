@@ -17,10 +17,7 @@ import java.util.Optional;
 import java.util.Set;
 
 @RestController
-@RequestMapping("club")
 public class ClubController {
-
-
 
     @Autowired
     private ClubRepository clubRepository;
@@ -31,12 +28,12 @@ public class ClubController {
     @Autowired
     private UserRepository userRepository;
 
-    @GetMapping
+    @GetMapping("getAllClubs")
     public List<Club> displayAllClubs(){
         return (List<Club>) clubRepository.findAll();
     }
 
-    @GetMapping("/{clubId}")
+    @GetMapping("getUserClub/Club/{clubId}")
     public Club displayClub(@PathVariable int clubId){
 
         Optional<Club> optClub = clubRepository.findById(clubId);
@@ -48,7 +45,20 @@ public class ClubController {
         return club;
     }
 
-    @PostMapping("/create")
+    @GetMapping("/getUserClub/Profile/{userId}")
+    public Set<Club> getUserClubs(@PathVariable Integer userId){
+        Optional<User> user = userRepository.findById(userId);
+        Set<Club> clubs = Set.of();
+
+        if (user.isPresent()){
+            User currentUser = user.get();
+            clubs = currentUser.getClubs();
+        }
+
+        return clubs;
+    }
+
+    @PostMapping("/createClub")
     public void createClub(@RequestBody ClubDTO clubCreateDTO) {
         Club newClub = new Club();
         newClub.setClubMessage(clubCreateDTO.getClubMessage());
@@ -81,7 +91,7 @@ public class ClubController {
         return club.getMembers();
     }
 
-    @PostMapping("{clubId}/book")
+    @PostMapping("addBookToClub/{clubId}")
 
     public void updateBOTM(@PathVariable int clubId, @RequestBody Book newBook){
         Optional<Club> optClub = clubRepository.findById(clubId);
@@ -94,7 +104,7 @@ public class ClubController {
         }
     }
 
-    @PostMapping("{clubId}/description/{newDescription}")
+    @PostMapping("clubDescription/{clubId}/{newDescription}")
     public void updateDescription(@PathVariable Integer clubId, @PathVariable String newDescription){
         Optional<Club> optClub = clubRepository.findById(clubId);
         Club club = null;
