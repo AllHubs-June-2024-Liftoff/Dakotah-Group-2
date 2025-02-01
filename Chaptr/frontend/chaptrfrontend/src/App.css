@@ -219,6 +219,7 @@
   flex: 1;
   align-items: flex-start;
   margin-top: 5rem;
+  margin-left: 5rem;
 }
 
 .profile-clubs {
@@ -299,6 +300,7 @@ justify-content: space-between;
   margin-left: 2rem;
   margin-top: 2rem;
   gap: 1rem;
+  overflow-x: auto;
 }
 
 .favorites-title-and-btn {

@@ -87,6 +87,7 @@ export default function ProfileOwner({ darkMode }) {
                 <h1>{`${owner.firstName + " " + owner.lastName}`}</h1>
             </div>
 
+            <div className="favorites-container">
             <div className="favorites-books">
                     <h2>My Favorites List</h2>
                     {favorites.length > 0 ? (
@@ -102,6 +103,7 @@ export default function ProfileOwner({ darkMode }) {
                     ) : (
                       <p>No favorite books found.</p>
                     )}
+                  </div>
                   </div>
 
             <div className="profile-owner-clubs-container">
