@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import Button from "@mui/material/Button";
-//import { colors } from "../../styles/ThemeColors";
+import { colors } from "../styles/ThemeColors";
 
 export default function BookCard(props) {
   const addToFavorites = async () => {
@@ -136,16 +136,18 @@ export default function BookCard(props) {
             : props.publishedDate.substring(0, 4)}
         </p>
       </div>
-      <Button variant="contained" onClick={addToTBR} sx={{ marginRight: 2 }}>
-        Add to TBR
-      </Button>
-      <Button
-        variant="contained"
-        onClick={addToFavorites}
-        sx={{ marginRight: 2 }}
-      >
-        Add to Favorites
-      </Button>
+      <div className="double-button-container">
+        <Button variant="contained" onClick={addToTBR} sx={{ marginRight: 2, backgroundColor: colors.blue }}>
+          Add to TBR
+        </Button>
+        <Button
+          variant="contained"
+          onClick={addToFavorites}
+          sx={{ marginRight: 2, backgroundColor: colors.blue }}
+        >
+          Add to Favorites
+        </Button>
+      </div>
     </div>
   );
 }

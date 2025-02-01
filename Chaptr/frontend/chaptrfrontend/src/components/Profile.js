@@ -217,40 +217,40 @@ export default function Profile({ darkMode }) {
       </div>
 
       <div className="profile-clubs-container">
-                          <div className="profile-clubs">
-                              <h1>My Clubs</h1>
-                              {userClubs.length > 0 ? (
-                                  userClubs.map((club) => (
-                                      <div className="club-button">
-                                          <Button
-                                              key={club.id}
-                                              onClick={() => clubButton(club.id)}
-                                              variant="contained"
-                                              style={{ backgroundColor: darkMode? colors.pink : colors.purple }}
-                                          >
-                                              {club.name}
-                                          </Button>
-                                      </div>
-                                  ))
-                              ) : (
-                                  <div>
-                                    <p>Not a member of any clubs yet!</p>
-                                    <Button
-                                      variant="contained"
-                                      component={Link}
-                                      sx={{
-                                          marginRight: 2,
-                                          backgroundColor: colors.purple,
-                                      }}
-                                      to="/ClubsList"
-                                      >
-                                      Go to Clubs
-                                  </Button>
-                                  </div>
-                              )}
+        <div className="profile-clubs">
+            <h1>My Clubs</h1>
+            {userClubs.length > 0 ? (
+                userClubs.map((club) => (
+                    <div className="club-button">
+                        <Button
+                            key={club.id}
+                            onClick={() => clubButton(club.id)}
+                            variant="contained"
+                            style={{ backgroundColor: darkMode? colors.pink : colors.purple }}
+                        >
+                            {club.name}
+                        </Button>
+                    </div>
+                ))
+            ) : (
+                <div>
+                  <p>Not a member of any clubs yet!</p>
+                  <Button
+                    variant="contained"
+                    component={Link}
+                    sx={{
+                        marginRight: 2,
+                        backgroundColor: colors.purple,
+                    }}
+                    to="/ClubsList"
+                    >
+                    Go to Clubs
+                  </Button>
+                </div>
+            )}
 
-                          </div>
-                      </div>
+        </div>
+    </div>
                   
                   
 
