@@ -26,12 +26,12 @@ public class FavoritesController {
     FavoritesRepository favoritesRepository;
 
     @GetMapping("/getAllFavoritesLists")
-    public List<Favorites> getAllFavorites(){
+    public List<Favorites> getAllFavoritesLists(){
         return (List<Favorites>) favoritesRepository.findAll();
     }
 
     @GetMapping("/getUserFavoritesList/{email}")
-    public ResponseEntity<?> getUserFavorites(@PathVariable String email){
+    public ResponseEntity<?> getUserFavoritesList(@PathVariable String email){
         Optional<User> userOptional = userRepository.findByEmail(email);
 
         if (userOptional.isPresent()){
@@ -58,7 +58,7 @@ public class FavoritesController {
 
     @Transactional
     @PostMapping("/createFavoritesList/{email}")
-    public ResponseEntity<?> newFavorites(@PathVariable String email, @RequestParam Integer bookId) {
+    public ResponseEntity<?> createFavoritesList(@PathVariable String email, @RequestParam Integer bookId) {
         Optional<User> existingUser = userRepository.findByEmail(email);
 
         if (existingUser.isPresent()) {
@@ -91,7 +91,7 @@ public class FavoritesController {
 
     @Transactional
     @PutMapping("/updateFavoritesList/{email}")
-    public ResponseEntity<?> updateUserFavorites(@RequestBody Book newBook, @PathVariable String email) {
+    public ResponseEntity<?> updateFavoritesList(@RequestBody Book newBook, @PathVariable String email) {
         Optional<User> userOptional = userRepository.findByEmail(email);
 
         if (!userOptional.isPresent()) {
@@ -129,7 +129,7 @@ public class FavoritesController {
 
     @Transactional
     @DeleteMapping("/deleteBookFromFavoritesList/{email}/{bookId}")
-    public ResponseEntity<?> removeBookFromFavorites(@PathVariable("email") String email, @PathVariable("bookId") Integer bookId) {
+    public ResponseEntity<?> removeBookFromFavoritesList(@PathVariable("email") String email, @PathVariable("bookId") Integer bookId) {
         Optional<User> userOptional = userRepository.findByEmail(email);
 
         if (!userOptional.isPresent()) {
@@ -157,7 +157,7 @@ public class FavoritesController {
 
     @Transactional
     @DeleteMapping("/deleteFavoritesList/{id}")
-    public ResponseEntity<?> deleteUserFavorites(@PathVariable("id") Integer id) {
+    public ResponseEntity<?> deleteFavoritesList(@PathVariable("id") Integer id) {
         Optional<Favorites> favoritesOptional = favoritesRepository.findById(id);
 
         if (favoritesOptional.isPresent()) {

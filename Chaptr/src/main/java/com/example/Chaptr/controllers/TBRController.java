@@ -26,12 +26,12 @@ public class TBRController {
     BookRepository bookRepository;
 
     @GetMapping("/getAllTBRLists")
-    public List<TBR> getAllTBRs() {
+    public List<TBR> getAllTBRLists() {
         return (List<TBR>) tbrRepository.findAll();
     }
 
     @GetMapping("/getUserTBRList/{email}")
-    public ResponseEntity<?> getUserTBR(@PathVariable String email) {
+    public ResponseEntity<?> getUserTBRList(@PathVariable String email) {
         Optional<User> userOptional = userRepository.findByEmail(email);
 
         if (userOptional.isPresent()) {
@@ -58,7 +58,7 @@ public class TBRController {
 
     @Transactional
     @PostMapping("/createTBRList/{email}")
-    public ResponseEntity<?> newTBR(@PathVariable String email, @RequestParam Integer bookId) {
+    public ResponseEntity<?> newTBRList(@PathVariable String email, @RequestParam Integer bookId) {
         Optional<User> existingUser = userRepository.findByEmail(email);
 
         if (existingUser.isPresent()) {
@@ -94,7 +94,7 @@ public class TBRController {
 
     @Transactional
     @PutMapping("/updateTBRList/{email}")
-    public ResponseEntity<?> updateUserTBR(@RequestBody Book newBook, @PathVariable String email) {
+    public ResponseEntity<?> updateTBRList(@RequestBody Book newBook, @PathVariable String email) {
         Optional<User> userOptional = userRepository.findByEmail(email);
 
         if (!userOptional.isPresent()) {
@@ -133,7 +133,7 @@ public class TBRController {
 
     @Transactional
     @DeleteMapping("/deleteTBRList/{id}")
-    public ResponseEntity<?> deleteUserTBR(@PathVariable("id") Integer id) {
+    public ResponseEntity<?> deleteTBRList(@PathVariable("id") Integer id) {
         Optional<TBR> tbrOptional = tbrRepository.findById(id);
         if (tbrOptional.isPresent()) {
             TBR tbr = tbrOptional.get();
@@ -153,7 +153,7 @@ public class TBRController {
 
     @Transactional
     @DeleteMapping("/deleteBookFromTBRList/{email}/{bookId}")
-    public ResponseEntity<?> removeBookFromTBR(@PathVariable("email") String email, @PathVariable("bookId") Integer bookId) {
+    public ResponseEntity<?> removeBookFromTBRList(@PathVariable("email") String email, @PathVariable("bookId") Integer bookId) {
         Optional<User> userOptional = userRepository.findByEmail(email);
 
         if (!userOptional.isPresent()) {

@@ -33,8 +33,8 @@ public class ClubController {
         return (List<Club>) clubRepository.findAll();
     }
 
-    @GetMapping("getUserClub/Club/{clubId}")
-    public Club displayClub(@PathVariable int clubId){
+    @GetMapping("getClubUser/{clubId}")
+    public Club getClubUser(@PathVariable int clubId){
 
         Optional<Club> optClub = clubRepository.findById(clubId);
         Club club = null;
@@ -45,7 +45,7 @@ public class ClubController {
         return club;
     }
 
-    @GetMapping("/getUserClub/Profile/{userId}")
+    @GetMapping("/getUserClubs/Profile/{userId}")
     public Set<Club> getUserClubs(@PathVariable Integer userId){
         Optional<User> user = userRepository.findById(userId);
         Set<Club> clubs = Set.of();
@@ -91,9 +91,9 @@ public class ClubController {
         return club.getMembers();
     }
 
-    @PostMapping("addBookToClub/{clubId}")
+    @PostMapping("addBOTMToClub/{clubId}")
 
-    public void updateBOTM(@PathVariable int clubId, @RequestBody Book newBook){
+    public void updateBOTMToClub(@PathVariable int clubId, @RequestBody Book newBook){
         Optional<Club> optClub = clubRepository.findById(clubId);
         Club club = null;
 
@@ -104,8 +104,8 @@ public class ClubController {
         }
     }
 
-    @PostMapping("clubDescription/{clubId}/{newDescription}")
-    public void updateDescription(@PathVariable Integer clubId, @PathVariable String newDescription){
+    @PostMapping("createClubDescription/{clubId}/{newDescription}")
+    public void createClubDescription(@PathVariable Integer clubId, @PathVariable String newDescription){
         Optional<Club> optClub = clubRepository.findById(clubId);
         Club club = null;
 

@@ -41,19 +41,19 @@ public class UserController {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @GetMapping("/users")
+    @GetMapping("/getAllUsers")
     public List<User> getAllUsers() {
         return (List<User>) userRepository.findAll();
     }
 
-    @GetMapping("/owner/{id}")
-    public Optional<User> profileOwner(@PathVariable("id") Integer id){
+    @GetMapping("/getUserProfilePage/{id}")
+    public Optional<User> getUserProfilePage(@PathVariable("id") Integer id){
         Optional<User> owner = userRepository.findById(id);
         return owner;
     }
 
     @PostMapping("/register")
-    public ResponseEntity<User> registerUser(@RequestBody User newUser) {
+    public ResponseEntity<User> register(@RequestBody User newUser) {
         if (newUser.getFirstName() == null || newUser.getFirstName().isEmpty()) {
             return ResponseEntity.badRequest().body(null);
         }
@@ -71,7 +71,7 @@ public class UserController {
         return ResponseEntity.ok(savedUser);
     }
 
-    @PutMapping("/editUser/{email}")
+    @PutMapping("/updateUser/{email}")
     public ResponseEntity<User> updateUser(@Valid @RequestBody User updateUser, @PathVariable String email) {
         Optional<User> optUser = userRepository.findByEmail(email);
 
@@ -93,7 +93,7 @@ public class UserController {
         }
     }
 
-    @DeleteMapping("/user/{id}")
+    @DeleteMapping("/deleteUser/{id}")
     public ResponseEntity<String> deleteUser(@PathVariable("id") Integer id){
         Optional<User> user = userRepository.findById(id);
 
@@ -141,11 +141,11 @@ public class UserController {
     }
 
     @GetMapping(path = "/image/{filename}", produces = { IMAGE_PNG_VALUE, IMAGE_JPEG_VALUE })
-    public byte[] getImage(@PathVariable("filename") String filename) throws IOException {
+    public byte[] getImagePath(@PathVariable("filename") String filename) throws IOException {
         return Files.readAllBytes(Paths.get(IMAGE_DIRECTORY + filename));
     }
     
-    @GetMapping("/clubs/{userId}")
+    @GetMapping("/getUserClubs/{userId}")
     public Set<Club> getUserClubs(@PathVariable Integer userId){
         Optional<User> user = userRepository.findById(userId);
         Set<Club> clubs = Set.of();
