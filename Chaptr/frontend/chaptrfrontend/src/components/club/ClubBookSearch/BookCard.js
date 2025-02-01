@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { colors } from "../../../styles/ThemeColors";
+import { colors } from "../../styles/ThemeColors";
 import { Button } from "@mui/material";
 
 export default function BookCard(props) {
@@ -22,7 +22,7 @@ export default function BookCard(props) {
     console.log("Sending book data:", bookData);
 
     const newBookResponse = await axios.post(
-      `http://localhost:8080/club/${clubId}/book`,
+      `http://localhost:8080/addBOTMToClub/${clubId}`,
       bookData
     );
     console.log("Book added:", newBookResponse.data);
@@ -30,21 +30,27 @@ export default function BookCard(props) {
     navigate("/Club");
   };
 
-    return (
-        <div className="card-container">
-            <img src={props.image} alt="book cover" />
-            <div className="desc">
-                <h2>{props.title}</h2>
-                <h3>{Array.isArray(props.author) ? props.author.join(", ") : props.author}</h3>
-                <p>{props.publishedDate === "0000" ? "Not available" : props.publishedDate.substring(0, 4)}</p>
-            </div>
-            <Button
-                variant="contained"
-                onClick={setClubBook}
-                sx={{ marginRight: 2, backgroundColor: colors.blue }}
-                >
-                Set Book
-            </Button>
-        </div>
-    );
+  return (
+    <div className="card-container">
+      <img src={props.image} alt="book cover" />
+      <div className="desc">
+        <h2>{props.title}</h2>
+        <h3>
+          {Array.isArray(props.author) ? props.author.join(", ") : props.author}
+        </h3>
+        <p>
+          {props.publishedDate === "0000"
+            ? "Not available"
+            : props.publishedDate.substring(0, 4)}
+        </p>
+      </div>
+      <Button
+        variant="contained"
+        onClick={setClubBook}
+        sx={{ marginRight: 2, backgroundColor: colors.blue }}
+      >
+        Set Book
+      </Button>
+    </div>
+  );
 }

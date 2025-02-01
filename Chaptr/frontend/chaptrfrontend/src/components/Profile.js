@@ -13,8 +13,8 @@ export default function Profile({ darkMode }) {
   const [userClubs, setUserClubs] = useState([]);
   const navigate = useNavigate();
 
-    useEffect(() => {
-        const storedUser = sessionStorage.getItem("user");
+  useEffect(() => {
+    const storedUser = sessionStorage.getItem("user");
 
     if (storedUser) {
       try {
@@ -34,9 +34,8 @@ export default function Profile({ darkMode }) {
   const loadFavoritesLists = async (userEmail) => {
     try {
       const response = await axios.get(
-        `http://localhost:8080/favorites/email/${userEmail}`
+        `http://localhost:8080/getUserFavoritesList/${userEmail}`
       );
-      console.log("Favorites Response:", response.data);
       if (response.data && response.data.favoritesList.length === 0) {
         setFavorites([]);
       } else {
@@ -50,7 +49,7 @@ export default function Profile({ darkMode }) {
   const loadTBRLists = async (userEmail) => {
     try {
       const response = await axios.get(
-        `http://localhost:8080/getTBR/email/${userEmail}`
+        `http://localhost:8080/getUserTBRList/${userEmail}`
       );
       if (response.data && response.data.tbr.length === 0) {
         setTbr({ tbr: [] });
@@ -62,16 +61,16 @@ export default function Profile({ darkMode }) {
       console.error("Error fetching TBR Lists:", error);
     }
   };
-  const deleteTBR = async (e) => {
+  const deleteTBRList = async (e) => {
     e.preventDefault();
 
-        if (!tbr.tbr.length) {
-            alert(`${user.firstName}'s TBR List is empty!`);
-            return;
-        }
+    if (!tbr.tbr.length) {
+      alert(`${user.firstName}'s TBR List is empty!`);
+      return;
+    }
 
     try {
-      await axios.delete(`http://localhost:8080/deleteTBR/${tbr.id}`);
+      await axios.delete(`http://localhost:8080/deleteTBRList/${tbr.id}`);
       sessionStorage.removeItem("tbrList");
       alert(`${user.firstName}'s TBR List deleted successfully!`);
       setTbr({ tbr: [] });
@@ -82,7 +81,7 @@ export default function Profile({ darkMode }) {
   const removeBookTBR = async (bookId) => {
     try {
       await axios.delete(
-        `http://localhost:8080/deleteBook/${user.email}/${bookId}`
+        `http://localhost:8080/deleteBookFromTBRList/${user.email}/${bookId}`
       );
       alert("Book removed successfully!");
       loadTBRLists(user.email);
@@ -108,7 +107,7 @@ export default function Profile({ darkMode }) {
 
     try {
       await axios.delete(
-        `http://localhost:8080/deleteFavorites/${favoritesListId}`
+        `http://localhost:8080/deleteFavoritesList/${favoritesListId}`
       );
       sessionStorage.removeItem("favoritesList");
       alert(`${user.firstName}'s Favorites List deleted successfully!`);
@@ -120,10 +119,10 @@ export default function Profile({ darkMode }) {
       );
     }
   };
-  const removeBookFavorites = async (bookId) => {
+  const removeBookFavoritesList = async (bookId) => {
     try {
       await axios.delete(
-        `http://localhost:8080/deleteBookFromFavorites/${user.email}/${bookId}`
+        `http://localhost:8080/deleteBookFromFavoritesList/${user.email}/${bookId}`
       );
       alert("Book removed successfully!");
       loadFavoritesLists(user.email);
@@ -133,27 +132,26 @@ export default function Profile({ darkMode }) {
     }
   };
 
-    if (!user) {
-        return <div>Loading...</div>;
-    }
+  if (!user) {
+    return <div>Loading...</div>;
+  }
 
   const getUserClubs = async () => {
-          const response = await axios.get(`http://localhost:8080/clubs/${user.id}`); 
-          setUserClubs(response.data);
-      };
+    const response = await axios.get(
+      `http://localhost:8080/getUserClubs/${user.id}`
+    );
+    setUserClubs(response.data);
+  };
 
-      const clubButton = async (clubId) => {
-          sessionStorage.setItem("clubId", clubId);
-          navigate("/Club");
-      };
+  const clubButton = async (clubId) => {
+    sessionStorage.setItem("clubId", clubId);
+    navigate("/Club");
+  };
 
   return (
     <div>
       <div className="user-profile-display">
-        <img
-          src={user.userImage || "path/to/default/image.jpg"}
-          alt={user.firstName}
-        />
+        <img src={user.userImage} alt={user.firstName} />
         <div className="text-button-container">
           <h1>{`${user.firstName} ${user.lastName}`}</h1>
           <Button
@@ -161,7 +159,7 @@ export default function Profile({ darkMode }) {
             variant="contained"
             component={Link}
             sx={{ marginRight: 2, backgroundColor: colors.blue }}
-            to="/EditUser"
+            to="/UpdateUser"
           >
             Upload Image
           </Button>
@@ -175,7 +173,7 @@ export default function Profile({ darkMode }) {
             variant="contained"
             component={Link}
             sx={{ marginRight: 2 }}
-            to="/SearchTBR"
+            to="/SearchBooks"
           >
             Add Book
           </Button>
@@ -201,7 +199,7 @@ export default function Profile({ darkMode }) {
                 />
                 <Button
                   onClick={() => {
-                    removeBookFavorites(book.id);
+                    removeBookFavoritesList(book.id);
                   }}
                   variant="contained"
                 >
@@ -216,42 +214,41 @@ export default function Profile({ darkMode }) {
       </div>
 
       <div className="profile-clubs-container">
-                          <div className="profile-clubs">
-                              <h1>My Clubs</h1>
-                              {userClubs.length > 0 ? (
-                                  userClubs.map((club) => (
-                                      <div className="club-button">
-                                          <Button
-                                              key={club.id}
-                                              onClick={() => clubButton(club.id)}
-                                              variant="contained"
-                                              style={{ backgroundColor: darkMode? colors.pink : colors.purple }}
-                                          >
-                                              {club.name}
-                                          </Button>
-                                      </div>
-                                  ))
-                              ) : (
-                                  <div>
-                                    <p>Not a member of any clubs yet!</p>
-                                    <Button
-                                      variant="contained"
-                                      component={Link}
-                                      sx={{
-                                          marginRight: 2,
-                                          backgroundColor: colors.purple,
-                                      }}
-                                      to="/ClubsList"
-                                      >
-                                      Go to Clubs
-                                  </Button>
-                                  </div>
-                              )}
-
-                          </div>
-                      </div>
-                  
-                  
+        <div className="profile-clubs">
+          <h1>My Clubs</h1>
+          {userClubs.length > 0 ? (
+            userClubs.map((club) => (
+              <div className="club-button">
+                <Button
+                  key={club.id}
+                  onClick={() => clubButton(club.id)}
+                  variant="contained"
+                  style={{
+                    backgroundColor: darkMode ? colors.pink : colors.purple,
+                  }}
+                >
+                  {club.name}
+                </Button>
+              </div>
+            ))
+          ) : (
+            <div>
+              <p>Not a member of any clubs yet!</p>
+              <Button
+                variant="contained"
+                component={Link}
+                sx={{
+                  marginRight: 2,
+                  backgroundColor: colors.purple,
+                }}
+                to="/ClubsList"
+              >
+                Go to Clubs
+              </Button>
+            </div>
+          )}
+        </div>
+      </div>
 
       <div>
         <div className="TBR-text-and-search-btn">
@@ -260,7 +257,7 @@ export default function Profile({ darkMode }) {
             variant="contained"
             component={Link}
             sx={{ marginRight: 2 }}
-            to="/SearchTBR"
+            to="/SearchBooks"
           >
             Search Books
           </Button>
@@ -309,7 +306,7 @@ export default function Profile({ darkMode }) {
                 </th>
                 <th style={{ padding: "10px", border: "1px solid #ccc" }}>
                   <Button
-                    onClick={deleteTBR}
+                    onClick={deleteTBRList}
                     variant="contained"
                     sx={{ marginRight: 2 }}
                   >

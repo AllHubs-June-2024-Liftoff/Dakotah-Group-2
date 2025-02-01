@@ -46,10 +46,10 @@ public class UserController {
         return (List<User>) userRepository.findAll();
     }
 
-    @GetMapping("/getUserProfilePage/{id}")
-    public Optional<User> getUserProfilePage(@PathVariable("id") Integer id){
-        Optional<User> owner = userRepository.findById(id);
-        return owner;
+    @GetMapping("/getUserProfile/{id}")
+    public Optional<User> getUserProfile(@PathVariable("id") Integer id) {
+        Optional<User> userProfile = userRepository.findById(id);
+        return userProfile;
     }
 
     @PostMapping("/register")
@@ -94,7 +94,7 @@ public class UserController {
     }
 
     @DeleteMapping("/deleteUser/{id}")
-    public ResponseEntity<String> deleteUser(@PathVariable("id") Integer id){
+    public ResponseEntity<String> deleteUser(@PathVariable("id") Integer id) {
         Optional<User> user = userRepository.findById(id);
 
         if (user.isPresent()) {
@@ -136,25 +136,12 @@ public class UserController {
     }
 
     @PutMapping("/uploadImage")
-    public ResponseEntity<String> uploadImage(@RequestParam("email") String email, @RequestParam("file")MultipartFile file) {
+    public ResponseEntity<String> uploadImage(@RequestParam("email") String email, @RequestParam("file") MultipartFile file) {
         return ResponseEntity.ok().body(imageService.uploadImage(email, file));
     }
 
-    @GetMapping(path = "/image/{filename}", produces = { IMAGE_PNG_VALUE, IMAGE_JPEG_VALUE })
+    @GetMapping(path = "/image/{filename}", produces = {IMAGE_PNG_VALUE, IMAGE_JPEG_VALUE})
     public byte[] getImagePath(@PathVariable("filename") String filename) throws IOException {
         return Files.readAllBytes(Paths.get(IMAGE_DIRECTORY + filename));
-    }
-    
-    @GetMapping("/getUserClubs/{userId}")
-    public Set<Club> getUserClubs(@PathVariable Integer userId){
-        Optional<User> user = userRepository.findById(userId);
-        Set<Club> clubs = Set.of();
-        
-        if (user.isPresent()){
-            User currentUser = user.get();
-            clubs = currentUser.getClubs();
-        }
-        
-        return clubs;
     }
 }

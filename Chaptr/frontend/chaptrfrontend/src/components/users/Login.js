@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import { TextField, Button, Paper, Typography } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { colors } from "../../styles/ThemeColors";
-
+import { colors } from "../styles/ThemeColors";
 
 export default function Login({ darkMode }) {
   const [email, setEmail] = useState("");
@@ -57,9 +56,12 @@ export default function Login({ darkMode }) {
   };
 
   return (
-    <div className="login"
+    <div
+      className="login"
       style={{
-        backgroundColor: `${darkMode ? colors.black : colors.whitesmoke} !important`,
+        backgroundColor: `${
+          darkMode ? colors.black : colors.whitesmoke
+        } !important`,
         color: darkMode ? colors.lightGrey : colors.blueGrey,
       }}
     >
@@ -82,7 +84,6 @@ export default function Login({ darkMode }) {
             marginBottom: 3,
             color: darkMode ? colors.pink : colors.purple,
             fontWeight: 600,
-            // commit before changing color scheme
           }}
         >
           Sign in

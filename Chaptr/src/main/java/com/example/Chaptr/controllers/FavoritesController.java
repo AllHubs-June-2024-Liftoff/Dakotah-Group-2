@@ -56,6 +56,32 @@ public class FavoritesController {
         }
     }
 
+    @GetMapping("/getUserFavoritesListById/{id}")
+    public ResponseEntity<?> getUserFavoritesListById(@PathVariable int id){
+        Optional<User> userOptional = userRepository.findById(id);
+
+        if (userOptional.isPresent()){
+            User user = userOptional.get();
+            Optional<Favorites> existingFavorites = favoritesRepository.findByUser(user);
+
+            if (existingFavorites.isPresent()){
+                return ResponseEntity.ok(existingFavorites.get());
+            } else {
+                Favorites newFavorites = new Favorites();
+                newFavorites.setUser(user);
+                String favoritesName = user.getName() + "'s Favorites List";
+                newFavorites.setName(favoritesName);
+                favoritesRepository.save(newFavorites);
+                user.setFavoritesList(newFavorites);
+                userRepository.save(user);
+
+                return ResponseEntity.status(HttpStatus.CREATED).body(newFavorites);
+            }
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found.");
+        }
+    }
+
     @Transactional
     @PostMapping("/createFavoritesList/{email}")
     public ResponseEntity<?> createFavoritesList(@PathVariable String email, @RequestParam Integer bookId) {

@@ -45,7 +45,7 @@ public class ClubController {
         return club;
     }
 
-    @GetMapping("/getUserClubs/Profile/{userId}")
+    @GetMapping("/getUserClubs/{userId}")
     public Set<Club> getUserClubs(@PathVariable Integer userId){
         Optional<User> user = userRepository.findById(userId);
         Set<Club> clubs = Set.of();

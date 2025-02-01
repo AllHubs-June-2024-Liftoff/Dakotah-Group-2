@@ -2,9 +2,9 @@ import React, { useState, useRef } from "react";
 import { TextField, Button, Paper } from "@mui/material";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { colors } from "../../styles/ThemeColors";
+import { colors } from "../styles/ThemeColors";
 
-export default function EditUser({ darkMode }) {
+export default function UpdateUser({ darkMode }) {
   const storedUser = JSON.parse(sessionStorage.getItem("user")) || {};
   const navigate = useNavigate();
   const inputRef = useRef();
@@ -30,10 +30,13 @@ export default function EditUser({ darkMode }) {
     formData.append("email", storedUser.email);
 
     try {
-      const response = await axios.put("http://localhost:8080/image", formData);
+      const response = await axios.put(
+        "http://localhost:8080/uploadImage",
+        formData
+      );
       const updatedImageUrl = response.data.imageUrl || user.userImage;
-      setUser((prev) => ({
-        ...prev,
+      setUser((storedUser) => ({
+        ...storedUser,
         userImage: updatedImageUrl,
       }));
       setImagePreview(URL.createObjectURL(file));
@@ -44,10 +47,10 @@ export default function EditUser({ darkMode }) {
       alert("Failed to upload image.");
     }
   };
-  const onInputChange = (e) => {
+  const inputChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
-  const onSubmit = async (e) => {
+  const submit = async (e) => {
     e.preventDefault();
 
     if (!user.firstName) {
@@ -118,7 +121,7 @@ export default function EditUser({ darkMode }) {
 
     try {
       await axios.put(
-        `http://localhost:8080/editUser/${storedUser.email}`,
+        `http://localhost:8080/updateUser/${storedUser.email}`,
         updatedUser
       );
       sessionStorage.setItem("user", JSON.stringify(updatedUser));
@@ -134,112 +137,114 @@ export default function EditUser({ darkMode }) {
       navigate("/Profile");
     }
   };
-  const onCancel = () => {
+  const cancel = () => {
     navigate("/Profile");
   };
 
   return (
     <div>
-
-    <div className="user-profile-display edit-user-profile-display">      
+      <div className="user-profile-display edit-user-profile-display">
         <img
           src={imagePreview || storedUser.userImage}
           alt={storedUser.firstName}
-          />
+        />
         <div className="text-button-container">
           <h1>{`Edit ${user.firstName + " " + user.lastName}'s Profile`}</h1>
           <Button
-          onClick={selectImage}
-          variant="contained"
-          sx={{backgroundColor: colors.blue}}>Change Image</Button>        
-        </div> 
-      </div>
-
-    <div className="edit-user-container">
-    <Paper
-      className="edit-user-paper"
-      sx={{
-        backgroundColor: darkMode ? "#333" : "#fff",
-        color: darkMode ? "#fff" : "#000",
-      }}
-    >  
-      <form>
-        <input
-          type="file"
-          ref={inputRef}
-          onChange={(e) => uploadImage(e.target.files[0])}
-          name="file"
-          accept="image/*"
-          style={{ display: "none" }}
-        />
-      </form>
-      <form onSubmit={onSubmit}>
-        <TextField
-          label="First Name"
-          name="firstName"
-          value={firstName}
-          onChange={onInputChange}
-          fullWidth
-          variant="outlined"
-          sx={{ marginBottom: 2 }}
-        />
-        <TextField
-          label="Last Name"
-          name="lastName"
-          value={lastName}
-          onChange={onInputChange}
-          fullWidth
-          variant="outlined"
-          sx={{ marginBottom: 2 }}
-        />
-        <TextField
-          label="Mailing Address"
-          name="location"
-          value={location}
-          onChange={onInputChange}
-          fullWidth
-          variant="outlined"
-          sx={{ marginBottom: 2 }}
-        />
-        <TextField
-          label="Password"
-          name="pwHash"
-          type="password"
-          value={pwHash}
-          onChange={onInputChange}
-          fullWidth
-          variant="outlined"
-          sx={{ marginBottom: 2 }}
-        />
-        <TextField
-          label="Verify Password"
-          name="verifyPassword"
-          type="password"
-          value={verifyPassword}
-          onChange={onInputChange}
-          fullWidth
-          variant="outlined"
-          sx={{ marginBottom: 3 }}
-        />
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <Button
+            onClick={selectImage}
             variant="contained"
-            type="submit"
-            sx={{ backgroundColor: darkMode?  colors.pink : colors.purple}}
+            sx={{ backgroundColor: colors.blue }}
           >
-            Submit
-          </Button>
-          <Button
-            onClick={onCancel}
-            variant="contained"            
-            sx={{ backgroundColor: darkMode?  colors.purple : colors.pink}}
-          >
-            Cancel
+            Change Image
           </Button>
         </div>
-      </form>
-    </Paper>
-    </div>
+      </div>
+
+      <div className="edit-user-container">
+        <Paper
+          className="edit-user-paper"
+          sx={{
+            backgroundColor: darkMode ? "#333" : "#fff",
+            color: darkMode ? "#fff" : "#000",
+          }}
+        >
+          <form>
+            <input
+              type="file"
+              ref={inputRef}
+              onChange={(e) => uploadImage(e.target.files[0])}
+              name="file"
+              accept="image/*"
+              style={{ display: "none" }}
+            />
+          </form>
+          <form onSubmit={submit}>
+            <TextField
+              label="First Name"
+              name="firstName"
+              value={firstName}
+              onChange={inputChange}
+              fullWidth
+              variant="outlined"
+              sx={{ marginBottom: 2 }}
+            />
+            <TextField
+              label="Last Name"
+              name="lastName"
+              value={lastName}
+              onChange={inputChange}
+              fullWidth
+              variant="outlined"
+              sx={{ marginBottom: 2 }}
+            />
+            <TextField
+              label="Mailing Address"
+              name="location"
+              value={location}
+              onChange={inputChange}
+              fullWidth
+              variant="outlined"
+              sx={{ marginBottom: 2 }}
+            />
+            <TextField
+              label="Password"
+              name="pwHash"
+              type="password"
+              value={pwHash}
+              onChange={inputChange}
+              fullWidth
+              variant="outlined"
+              sx={{ marginBottom: 2 }}
+            />
+            <TextField
+              label="Verify Password"
+              name="verifyPassword"
+              type="password"
+              value={verifyPassword}
+              onChange={inputChange}
+              fullWidth
+              variant="outlined"
+              sx={{ marginBottom: 3 }}
+            />
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <Button
+                variant="contained"
+                type="submit"
+                sx={{ backgroundColor: darkMode ? colors.pink : colors.purple }}
+              >
+                Submit
+              </Button>
+              <Button
+                onClick={cancel}
+                variant="contained"
+                sx={{ backgroundColor: darkMode ? colors.purple : colors.pink }}
+              >
+                Cancel
+              </Button>
+            </div>
+          </form>
+        </Paper>
+      </div>
     </div>
   );
 }

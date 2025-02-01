@@ -3,7 +3,7 @@ import axios from "axios";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import Description from "./Description";
-import { colors } from "../../styles/ThemeColors";
+import { colors } from "../styles/ThemeColors";
 
 const Club = ({ darkMode }) => {
   const [club, setClub] = useState({});
@@ -19,7 +19,9 @@ const Club = ({ darkMode }) => {
 
   const getClub = async () => {
     try {
-      const response = await axios.get(`http://localhost:8080/club/${clubId}`);
+      const response = await axios.get(
+        `http://localhost:8080/getClubUser/${clubId}`
+      );
       setClub(response.data);
       const membersData = response.data.members || [];
       console.log("Updated members data: ", membersData);
@@ -43,7 +45,7 @@ const Club = ({ darkMode }) => {
 
     try {
       const response = await axios.post(
-        `http://localhost:8080/club/joinClub/${clubId}?email=${email}`
+        `http://localhost:8080/joinClub/${clubId}?email=${email}`
       );
 
       if (response.status === 200) {
@@ -73,43 +75,42 @@ const Club = ({ darkMode }) => {
   return (
     <div>
       <h2>{club.name || "Club name not available"}</h2>
-      
+
       <div className="club-message-container">
         <div className="club-message">
           <p>{club.clubMessage || "No description added!"}</p>
         </div>
       </div>
-        
-      <div className="set-desc" >
 
-          {showDescription ? (
-            <Description
-              clubId={club.id}
-              onRefresh={handleRefresh}
-              hideDescription={setShowDescription}
-            />
-          ) : (
-            ""
-          )}
-          {!showDescription ? (
-            <Button
-              variant="contained"
-              sx={{ marginRight: 2, backgroundColor: colors.blue }}
-              onClick={() => setShowDescription(true)}
-            >
-              Edit Description
-            </Button>
-          ) : (
-            <Button
-              variant="contained"
-              sx={{ marginRight: 2, backgroundColor: colors.pink }}
-              onClick={() => setShowDescription(false)}
-            >
-              Cancel
-            </Button>
-          )}
+      <div className="set-desc">
+        {showDescription ? (
+          <Description
+            clubId={club.id}
+            onRefresh={handleRefresh}
+            hideDescription={setShowDescription}
+          />
+        ) : (
+          ""
+        )}
+        {!showDescription ? (
+          <Button
+            variant="contained"
+            sx={{ marginRight: 2, backgroundColor: colors.blue }}
+            onClick={() => setShowDescription(true)}
+          >
+            Edit Description
+          </Button>
+        ) : (
+          <Button
+            variant="contained"
+            sx={{ marginRight: 2, backgroundColor: colors.pink }}
+            onClick={() => setShowDescription(false)}
+          >
+            Cancel
+          </Button>
+        )}
 
-          <div>
+        <div>
           <Button
             variant="contained"
             color="primary"
@@ -122,58 +123,59 @@ const Club = ({ darkMode }) => {
       </div>
 
       <div className="book-card-members-container">
-        
-          <div className="book-card club-book-card">
-            {club.bookOfTheMonth != null ? (
-              <div className="card-container">
-                <img src={club.bookOfTheMonth.bookCover} alt="book cover" />
-                <div className="desc">
-                  <h2>{club.bookOfTheMonth.name}</h2>
-                  <h3>
-                    {Array.isArray(club.bookOfTheMonth.author)
-                      ? club.bookOfTheMonth.author.join(", ")
-                      : club.bookOfTheMonth.author}
-                  </h3>
-                  <p>
-                    {club.bookOfTheMonth.publicationDate === "0000"
-                      ? "Not available"
-                      : club.bookOfTheMonth.publicationDate.substring(0, 4)}
-                  </p>
-                </div>
+        <div className="book-card club-book-card">
+          {club.bookOfTheMonth != null ? (
+            <div className="card-container">
+              <img src={club.bookOfTheMonth.bookCover} alt="book cover" />
+              <div className="desc">
+                <h2>{club.bookOfTheMonth.name}</h2>
+                <h3>
+                  {Array.isArray(club.bookOfTheMonth.author)
+                    ? club.bookOfTheMonth.author.join(", ")
+                    : club.bookOfTheMonth.author}
+                </h3>
+                <p>
+                  {club.bookOfTheMonth.publicationDate === "0000"
+                    ? "Not available"
+                    : club.bookOfTheMonth.publicationDate.substring(0, 4)}
+                </p>
               </div>
-            ) : (
-              <p>No book set!</p>
-            )}
-
-            <div>
-              <Button
-                variant="contained"
-                color="primary"
-                style={{ margin: "10px 0", backgroundColor: colors.purple }}
-                onClick={navToSearch}
-              >
-                Change Book
-              </Button>
             </div>
-          </div>
+          ) : (
+            <p>No book set!</p>
+          )}
 
-          <div className="members-container">
-            <h1>Club Members</h1>
-
-            {members.length > 0 ? (
-              members.map((member) => (
-                <Button
-                  key={member.id}
-                  onClick={() => navigate(`/ProfileOwner/${member.id}`)}
-                  variant="contained"
-                  style={{ backgroundColor: colors.purple }}
-                  >{member.name}</Button>                 
-                  ))
-                ) : ( <p>No Members!</p> )}
+          <div>
+            <Button
+              variant="contained"
+              color="primary"
+              style={{ margin: "10px 0", backgroundColor: colors.purple }}
+              onClick={navToSearch}
+            >
+              Change Book
+            </Button>
           </div>
-        
+        </div>
+
+        <div className="members-container">
+          <h1>Club Members</h1>
+
+          {members.length > 0 ? (
+            members.map((member) => (
+              <Button
+                key={member.id}
+                onClick={() => navigate(`/ProfileOwner/${member.id}`)}
+                variant="contained"
+                style={{ backgroundColor: colors.purple }}
+              >
+                {member.name}
+              </Button>
+            ))
+          ) : (
+            <p>No Members!</p>
+          )}
+        </div>
       </div>
-
     </div>
   );
 };

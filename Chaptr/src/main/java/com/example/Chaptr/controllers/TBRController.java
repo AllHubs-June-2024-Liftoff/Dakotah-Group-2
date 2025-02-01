@@ -56,6 +56,21 @@ public class TBRController {
         }
     }
 
+    @GetMapping("/getUserTBRListById/{id}")
+    public ResponseEntity<?> getUserTBRListById(@PathVariable int id) {
+        Optional<User> userOptional = userRepository.findById(id);
+
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            Optional<TBR> existingTBR = tbrRepository.findByUser(user);
+
+            if (existingTBR.isPresent()) {
+                return ResponseEntity.ok(existingTBR.get());
+            }
+        }
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found.");
+        }
+
     @Transactional
     @PostMapping("/createTBRList/{email}")
     public ResponseEntity<?> newTBRList(@PathVariable String email, @RequestParam Integer bookId) {

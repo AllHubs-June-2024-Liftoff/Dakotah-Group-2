@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { TextField, Button, Paper } from "@mui/material";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { colors } from "../../styles/ThemeColors";
+import { colors } from "../styles/ThemeColors";
 
 export default function Register({ darkMode }) {
   const navigate = useNavigate();
@@ -14,7 +14,7 @@ export default function Register({ darkMode }) {
 
   const loadUsers = async () => {
     try {
-      const response = await axios.get("http://localhost:8080/users");
+      const response = await axios.get("http://localhost:8080/getAllUsers");
       setExistingUsers(response.data);
     } catch (error) {
       console.error("Error fetching users:", error);
@@ -32,11 +32,11 @@ export default function Register({ darkMode }) {
 
   const { firstName, lastName, email, location, pwHash, verifyPassword } = user;
 
-  const onInputChange = (e) => {
+  const inputChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
 
-  const onSubmit = async (e) => {
+  const submit = async (e) => {
     e.preventDefault();
 
     if (!user.firstName) {
@@ -113,101 +113,98 @@ export default function Register({ darkMode }) {
     navigate("/Chaptr");
   };
 
-  const onCancel = () => {
+  const cancel = () => {
     navigate("/Chaptr");
   };
 
   return (
-
     <div className="register-user-container">
-      
-    <Paper
-      className="register-user-paper"
-      sx={{
-        padding: 4,
-        marginTop: "80px",
-        backgroundColor: darkMode ? "#333" : "#fff",
-        color: darkMode ? "#fff" : "#000",
-      }}
-    >
-      
+      <Paper
+        className="register-user-paper"
+        sx={{
+          padding: 4,
+          marginTop: "80px",
+          backgroundColor: darkMode ? "#333" : "#fff",
+          color: darkMode ? "#fff" : "#000",
+        }}
+      >
         <h1>Register User</h1>
-     
-      <form onSubmit={(e) => onSubmit(e)}>
-        <TextField
-          label="First Name"
-          name="firstName"
-          value={firstName}
-          onChange={onInputChange}
-          fullWidth
-          variant="outlined"
-          sx={{ marginBottom: 2 }}
-        />
-        <TextField
-          label="Last Name"
-          name="lastName"
-          value={lastName}
-          onChange={onInputChange}
-          fullWidth
-          variant="outlined"
-          sx={{ marginBottom: 2 }}
-        />
-        <TextField
-          label="Email Address"
-          name="email"
-          value={email}
-          onChange={onInputChange}
-          fullWidth
-          variant="outlined"
-          sx={{ marginBottom: 2 }}
-        />
-        <TextField
-          label="Mailing Address"
-          name="location"
-          value={location}
-          onChange={onInputChange}
-          fullWidth
-          variant="outlined"
-          sx={{ marginBottom: 2 }}
-        />
-        <TextField
-          label="Password"
-          name="pwHash"
-          type="password"
-          value={pwHash}
-          onChange={onInputChange}
-          fullWidth
-          variant="outlined"
-          sx={{ marginBottom: 2 }}
-        />
-        <TextField
-          label="Verify Password"
-          name="verifyPassword"
-          type="password"
-          value={verifyPassword}
-          onChange={onInputChange}
-          fullWidth
-          variant="outlined"
-          sx={{ marginBottom: 3 }}
-        />
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <Button
-            variant="contained"
-            type="submit"
-            sx={{ backgroundColor: darkMode?  colors.pink : colors.purple}}
-          >
-            Submit
-          </Button>
-          <Button
-            onClick={() => onCancel()}
-            variant="contained"
-            sx={{ backgroundColor: darkMode?  colors.purple : colors.pink}}
-          >
-            Cancel
-          </Button>
-        </div>
-      </form>
-    </Paper>
+
+        <form onSubmit={(e) => submit(e)}>
+          <TextField
+            label="First Name"
+            name="firstName"
+            value={firstName}
+            onChange={inputChange}
+            fullWidth
+            variant="outlined"
+            sx={{ marginBottom: 2 }}
+          />
+          <TextField
+            label="Last Name"
+            name="lastName"
+            value={lastName}
+            onChange={inputChange}
+            fullWidth
+            variant="outlined"
+            sx={{ marginBottom: 2 }}
+          />
+          <TextField
+            label="Email Address"
+            name="email"
+            value={email}
+            onChange={inputChange}
+            fullWidth
+            variant="outlined"
+            sx={{ marginBottom: 2 }}
+          />
+          <TextField
+            label="Mailing Address"
+            name="location"
+            value={location}
+            onChange={inputChange}
+            fullWidth
+            variant="outlined"
+            sx={{ marginBottom: 2 }}
+          />
+          <TextField
+            label="Password"
+            name="pwHash"
+            type="password"
+            value={pwHash}
+            onChange={inputChange}
+            fullWidth
+            variant="outlined"
+            sx={{ marginBottom: 2 }}
+          />
+          <TextField
+            label="Verify Password"
+            name="verifyPassword"
+            type="password"
+            value={verifyPassword}
+            onChange={inputChange}
+            fullWidth
+            variant="outlined"
+            sx={{ marginBottom: 3 }}
+          />
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <Button
+              variant="contained"
+              type="submit"
+              sx={{ backgroundColor: darkMode ? colors.pink : colors.purple }}
+            >
+              Submit
+            </Button>
+            <Button
+              onClick={() => cancel()}
+              variant="contained"
+              sx={{ backgroundColor: darkMode ? colors.purple : colors.pink }}
+            >
+              Cancel
+            </Button>
+          </div>
+        </form>
+      </Paper>
     </div>
   );
 }

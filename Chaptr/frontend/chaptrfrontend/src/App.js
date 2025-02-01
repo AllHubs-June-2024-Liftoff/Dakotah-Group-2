@@ -3,10 +3,10 @@ import "./App.css";
 import NavBar from "./components/NavBar";
 import Chaptr from "./components/Chaptr";
 import Profile from "./components/Profile";
-import ProfileOwner from "./components/users/ProfileOwner";
-import SearchTBR from "./components/search/SearchTBR";
+import UserProfile from "./components/users/UserProfile";
+import SearchBooks from "./components/search/SearchBooks";
 import Register from "./components/users/Register";
-import EditUser from "./components/users/EditUser";
+import UpdateUser from "./components/users/UpdateUser";
 import Club from "./components/club/Club";
 import ClubsList from "./components/club/ClubsList";
 import CreateClub from "./components/club/CreateClub";
@@ -44,15 +44,15 @@ function App() {
             <Route path="/Profile" element={<Profile darkMode={darkMode} />} />
             <Route
               path="/ProfileOwner/:id"
-              element={<ProfileOwner darkMode={darkMode} />}
+              element={<UserProfile darkMode={darkMode} />}
             />
             <Route
-              path="/EditUser"
-              element={<EditUser darkMode={darkMode} />}
+              path="/UpdateUser"
+              element={<UpdateUser darkMode={darkMode} />}
             />
             <Route
-              path="/SearchTBR"
-              element={<SearchTBR darkMode={darkMode} />}
+              path="/SearchBooks"
+              element={<SearchBooks darkMode={darkMode} />}
             />
             <Route
               path="/Register"

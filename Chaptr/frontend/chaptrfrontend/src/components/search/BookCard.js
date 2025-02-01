@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import Button from "@mui/material/Button";
-//import { colors } from "../../styles/ThemeColors";
+import { colors } from "../styles/ThemeColors";
 
 export default function BookCard(props) {
   const addToFavorites = async () => {
@@ -31,7 +31,7 @@ export default function BookCard(props) {
       console.log("Book added:", newBookResponse.data);
       const userBook = newBookResponse.data;
       const favoritesResponse = await axios.get(
-        `http://localhost:8080/favorites/email/${storedUser.email}`
+        `http://localhost:8080/getUserFavoritesList/${storedUser.email}`
       );
 
       if (
@@ -41,14 +41,14 @@ export default function BookCard(props) {
       ) {
         console.log(`Creating new Favorites List for: ${storedUser.name}`);
         const newFavoritesResponse = await axios.post(
-          `http://localhost:8080/newFavorites/email/${storedUser.email}`,
+          `http://localhost:8080/createFavoriteslist/email/${storedUser.email}`,
           { bookId: userBook.id }
         );
         console.log("New Favorites List created:", newFavoritesResponse.data);
         alert("Book added to Favorites List");
       } else {
         const addToFavoritesResponse = await axios.put(
-          `http://localhost:8080/favorites/${storedUser.email}`,
+          `http://localhost:8080/updateFavoritesList/${storedUser.email}`,
           userBook
         );
 
@@ -91,7 +91,7 @@ export default function BookCard(props) {
       console.log("Book added:", newBookResponse.data);
       const userBook = newBookResponse.data;
       const tbrResponse = await axios.get(
-        `http://localhost:8080/getTBR/email/${storedUser.email}`
+        `http://localhost:8080/getUserTBRList/${storedUser.email}`
       );
 
       if (
@@ -101,14 +101,14 @@ export default function BookCard(props) {
       ) {
         console.log(`Creating TBR List for: ${storedUser.name}`);
         const newTBRResponse = await axios.post(
-          `http://localhost:8080/createTBR/email/${storedUser.email}`,
+          `http://localhost:8080/createTBRList/${storedUser.email}`,
           { bookId: userBook.id }
         );
         console.log("New TBR created:", newTBRResponse.data);
         alert("Book added to TBR list");
       } else {
         const addToTBRResponse = await axios.put(
-          `http://localhost:8080/updateTBR/${storedUser.email}`,
+          `http://localhost:8080/updateTBRList/${storedUser.email}`,
           userBook
         );
 
@@ -136,13 +136,17 @@ export default function BookCard(props) {
             : props.publishedDate.substring(0, 4)}
         </p>
       </div>
-      <Button variant="contained" onClick={addToTBR} sx={{ marginRight: 2 }}>
+      <Button
+        variant="contained"
+        onClick={addToTBR}
+        sx={{ marginRight: 2, backgroundColor: colors }}
+      >
         Add to TBR
       </Button>
       <Button
         variant="contained"
         onClick={addToFavorites}
-        sx={{ marginRight: 2 }}
+        sx={{ marginRight: 2, backgroundColor: colors }}
       >
         Add to Favorites
       </Button>
