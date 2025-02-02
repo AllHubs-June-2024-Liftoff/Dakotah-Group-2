@@ -1,16 +1,16 @@
 import React from "react";
-import ProfilePicture from "./users/Data/ProfilePicture";
-import FavoritesList from "./users/Data/FavoritesList";
-import TBRList from "./users/Data/TBRList";
-import ClubList from "./users/Data/ClubList";
+import UpdateProfilePicture from "./users/UpdateData/UpdateProfilePicture";
+import UpdateFavoritesList from "./users/UpdateData/UpdateFavoritesList";
+import UpdateTBRList from "./users/UpdateData/UpdateTBRList";
+import UpdateClubList from "./users/UpdateData/UpdateClubList";
 
 export default function Profile({ darkMode }) {
   return (
     <>
-      <ProfilePicture />
-      <FavoritesList />
-      <ClubList darkMode={darkMode} />
-      <TBRList darkMode={darkMode} />
+      <UpdateProfilePicture />
+      <UpdateFavoritesList />
+      <UpdateClubList darkMode={darkMode} />
+      <UpdateTBRList darkMode={darkMode} />
     </>
   );
 }

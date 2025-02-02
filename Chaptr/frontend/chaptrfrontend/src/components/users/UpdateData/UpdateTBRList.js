@@ -31,11 +31,7 @@ export default function TBRList({ darkMode }) {
       const response = await axios.get(
         `http://localhost:8080/getUserTBRList/${userEmail}`
       );
-      if (response.data && response.data.tbr.length === 0) {
-        setTbr({ tbr: [] });
-      } else {
-        setTbr(response.data);
-      }
+      setTbr(response.data);
       sessionStorage.setItem("tbrList", JSON.stringify(response.data));
     } catch (error) {
       console.error("Error fetching TBR Lists:", error);

@@ -9,7 +9,7 @@ export default function Login({ darkMode }) {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = async (event) => {
+  const submit = async (event) => {
     event.preventDefault();
     sessionStorage.removeItem("user");
     sessionStorage.removeItem("tbrList");
@@ -89,7 +89,7 @@ export default function Login({ darkMode }) {
           Sign in
         </Typography>
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={submit}>
           <TextField
             label="Email Address"
             type="email"
