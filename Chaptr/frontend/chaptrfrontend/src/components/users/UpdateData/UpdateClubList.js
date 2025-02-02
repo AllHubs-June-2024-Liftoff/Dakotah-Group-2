@@ -4,19 +4,12 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { colors } from "../../styles/ThemeColors";
 
-export default function TBRList({ darkMode }) {
-  const [user, setUser] = useState(
-    JSON.parse(sessionStorage.getItem("user")) || {}
-  );
+export default function TBRList({ darkMode, user }) {
   const [userClubs, setUserClubs] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
-    const storedUser = sessionStorage.getItem("user");
-
-    if (storedUser) {
+    if (user) {
       try {
-        const parsedUser = JSON.parse(storedUser);
-        setUser(parsedUser);
         getUserClubs();
       } catch (error) {
         console.error("Error parsing user data:", error);

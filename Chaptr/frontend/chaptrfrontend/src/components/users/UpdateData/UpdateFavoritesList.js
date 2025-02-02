@@ -3,21 +3,14 @@ import Button from "@mui/material/Button";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-export default function Profile() {
-  const [user, setUser] = useState(
-    JSON.parse(sessionStorage.getItem("user")) || {}
-  );
+export default function Profile({ user }) {
   const [favorites, setFavorites] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const storedUser = sessionStorage.getItem("user");
-
-    if (storedUser) {
+    if (user) {
       try {
-        const parsedUser = JSON.parse(storedUser);
-        setUser(parsedUser);
-        loadFavoritesLists(parsedUser.email);
+        loadFavoritesLists(user.email);
       } catch (error) {
         console.error("Error parsing user data:", error);
         navigate("/Chaptr");
