@@ -7,6 +7,7 @@ import com.example.Chaptr.models.Book;
 import com.example.Chaptr.models.Favorites;
 import com.example.Chaptr.models.User;
 import jakarta.transaction.Transactional;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -119,6 +120,16 @@ public class FavoritesController {
         if (existingFavorites.getFavoritesList().contains(existingBook)) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Book '" + existingBook.getName() + "' is already in your Favorites List.");
         }
+        //adding below to limit Favorites list to three items
+        if (existingFavorites.getFavoritesList().size() >= 3) {
+            int i = 3;
+            while (existingFavorites.getFavoritesList().get(i) != null){
+                existingFavorites.getFavoritesList().set(i, null);
+                i++;
+            }
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Favorites List already contains three books. Please delete a book before adding another.");
+        }
+        // end of additions
         existingFavorites.addToFavoritesList(existingBook);
         favoritesRepository.save(existingFavorites);
         user.setFavoritesList(existingFavorites);
