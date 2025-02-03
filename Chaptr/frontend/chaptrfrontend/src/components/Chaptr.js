@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import Login from "../components/users/Login";
-import Register from "../components/users/Register";
 import { useNavigate } from "react-router-dom";
 
 export default function Chaptr({ darkMode }) {

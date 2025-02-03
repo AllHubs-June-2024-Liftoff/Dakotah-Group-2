@@ -1,30 +1,35 @@
 package com.example.Chaptr.controllers;
 
-import com.example.Chaptr.data.UserRepository;
-import com.example.Chaptr.models.Club;
-import com.example.Chaptr.models.User;
-import com.example.Chaptr.services.ImageService;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
-import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
-import static com.example.Chaptr.services.imageDirectory.IMAGE_DIRECTORY;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import static org.springframework.http.MediaType.IMAGE_JPEG_VALUE;
 import static org.springframework.http.MediaType.IMAGE_PNG_VALUE;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.example.Chaptr.data.UserRepository;
+import com.example.Chaptr.models.User;
+import com.example.Chaptr.services.ImageService;
+import static com.example.Chaptr.services.imageDirectory.IMAGE_DIRECTORY;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 
 @RestController
 public class UserController {
@@ -54,13 +59,13 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<User> register(@RequestBody User newUser) {
-        if (newUser.getFirstName() == null || newUser.getFirstName().isEmpty()) {
+        if (newUser.getFirstName().isEmpty()) {
             return ResponseEntity.badRequest().body(null);
         }
-        if (newUser.getLastName() == null || newUser.getLastName().isEmpty()) {
+        if (newUser.getLastName().isEmpty()) {
             return ResponseEntity.badRequest().body(null);
         }
-        if (newUser.getPwHash() == null || newUser.getPwHash().isEmpty()) {
+        if (newUser.getPwHash().isEmpty()) {
             return ResponseEntity.badRequest().body(null);
         }
         newUser.setPwHash(passwordEncoder.encode(newUser.getPwHash()));
@@ -83,7 +88,7 @@ public class UserController {
             existingUser.setName(String.format("%s %s", updateUser.getFirstName(), updateUser.getLastName()).trim());
             existingUser.setLocation(updateUser.getLocation());
 
-            if (updateUser.getPwHash() != null && !updateUser.getPwHash().equals(existingUser.getPwHash())) {
+            if (!updateUser.getPwHash().equals(existingUser.getPwHash())) {
                 existingUser.setPwHash(passwordEncoder.encode(updateUser.getPwHash()));
             }
 

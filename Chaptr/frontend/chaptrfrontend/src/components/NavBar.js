@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "@mui/material/Button";
 import { Link, useNavigate } from "react-router-dom";
-import { colors } from "../components/styles/ThemeColors";
+import { colors } from "./styles/ThemeColors";
 import { useState, useEffect } from "react";
 
 export default function NavBar({ darkMode, toggleDarkMode }) {

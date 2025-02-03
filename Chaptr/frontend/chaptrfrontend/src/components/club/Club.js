@@ -56,7 +56,7 @@ const Club = ({ darkMode }) => {
   };
   useEffect(() => {
     getClub();
-  }, []);
+  });
 
   return (
     <div>
