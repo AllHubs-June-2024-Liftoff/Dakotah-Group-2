@@ -16,10 +16,15 @@ export default function Chaptr({ darkMode }) {
     <div className="chaptr-container">
       <div className="chaptr-desc">
         <div className="logo-title">
-          {/*book logo */}
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="24" height="24">
-        <path d="M96 32C43 32 0 75 0 128V384C0 437 43 480 96 480H448V32H96zM384 384H96C69.5 384 48 362.5 48 336S69.5 288 96 288H384V384z" fill="currentColor"/>
-        </svg>
+          {/*book logo with conditional rendering for dark mode*/}
+          { darkMode ? (
+            <a href="https://imgur.com/d7lApr8"><img src="https://i.imgur.com/d7lApr8.png" title="source: imgur.com" alt="Book Logo - Dark Mode" 
+            width="40" height="40"  /></a>
+          ) : (
+            <a href="https://imgur.com/uJulko6"><img src="https://i.imgur.com/uJulko6.png" title="source: imgur.com"  alt="Book Logo - Light Mode" 
+              width="40" height="40" /></a>
+          )}    
+          
         <h1>Chaptr</h1>
         </div>
 
