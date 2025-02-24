@@ -18,10 +18,10 @@ export default function Chaptr({ darkMode }) {
         <div className="logo-title">
           {/*book logo with conditional rendering for dark mode*/}
           { darkMode ? (
-            <a href="https://imgur.com/d7lApr8"><img src="https://i.imgur.com/d7lApr8.png" title="source: imgur.com" alt="Book Logo - Dark Mode" 
+            <a href="https://imgur.com/WC9sn6p"><img src="https://i.imgur.com/WC9sn6p.png" title="source: imgur.com" alt="Book Logo - Dark Mode" 
             width="40" height="40"  /></a>
           ) : (
-            <a href="https://imgur.com/uJulko6"><img src="https://i.imgur.com/uJulko6.png" title="source: imgur.com"  alt="Book Logo - Light Mode" 
+            <a href="https://imgur.com/d7zf6lS"><img src="https://i.imgur.com/d7zf6lS.png" title="source: imgur.com"  alt="Book Logo - Light Mode" 
               width="40" height="40" /></a>
           )}    
           
