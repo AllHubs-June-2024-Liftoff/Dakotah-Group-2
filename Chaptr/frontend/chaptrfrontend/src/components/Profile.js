@@ -174,7 +174,7 @@ export default function Profile({ darkMode }) {
           <Button
             variant="contained"
             component={Link}
-            sx={{ marginRight: 2 }}
+            sx={{ marginRight: 2, backgroundColor: colors.blue }}
             to="/SearchTBR"
           >
             Add Book
@@ -186,7 +186,7 @@ export default function Profile({ darkMode }) {
             <Button
               onClick={deleteFavorites}
               variant="contained"
-              sx={{ marginRight: 2 }}
+              sx={{ marginRight: 2, backgroundColor: colors.blue }}
             >
               Delete Favorites List
             </Button>
@@ -204,6 +204,7 @@ export default function Profile({ darkMode }) {
                     removeBookFavorites(book.id);
                   }}
                   variant="contained"
+                  sx={{ backgroundColor: colors.blue }}
                 >
                   Remove
                 </Button>
@@ -259,8 +260,9 @@ export default function Profile({ darkMode }) {
           <Button
             variant="contained"
             component={Link}
-            sx={{ marginRight: 2 }}
+            sx={{ marginRight: 2, backgroundColor: colors.blue }}
             to="/SearchTBR"
+            
           >
             Search Books
           </Button>
@@ -311,7 +313,7 @@ export default function Profile({ darkMode }) {
                   <Button
                     onClick={deleteTBR}
                     variant="contained"
-                    sx={{ marginRight: 2 }}
+                    sx={{ marginRight: 2, backgroundColor: colors.blue }}
                   >
                     Delete TBR List
                   </Button>
@@ -367,7 +369,7 @@ export default function Profile({ darkMode }) {
                       <Button
                         onClick={() => removeBookTBR(book.id)}
                         variant="contained"
-                        sx={{ marginRight: 2 }}
+                        sx={{ marginRight: 2, backgroundColor: colors.blue }}
                       >
                         Remove Book
                       </Button>
