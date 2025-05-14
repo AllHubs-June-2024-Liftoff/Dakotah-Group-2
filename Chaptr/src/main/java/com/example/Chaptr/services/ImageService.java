@@ -24,7 +24,7 @@ public class ImageService {
     }
 
     private User getUser(String email) {
-        return userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("Contact not found"));
+        return userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("User email not found"));
     }
 
     public String uploadImage(String email, MultipartFile file) {
